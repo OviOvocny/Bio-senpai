@@ -7,6 +7,12 @@ export default class {
     this.base = base
     this.endpoint = endpoint
     this.filters = []
+    this.postBody = {}
+  }
+
+  body (hash) {
+    this.postBody = hash
+    return this
   }
 
   filter (key, val) {
@@ -44,7 +50,7 @@ export default class {
         url += `${prefix}filter[${t}]=${v}`
       }
     }
-    return axios[verb](url)
+    return axios[verb](url, this.postBody)
   }
 
 }

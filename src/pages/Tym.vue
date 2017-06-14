@@ -3,11 +3,13 @@
     <error :error="error" @retry="fetchData"></error>
     <div class="searchfield-wrap">
       <input class="searchfield" type="text" v-model="search" @input="$refs.iso.filter('text')" placeholder="Vyhledat..." autofocus>
-      <div class="switches">
-        <input type="radio" v-model="category" value="bio" id="category-bio">
-        <label for="category-bio">Bio-senpai</label>
-        <input type="radio" v-model="category" value="yoi" id="category-yoi">
-        <label for="category-yoi">Yoimiru</label>
+      <div class="switches" v-show="search === ''">
+        <fieldset class="radio-group">
+          <input type="radio" v-model="category" value="bio" id="category-bio">
+          <label for="category-bio">Bio-senpai</label>
+          <input type="radio" v-model="category" value="yoi" id="category-yoi">
+          <label for="category-yoi">Yoimiru</label>
+        </fieldset>
       </div>
     </div>
     <isotope ref="iso" :list="team" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden}">
@@ -20,7 +22,7 @@
 import API from 'api'
 import isotope from 'vueisotope'
 export default {
-  submenu: ['/tym', '/prihlaska'],
+  submenu: ['Tým', 'Přidat se'],
   data () {
     let self = this
     return {
@@ -28,7 +30,7 @@ export default {
       hidden: false,
       team: [],
       category: 'bio',
-      search: '',
+      search: this.$route.params.member || '',
       isoOptions: {
         itemSelector: '.member',
         layoutMode: 'masonry',
@@ -38,9 +40,16 @@ export default {
         },
         getFilterData: {
           text (el) {
-            return el.name.toLowerCase().includes(self.search.toLowerCase()) && el.categories.includes(self.category)
+            return self.search === '' ? el.categories.includes(self.category) : el.name.toLowerCase().includes(self.search.toLowerCase()) || el.role[0].map(r => r.toLowerCase()).some(r => r.includes(self.search.toLowerCase()))
           }
         },
+        getSortData: {
+          dbid (el) {
+            return parseInt(el.id, 16)
+          }
+        },
+        sortBy: 'dbid',
+        sortAscending: true,
         stagger: 20,
         hiddenStyle: {
           transform: 'scale(.5)',
@@ -64,6 +73,14 @@ export default {
         .catch(err => {
           this.$emit('error', err)
         })
+    }
+  },
+  watch: {
+    category () {
+      const cat = this.category
+      this.$refs.iso.arrange({
+        sortAscending: cat === 'bio'
+      })
     }
   },
   beforeRouteLeave (to, from, next) {

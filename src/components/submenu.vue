@@ -18,8 +18,8 @@ export default {
     subnavItems () {
       return allItems.filter(item => {
         let result = false
-        this.items.forEach(path => {
-          if (item.to === path) result = true
+        this.items.forEach(name => {
+          if (item.label === name) result = true
         })
         return result
       })

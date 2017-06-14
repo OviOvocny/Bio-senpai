@@ -77,7 +77,7 @@ export default {
       transition none
       transform perspective(700px) translateY(calc(var(--parallax-y) * -1px)) translateX(calc(var(--parallax-x) * 1px))
     .title
-      text-shadow calc(var(--parallax-x) * -1px) calc(var(--parallax-y) * 1px) 1em
+      text-shadow 0 0 1em // calc(var(--parallax-x) * -1px) calc(var(--parallax-y) * 1px) 1em
       transition box-shadow 0.2s
       transform perspective(700px) translateY(calc(var(--parallax-y) * -2px)) translateX(calc(var(--parallax-x) * 2px))
 

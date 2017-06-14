@@ -40,16 +40,16 @@ export default {
     }
   },
   created () {
-    this.fetchQuote()
+    this.fetchData()
   },
   mounted () {
     Stickyfill.add(this.$el)
   },
   watch: {
-    $route: 'fetchQuote'
+    $route: 'fetchData'
   },
   methods: {
-    fetchQuote () {
+    fetchData () {
       this.quoteVisible = false
       new API('quotes/random')
         .call()

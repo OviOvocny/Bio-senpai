@@ -16,6 +16,7 @@
     "axios": "^0.16.1",
     "cloudinary-core": "^2.3.0",
     "fuzzysearch-js": "^0.2.0",
+    "moment": "^2.18.1",
     "stickyfill2": "^2.0.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",

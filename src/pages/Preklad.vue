@@ -18,70 +18,82 @@
       </router-link>
     </div>
 
-    <div class="project-card">
-      <div class="actions" v-if="$route.name === 'Překlad'">
-        <div class="actions-inner">
-          <a tabindex="-1" :href="project.mega">
-            <btn variant="red" icon="download">Přeložená videa</btn>
-          </a>
-          <a tabindex="-1" :href="'/static/data/' + project.url_title + '/ass.zip'" download>
-            <btn icon="attachment">Všechny titulky</btn>
-          </a>
+    <transition-group name="list-vertical">
+      <div class="project-stream" v-if="$route.name === 'Stream'" key="stream">
+        <div class="stream-controls" v-if="$route.params.episode">
+          <router-link :to="`/stream/${$route.params.anime}/${parseInt($route.params.episode) - 1}`">
+            <btn :disabled="parseInt($route.params.episode) <= 1">Předchozí</btn>
+          </router-link>
+          <span>Epizoda {{$route.params.episode}}</span>
+          <router-link :to="`/stream/${$route.params.anime}/${parseInt($route.params.episode) + 1}`">
+            <btn :disabled="parseInt($route.params.episode) >= parseInt(project.eps.total)">Další</btn>
+          </router-link>
         </div>
-      </div>
-      <transition-group name="list" tag="div" class="episode-list">
-        <div class="episode" v-if="eps.done === 1 && !project.single_type" key="film">
-          Film
-          <div class="episode-actions">
-            <a tabindex="-1" :href="`/static/data/${project.url_title}/[Bio-senpai] ${project.title}.ass`" download>
-              <btn icon="attachment"></btn>
-            </a>
-            <router-link tabindex="-1" :to="`/stream/${project.url_title}`">
-              <btn icon="play"></btn>
-            </router-link>
-          </div>
-        </div>
-        <div class="episode" v-else v-for="i in eps.done" :key="i">
-          Epizoda {{i}}
-          <div class="episode-actions">
-            <a tabindex="-1" :href="`/static/data/${project.url_title}/[Bio-senpai] ${project.title} - Epizoda ${i}.ass`" download>
-              <btn icon="attachment"></btn>
-            </a>
-            <router-link tabindex="-1" :to="`/stream/${project.url_title}/${i}`">
-              <btn icon="play"></btn>
-            </router-link>
-          </div>
-        </div>
-      </transition-group>
-      <div class="project-desc" v-if="$route.name === 'Překlad'">
-        <div v-html="project.desc"></div>
-        <div class="relatives" v-if="project.relatives">
-          <div class="prequels" v-if="project.relatives.prequels">
-            <h3>Předcházející:</h3>
-            <router-link class="tl-link" v-for="prequel in prequelArr" :key="prequel" :to="'/projekty/' + prequel.url_title">
-              <anime :data="prequel"></anime>
-            </router-link>
-          </div>
-          <div class="sequels" v-if="project.relatives.sequels">
-            <h3>Následující:</h3>
-            <router-link class="tl-link" v-for="sequel in sequelArr" :key="sequel" :to="'/projekty/' + sequel.url_title">
-              <anime :data="sequel"></anime>
-            </router-link>
-          </div>
-          <div class="other" v-if="project.relatives.other">
-            <h3>Související:</h3>
-            <router-link class="tl-link" v-for="other in otherArr" :key="other" :to="'/projekty/' + other.url_title">
-              <anime :data="other"></anime>
-            </router-link>
-          </div>
-        </div>
-      </div>
-      <div class="project-stream" v-if="$route.name === 'Stream'">
         <div class="video-wrap">
           <iframe id="plr" :src="'https://drive.google.com/file/d/' + file + '/preview'" frameborder="0" allowfullscreen></iframe>
         </div>
       </div>
-    </div>
+
+      <div class="project-card" key="project">
+        <div class="actions">
+          <div class="actions-inner">
+            <a tabindex="-1" :href="project.mega">
+              <btn variant="red" icon="download">Přeložená videa</btn>
+            </a>
+            <a tabindex="-1" :href="'/static/data/' + project.url_title + '/ass.zip'" download>
+              <btn icon="attachment">Všechny titulky</btn>
+            </a>
+          </div>
+        </div>
+        <transition-group name="list" tag="div" class="episode-list">
+          <div class="episode" v-if="eps.done === 1 && !project.single_type" key="film">
+            Film
+            <div class="episode-actions">
+              <a tabindex="-1" :href="`/static/data/${project.url_title}/[Bio-senpai] ${project.title}.ass`" download>
+                <btn icon="attachment"></btn>
+              </a>
+              <router-link tabindex="-1" :to="`/stream/${project.url_title}`">
+                <btn icon="play"></btn>
+              </router-link>
+            </div>
+          </div>
+          <div class="episode" v-else v-for="i in eps.done" :key="i">
+            Epizoda {{i}}
+            <div class="episode-actions">
+              <a tabindex="-1" :href="`/static/data/${project.url_title}/[Bio-senpai] ${project.title} - Epizoda ${i}.ass`" download>
+                <btn icon="attachment"></btn>
+              </a>
+              <router-link tabindex="-1" :to="`/stream/${project.url_title}/${i}`">
+                <btn icon="play"></btn>
+              </router-link>
+            </div>
+          </div>
+        </transition-group>
+        <div class="project-desc">
+          <div v-html="project.desc"></div>
+          <div class="relatives" v-if="project.relatives">
+            <div class="prequels" v-if="project.relatives.prequels">
+              <h3>Předcházející:</h3>
+              <router-link class="tl-link" v-for="prequel in prequelArr" :key="prequel" :to="'/projekty/' + prequel.url_title">
+                <anime :data="prequel"></anime>
+              </router-link>
+            </div>
+            <div class="sequels" v-if="project.relatives.sequels">
+              <h3>Následující:</h3>
+              <router-link class="tl-link" v-for="sequel in sequelArr" :key="sequel" :to="'/projekty/' + sequel.url_title">
+                <anime :data="sequel"></anime>
+              </router-link>
+            </div>
+            <div class="other" v-if="project.relatives.other">
+              <h3>Související:</h3>
+              <router-link class="tl-link" v-for="other in otherArr" :key="other" :to="'/projekty/' + other.url_title">
+                <anime :data="other"></anime>
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition-group>
 
   </section>
 </template>
@@ -359,25 +371,31 @@ bgcolor = #1e2430
 
 .project-stream
   padding 1em
-  padding-bottom 2.5em
-  grid-area desc
+  background-color bgcolor
+  border-radius 15px
 
-@supports not (display: -ms-grid)
-  @media (min-width: 1055px)
-    .project-stream
-      grid-column 1 / span 2
+.stream-controls
+  display flex
+  justify-content center
+  align-items center
+  margin-bottom 1em
+  span
+    text-align center
+    flex-grow 2
 
+.video-wrap
+  position relative
+  padding-top 56.25%
+  iframe
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
 
-    .video-wrap
-      position relative
-      padding-bottom 54% /* 16:9 */
-      padding-top 25px
-      height 0
-    
-    .video-wrap iframe
-      position absolute
-      top 0
-      left 0
-      width 100%
-      height 100%
+.list-vertical-enter-active, .list-vertical-leave-active, .list-vertical-move
+  transition all .3s
+.list-vertical-enter, .list-vertical-leave-to
+  opacity 0
+  transform scaleY(0) translateY(-75%)
 </style>

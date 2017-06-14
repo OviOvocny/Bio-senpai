@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <error :error="error" @retry="reFetchView" @ignore="error = false"></error>
-    <bio-header>
+    <ticker :ticker="ticker" :tickerIcon="tickerIcon" @ignore="ticker = false"></ticker>
+    <bio-header @error="updateError">
       <bio-nav :items="navItems"></bio-nav>
     </bio-header>
     <main>
@@ -13,6 +14,7 @@
           @update:audio="updateAudio"
           @update:audio-meta="val => audioMeta = val"
           @error="updateError"
+          @ticker="updateTicker"
         ></router-view>
       </transition>
     </main>
@@ -37,7 +39,9 @@ export default {
       routeTransition: 'shift',
       audioSource: '',
       audioMeta: {},
-      error: false
+      error: false,
+      ticker: false,
+      tickerIcon: ''
     }
   },
   computed: {
@@ -51,6 +55,10 @@ export default {
     },
     updateError (val = false) {
       this.error = val
+    },
+    updateTicker (msg = false, icon = '') {
+      this.ticker = msg
+      this.tickerIcon = icon
     },
     reFetchView () {
       this.$refs.view.fetchData()
@@ -113,6 +121,12 @@ export default {
 *
   outline-color hsl(150, 80%, 50%)
 
+p
+  text-align justify
+
+.center-text
+  text-align center
+
 @keyframes pop
   0%
     // transform scale(1.05)
@@ -171,4 +185,110 @@ input[type=text]
   &:hover, &:focus
     animation pop .5s
     border-color hsl(150,80%,50%)
+
+.radio-group
+  border 0
+  padding 0
+  margin 1em 0
+  label
+    display inline-block
+    cursor pointer
+    margin .5em -3px
+    padding 0.3em 1em
+    border 2px solid #0a5c33
+    background-color #14b866
+    transition .2s
+    &:nth-child(2)
+      border-radius 2em 0 0 2em
+    &:last-child
+      border-radius 0 2em 2em 0
+  input[type=radio]
+    display none
+    &:checked + label
+      background-color lighten(#14b866, 50%)
+      color #1e2430
+
+.checkboxContainer
+  height 1em
+  margin 1em 0.3em
+  display flex
+  align-items center
+  .checkboxLabel
+    height 1.25em
+
+.checkbox-hidden
+  opacity 0
+  width 0
+  &:checked
+    & + .checkbox
+      background #19e680
+      border-color #0f8a4d
+      color #052e1a
+      .checkboxIcons
+        transform translateY(-1.25em)
+        transform translateY(-1.25em)
+  &:focus + .checkbox
+    border-color white
+
+.checkbox
+  position relative
+  display inline-flex
+  align-items center
+  overflow hidden
+  justify-content center
+  width 20px
+  height 20px
+  margin 0.3em
+  border-radius 0.4em
+  border-style solid
+  border-width 2px
+  border-color #8a0f38
+  background #e6195d
+  color #fad1df
+  // box-shadow 0 0.2em 0.3em rgba(0,0,0,0.15)
+  transition-property border, color, background-color, box-shadow
+  transition-duration 0.15s
+  &:hover
+    // box-shadow 0 0.2em 0.5em rgba(0,0,0,0.25)
+  &:active
+    transform scale(0.8)
+    transform scale(0.8)
+    // box-shadow 0 0 0 0
+    transition-duration 0.1s
+  i
+    cursor pointer
+
+.checkboxIcons
+  position absolute
+  top 0
+  left 0
+  transition transform 0.3s
+  .mdi
+    display block
+    height 20px
+
+input[type=submit]
+  font-family Noto Sans
+  padding 0.3em 1em
+  margin 0.3em
+  border-radius 2em
+  color #fff
+  border-width 2px
+  border-style solid
+  border-color #0a5c33
+  background-color #14b866
+  outline none
+  transition-property box-shadow, border-color, transform
+  transition-duration: 0.5s
+  &:focus
+    &:not(:hover)
+      border-color currentColor
+      animation pop .5s
+  &:hover
+    &:not([disabled])
+      border-color currentColor
+      transition-duration 0.15s
+  &:active
+    transform scale(0.95)
+    transition-duration 0.1s
 </style>

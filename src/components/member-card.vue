@@ -1,9 +1,9 @@
 <template>
   <div class="member">
-    <div class="member-head">
+    <div class="member-head" :style="{backgroundImage: headBg}">
       <div class="mh-left">
         <div class="mh-main">
-          <cl-image class="member-img" :src="'team/' + data.url_name" width="74"></cl-image>
+          <cl-image class="member-img" :src="imgPath" width="74"></cl-image>
           <div class="mh-name">{{data.name}}</div>
         </div>
       </div>
@@ -31,9 +31,29 @@ let icons = {
   'Podcast': 'radio'
 }
 
+import cl from 'cloudinary-core'
 export default {
   props: {
     data: Object
+  },
+  computed: {
+    imgPath () {
+      return 'team/' + this.data.url_name
+    },
+    headBg () {
+      const c = cl.Cloudinary.new({cloud_name: 'bio-senpai'})
+      const params = {
+        fetch_format: 'auto',
+        effect: 'blur:1400',
+        width: 450,
+        gravity: 'center',
+        zoom: 3,
+        crop: 'thumb',
+        opacity: 40
+      }
+      const humus = c.url(this.imgPath, params)
+      return `url(${humus})`
+    }
   },
   methods: {
     roleIcon (role) {

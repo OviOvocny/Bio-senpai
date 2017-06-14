@@ -1,9 +1,12 @@
 import Home from '@/pages/Home'
 import Projekty from '@/pages/Projekty'
 import Preklad from '@/pages/Preklad'
-// import Stream from '@/pages/Stream'
+import Navrhy from '@/pages/Navrhy'
 import Podcast from '@/pages/Podcast'
 import Tym from '@/pages/Tym'
+import Prihlaska from '@/pages/Prihlaska'
+import Kontakt from '@/pages/Kontakt'
+import FAQ from '@/pages/FAQ'
 import About from '@/pages/About'
 
 const routes = [
@@ -46,7 +49,7 @@ const routes = [
   {
     path: '/navrhy',
     name: 'Návrhy',
-    component: Home,
+    component: Navrhy,
     meta: {
       title: 'Návrhy | Bio-senpai',
       icon: 'star',
@@ -64,7 +67,7 @@ const routes = [
     }
   },
   {
-    path: '/tym',
+    path: '/tym/:member?',
     name: 'Tým',
     component: Tym,
     meta: {
@@ -75,7 +78,7 @@ const routes = [
   {
     path: '/prihlaska',
     name: 'Přidat se',
-    component: Home,
+    component: Prihlaska,
     alias: '/join',
     meta: {
       title: 'Přidat se | Bio-senpai',
@@ -85,7 +88,7 @@ const routes = [
   {
     path: '/kontakt',
     name: 'Kontakt',
-    component: Home,
+    component: Kontakt,
     meta: {
       title: 'Kontakt | Bio-senpai',
       icon: 'message'
@@ -94,7 +97,7 @@ const routes = [
   {
     path: '/faq',
     name: 'FAQ',
-    component: Home,
+    component: FAQ,
     meta: {
       title: 'FAQ | Bio-senpai',
       icon: 'library'
@@ -114,14 +117,14 @@ const routes = [
 const navItems = routes
   .filter(rt => !rt.meta.navHidden)
   .map(rt => ({
-    to: rt.path,
+    to: rt.path.split('/:')[0],
     label: rt.name,
     icon: rt.meta.icon
   }))
 
 const allItems = routes
   .map(rt => ({
-    to: rt.path,
+    to: rt.path.split('/:')[0],
     label: rt.name,
     icon: rt.meta.icon
   }))

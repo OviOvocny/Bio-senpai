@@ -7,6 +7,12 @@
         Yoimiru je podcast převážně o anime. Pravidelně se v náhodnou dobu scházíme a jdeme se pobavit o našich zážitcích při sledování tohoto média.
         Vždy se snažíme mluvit k věci a zbytečně epizody nenatahovat. To je lež. Smějeme se každé blbosti a navzájem po sobě házíme plyšáky.
       </p>
+      <router-link to="/tym/podcast">
+        <btn>Tým podcastu</btn>
+      </router-link>
+      <a href="//akari.in/yoimiru">
+        <btn>Naše poznámky (NSFW)</btn>
+      </a>
     </div>
 
 
@@ -29,7 +35,7 @@ let wtfs = [
 ]
 
 export default {
-  submenu: ['/projekty', '/navrhy', '/podcast'],
+  submenu: ['Projekty', 'Návrhy', 'Podcast'],
   data () {
     return {
       podcasts: []

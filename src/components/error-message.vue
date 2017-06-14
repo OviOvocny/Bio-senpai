@@ -5,8 +5,8 @@
         <icon :symbol="errorIcon"></icon>
         {{friendlyError}}
       </span>
-      <btn variant="red" @click="$emit('retry')" icon="reload">Zkusit znovu</btn>
-      <btn variant="red" @click="$emit('ignore')" icon="close">Skrýt</btn>
+      <btn variant="red" @click="$emit('retry')" icon="reload" v-if="canRetry">Zkusit znovu</btn>
+      <btn force-small variant="red" @click="$emit('ignore')" icon="close"></btn>
     </div>
   </transition>
 </template>
@@ -14,10 +14,16 @@
 <script>
 export default {
   props: {
-    error: [Error, Boolean]
+    error: [Error, String, Boolean]
   },
   computed: {
+    canRetry () {
+      return this.error.message === 'Network Error'
+    },
     friendlyError () {
+      if (typeof this.error === 'string') {
+        return this.error
+      }
       if (this.error.message === 'Network Error') {
         return 'Se serverem API se nepodařilo spojit.'
       } else {
@@ -37,6 +43,9 @@ export default {
 
 <style scoped lang="stylus">
 .error-wrap
+  display flex
+  align-items center
+  flex-wrap wrap
   position fixed
   z-index 15
   top 0

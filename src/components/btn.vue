@@ -12,14 +12,15 @@ export default {
     variant: {
       type: String,
       default: 'green'
-    }
+    },
+    forceSmall: Boolean
   },
   computed: {
     variantClass () {
       return `btn-${this.variant}`
     },
     iconOnly () {
-      return !this.$slots.default
+      return !this.$slots.default && !this.forceSmall
     }
   }
 }

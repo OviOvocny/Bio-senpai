@@ -1,6 +1,5 @@
 <template>
   <section>
-    <error :error="error" @retry="fetchData"></error>
     <div class="searchfield-wrap">
       <input class="searchfield" type="text" v-model="search" @input="$refs.iso.filter('text')" placeholder="Vyhledat..." autofocus>
     </div>
@@ -16,7 +15,7 @@
 import API from 'api'
 import isotope from 'vueisotope'
 export default {
-  submenu: ['/projekty', '/navrhy', '/podcast'],
+  submenu: ['Projekty', 'Návrhy', 'Podcast'],
   data () {
     let self = this
     return {

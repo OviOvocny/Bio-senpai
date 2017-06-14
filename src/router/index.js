@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routes'
 import ErrorPage from '@/pages/ErrorPage'
+import nano from '@/scripts/nano-scroll'
 
 Vue.use(Router)
 
@@ -19,9 +20,9 @@ let rt = new Router({
   mode: 'history',
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
-      return savedPosition
+      nano(savedPosition.y, 0.2, () => savedPosition)
     } else {
-      return { x: 0, y: 0 }
+      nano(0, 0.2, () => ({ x: 0, y: 0 }))
     }
   }
 })

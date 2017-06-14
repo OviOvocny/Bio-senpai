@@ -33,6 +33,9 @@ Vue.component('submenu', submenu)
 import error from './components/error-message'
 Vue.component('error', error)
 
+import ticker from './components/ticker-message'
+Vue.component('ticker', ticker)
+
 Vue.config.productionTip = false
 
 import Promise from 'promise-polyfill'
