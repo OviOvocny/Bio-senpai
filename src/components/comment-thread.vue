@@ -2,16 +2,33 @@
   <div class="msg-container" :id="id">
     <comment :sender="sender" :time="time" :team="team">{{msg}}</comment>
     <transition-group name="shift-down">
-      <comment reply v-for="reply in replies" :key="reply.msg" :sender="reply.sender" :time="reply.time" :team="reply.team">{{reply.msg}}</comment>
+      <comment reply v-for="reply in shownReplies" :key="reply.msg" :sender="reply.sender" :time="reply.time" :team="reply.team">{{reply.msg}}</comment>
     </transition-group>
+    <div class="hidden-hint"
+         v-if="replies.length > maxCompactReplies && !showingAllReplies && !replying"
+         @click="showingAllReplies = !showingAllReplies"
+    >
+      Kliknutím zobrazíte zbytek odpovědí (celkem {{remainingReplies}})
+    </div>
 
     <transition name="shift-down">
-      <div class="reply-box" v-if="replying">
-        <comment-form reply @send="handleReply" @cancel="replying = false" :disabled="formDisabled"></comment-form>
+      <div class="reply-box" v-if="replying" ref="replyBoxRef">
+        <comment-form reply
+                      @send="handleReply"
+                      @cancel="replying = false"
+                      @mount="initReply"
+                      :disabled="formDisabled"
+        ></comment-form>
       </div>
     </transition>
     <div class="reply-btn-outer" v-show="!replying">
-      <button class="reply-buttons reply-btn" @click="replying = true"><i class="mdi mdi-reply"></i> Odpovědět</button>
+      <button v-if="replies.length > maxCompactReplies"
+              class="reply-buttons reply-btn"
+              @click="showingAllReplies = !showingAllReplies"
+      >
+        <icon symbol="format-line-weight"></icon> {{allRepliesLabel}}
+      </button>
+      <button class="reply-buttons reply-btn" @click="replying = true"><icon symbol="reply"></icon> Odpovědět</button>
     </div>
   </div>
 </template>
@@ -27,10 +44,26 @@ export default {
     return {
       replying: false,
       formDisabled: false,
+      maxCompactReplies: 3,
+      showingAllReplies: false,
       ...this.message
     }
   },
+  computed: {
+    shownReplies () {
+      return this.showingAllReplies || this.replying ? this.replies : this.replies.slice(0, this.maxCompactReplies)
+    },
+    allRepliesLabel () {
+      return this.showingAllReplies ? `Skrýt ostatní odpovědi (celkem ${this.remainingReplies})` : 'Všechny odpovědi'
+    },
+    remainingReplies () {
+      return this.replies.length - 3
+    }
+  },
   methods: {
+    initReply () {
+      this.$emit('replyOpen', this.$refs.replyBoxRef.offsetTop)
+    },
     handleReply (data) {
       delete data.replies
       this.$emit('reply', this, {reply: data, parentId: this.id})
@@ -83,4 +116,14 @@ export default {
 .reply-box
   padding 1em
   margin-left calc(1em + 5%)
+
+.hidden-hint
+  cursor pointer
+  background-color hsl(220, 23%, 35%)
+  margin-left calc(1em + 5%)
+  margin-top .5em
+  padding 1em
+  border-radius 15px
+  text-align left
+  position relative
 </style>

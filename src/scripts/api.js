@@ -30,6 +30,11 @@ export default class {
     return this
   }
 
+  skip (num) {
+    this.filters.push(['skip', num])
+    return this
+  }
+
   order (by) {
     this.filters.push(['order', by])
     return this

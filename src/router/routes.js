@@ -1,13 +1,24 @@
-import Home from '@/pages/Home'
-import Projekty from '@/pages/Projekty'
-import Preklad from '@/pages/Preklad'
-import Navrhy from '@/pages/Navrhy'
-import Podcast from '@/pages/Podcast'
-import Tym from '@/pages/Tym'
-import Prihlaska from '@/pages/Prihlaska'
-import Kontakt from '@/pages/Kontakt'
-import FAQ from '@/pages/FAQ'
-import About from '@/pages/About'
+// import Home from '@/pages/Home'
+// import Projekty from '@/pages/Projekty'
+// import Preklad from '@/pages/Preklad'
+// import Navrhy from '@/pages/Navrhy'
+// import Podcast from '@/pages/Podcast'
+// import Tym from '@/pages/Tym'
+// import Prihlaska from '@/pages/Prihlaska'
+// import Kontakt from '@/pages/Kontakt'
+// import FAQ from '@/pages/FAQ'
+// import About from '@/pages/About'
+
+const Home = r => require.ensure([], () => r(require('@/pages/Home.vue')))
+const Projekty = r => require.ensure([], () => r(require('@/pages/Projekty.vue')))
+const Preklad = r => require.ensure([], () => r(require('@/pages/Preklad.vue')))
+const Navrhy = r => require.ensure([], () => r(require('@/pages/Navrhy.vue')))
+const Podcast = r => require.ensure([], () => r(require('@/pages/Podcast.vue')))
+const Tym = r => require.ensure([], () => r(require('@/pages/Tym.vue')))
+const Prihlaska = r => require.ensure([], () => r(require('@/pages/Prihlaska.vue')))
+const Kontakt = r => require.ensure([], () => r(require('@/pages/Kontakt.vue')))
+const FAQ = r => require.ensure([], () => r(require('@/pages/FAQ.vue')))
+const About = r => require.ensure([], () => r(require('@/pages/About.vue')))
 
 const routes = [
   {

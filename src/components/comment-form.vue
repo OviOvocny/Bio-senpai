@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="handleMessage">
     <div class="tr-msg">
-      <textarea :disabled="disabled" class="text" name="msg" placeholder="Zpráva" required @input="storeMessage" :value="storedMessage"></textarea>
+      <textarea ref="txt" :disabled="disabled" class="text" name="msg" placeholder="Zpráva" required @input="storeMessage" :value="storedMessage"></textarea>
     </div>
     <div class="tr-detail">
       <input :disabled="disabled" type="text" name="sender" placeholder="Jméno" @input="storeName" :value="storedName">
@@ -53,6 +53,10 @@ export default {
       data.time = new Date().toISOString()
       this.$emit('send', data)
     }
+  },
+  mounted () {
+    this.$refs.txt.focus()
+    this.$emit('mount')
   }
 }
 </script>
