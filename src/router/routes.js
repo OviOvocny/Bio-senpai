@@ -16,7 +16,7 @@ const Navrhy = r => require.ensure([], () => r(require('@/pages/Navrhy.vue')))
 const Podcast = r => require.ensure([], () => r(require('@/pages/Podcast.vue')))
 const Tym = r => require.ensure([], () => r(require('@/pages/Tym.vue')))
 const Prihlaska = r => require.ensure([], () => r(require('@/pages/Prihlaska.vue')))
-const Kontakt = r => require.ensure([], () => r(require('@/pages/Kontakt.vue')))
+const Zpravy = r => require.ensure([], () => r(require('@/pages/Zpravy.vue')))
 const FAQ = r => require.ensure([], () => r(require('@/pages/FAQ.vue')))
 const About = r => require.ensure([], () => r(require('@/pages/About.vue')))
 
@@ -25,6 +25,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    alias: '/novinky',
     meta: {
       title: 'Bio-senpai',
       navHidden: true
@@ -97,9 +98,10 @@ const routes = [
     }
   },
   {
-    path: '/kontakt',
-    name: 'Kontakt',
-    component: Kontakt,
+    path: '/zpravy',
+    name: 'Zprávy',
+    component: Zpravy,
+    alias: '/kontakt',
     meta: {
       title: 'Kontakt | Bio-senpai',
       icon: 'message'

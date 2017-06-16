@@ -146,9 +146,13 @@ ease-out-expo = cubic-bezier(0.190, 1.000, 0.220, 1.000)
   padding 0 1em
   color white
   background-color alpha(bgcolor, 80%)
-  // background-color #fff
   transform translateY(110%)
   transition transform .1s ease-in
+
+@supports (backdrop-filter: blur)
+  .audio
+    background-color alpha(bgcolor, 50%)
+    backdrop-filter blur(10px)
 
 @media (orientation: portrait)
   .audio

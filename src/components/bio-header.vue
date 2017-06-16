@@ -130,9 +130,8 @@ export default {
       width 100%
       height 100%
       background-color hsl(150,80%,25%)
-      background-image linear-gradient(black, transparent, black)
+      background-image linear-gradient(black, transparent)
       //background-position center
-      background-size 200%
       opacity .7
       z-index 0
       transition background .2s

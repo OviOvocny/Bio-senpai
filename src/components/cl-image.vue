@@ -12,17 +12,19 @@ export default {
       required: true
     },
     alt: String,
-    width: String
+    width: String,
+    params: Object
   },
   computed: {
     url: function () {
       const c = cl.Cloudinary.new({cloud_name: 'bio-senpai'})
-      let params = {
+      let parameters = {
         fetch_format: 'auto',
-        crop: 'scale'
+        crop: 'scale',
+        ...this.params
       }
-      if (this.width) params['width'] = parseInt(this.width)
-      return c.url(this.src, params)
+      if (this.width) parameters['width'] = parseInt(this.width)
+      return c.url(this.src, parameters)
     }
   },
   methods: {

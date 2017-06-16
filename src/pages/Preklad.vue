@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div :class="{'hero-wrap': true, 'revealed': heroVisible && heroLoaded}">
+    <div :class="{'hero-wrap': true, 'revealed': entered && heroLoaded}">
       <cl-image class="hero" :src="'cover/' + $route.params.anime" :alt="'Obal ' + project.title" @imageloaded="heroLoaded = true"></cl-image>
     </div>
 
@@ -26,7 +26,7 @@
           </router-link>
           <span>Epizoda {{$route.params.episode}}</span>
           <router-link :to="`/stream/${$route.params.anime}/${parseInt($route.params.episode) + 1}`">
-            <btn :disabled="parseInt($route.params.episode) >= parseInt(project.eps.total)">Další</btn>
+            <btn :disabled="parseInt($route.params.episode) >= parseInt(project.eps.done)">Další</btn>
           </router-link>
         </div>
         <div class="video-wrap">
@@ -103,6 +103,7 @@ import API from 'api'
 export default {
   data () {
     return {
+      entered: false,
       error: false,
       project: {
         title: 'Hned to bude...',
@@ -118,19 +119,15 @@ export default {
         relatives: {}
       },
       relativeArr: [],
-      heroVisible: false,
       heroLoaded: false
     }
   },
   mounted () {
     this.fetchData()
-    setTimeout(() => {
-      this.heroVisible = true
-    }, 700)
   },
   beforeRouteLeave (to, from, next) {
     if (to.params.anime !== this.$route.params.anime) {
-      this.heroVisible = false
+      this.entered = false
       setTimeout(next, 200)
     } else {
       next()

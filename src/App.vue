@@ -7,7 +7,7 @@
     </bio-header>
     <main>
       <submenu :items="subnav"></submenu>
-      <transition :name="routeTransition" mode="out-in">
+      <transition :name="routeTransition" mode="out-in" @after-enter="$refs.view.entered = true">
         <router-view
           ref="view"
           @update:subnav="val => subnav = val"
