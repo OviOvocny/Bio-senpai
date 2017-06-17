@@ -44,7 +44,7 @@
       <div class="top-grid--area top-grid__yoimiru">
         <div class="yoimiru__flex">
           <div class="yoimiru__flex">
-            <svg xmlns="http://www.w3.org/2000/svg" width="60" viewBox="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink"><desc>Yoimiru logo</desc><g fill="#1e2430" transform="translate(30 30)"><clipPath id="a" clip-rule="evenodd"><path d="M-30-30h60v60h-60v-60z"/></clipPath><g clip-path="url(#a)"><use xlink:href="#b" transform="translate(-22 -21)"/><use xlink:href="#c" transform="translate(.5 -19.5)"/><use xlink:href="#d" transform="translate(7.5 -18)"/></g></g><defs><path id="b" d="M4 39L0 0l7 .5L21 29c-2.4 4.6-4.2 7-8.5 10H4z"/><path id="c" d="M7 .5L0 0l5.5 13.5L7 .5z"/><path id="d" d="M11.5 39l3-39h-2C6.5 23.6 3.8 31.8 0 38l11.5 1z"/></defs></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" viewBox="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink"><desc>Yoimiru logo</desc><g fill="#1e2430" transform="translate(30 30)"><clipPath id="a" clip-rule="evenodd"><path d="M-30-30h60v60h-60v-60z"/></clipPath><g clip-path="url(#a)"><use xlink:href="#b" transform="translate(-22 -21)"/><use xlink:href="#c" transform="translate(.5 -19.5)"/><use xlink:href="#d" transform="translate(7.5 -18)"/></g></g><defs><path id="b" d="M4 39L0 0l7 .5L21 29c-2.4 4.6-4.2 7-8.5 10H4z"/><path id="c" d="M7 .5L0 0l5.5 13.5L7 .5z"/><path id="d" d="M11.5 39l3-39h-2C6.5 23.6 3.8 31.8 0 38l11.5 1z"/></defs></svg>
             <h2>Nejnovější epizody</h2>
           </div>
           <router-link to="/podcast">
@@ -141,6 +141,7 @@ export default {
         })
     },
     handleScroll () {
+      if (window.matchMedia('(prefers-reduced-motion)').matches) return
       let percent = (20 / window.innerHeight) * window.pageYOffset * 2
       if (window.pageYOffset < window.innerHeight) this.$refs.topImage.$el.style.transform = `translateY(-${(20 - percent)}%)`
     },
@@ -189,6 +190,8 @@ bgcolor = #1e2430
   grid-row span 2
   -ms-grid-row-span 2
   margin-right 1em
+  svg
+    margin-right .5em
 .top-grid__social
   // grid-area social
   grid-column 2
@@ -260,6 +263,18 @@ bgcolor = #1e2430
   position absolute
   right 0
   bottom -10%
+  transform-origin bottom
+  animation tegami 7s ease-in infinite
+@media (prefers-reduced-motion)
+  .tegami__mascot
+    animation none
+@keyframes tegami
+  50%, 78%
+    transform rotateZ(0) rotateY(0)
+  53%, 58%, 63%, 68%, 75%
+    transform rotateZ(0) rotateY(180deg)
+  55%, 60%, 65%
+    transform rotateZ(20deg) rotateY(180deg)
 
 @media (max-width: 500px)
   .tegami__mascot

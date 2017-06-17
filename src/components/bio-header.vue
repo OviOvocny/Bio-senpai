@@ -27,7 +27,7 @@
 <script>
 import cl from 'cloudinary-core'
 import API from 'api'
-import Stickyfill from 'stickyfill2'
+import Stickyfill from 'stickyfill'
 export default {
   name: 'bio-header',
   data () {
@@ -43,7 +43,8 @@ export default {
     this.fetchData()
   },
   mounted () {
-    Stickyfill.add(this.$el)
+    console.log(Stickyfill)
+    Stickyfill().add(this.$el)
   },
   watch: {
     $route: 'fetchData'
@@ -113,8 +114,8 @@ export default {
     position sticky
 
   header
-    position sticky
     position -webkit-sticky
+    position sticky
     height 200px
     background-color hsl(150, 80%, 80%)
     background-position center 20%
