@@ -17,6 +17,7 @@
     "cloudinary-core": "^2.3.0",
     "fuzzysearch-js": "^0.2.0",
     "moment": "^2.18.1",
+    "promise-polyfill": "^6.0.2",
     "stickyfill": "^1.1.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
