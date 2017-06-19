@@ -43,7 +43,6 @@ export default {
     this.fetchData()
   },
   mounted () {
-    console.log(Stickyfill)
     Stickyfill().add(this.$el)
   },
   watch: {
