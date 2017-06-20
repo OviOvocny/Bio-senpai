@@ -108,7 +108,7 @@ const routes = [
     }
   },
   {
-    path: '/faq',
+    path: '/faq/:category?',
     name: 'FAQ',
     component: FAQ,
     meta: {

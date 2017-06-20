@@ -1,10 +1,10 @@
 <template>
   <div :class="['bubble', {right}]">
-    <div class="head">
+    <div class="head" v-if="speaker">
       <cl-image :src="'team/' + speaker" width="50"></cl-image>
     </div>
     <div class="speech">
-      <div class="speaker"><router-link :to="'/tym/' + speaker">{{speaker}}</router-link></div>
+      <div class="speaker" v-if="speaker"><router-link :to="'/tym/' + speaker">{{speaker}}</router-link></div>
       <div>
         <slot></slot>
       </div>

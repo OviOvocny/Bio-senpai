@@ -35,7 +35,7 @@
             <icon symbol="facebook"></icon>
             Facebook
           </a>
-          <a href="//twitter.com/" class="social-links__twitter">
+          <a href="//twitter.com/bio_senpai" class="social-links__twitter">
             <icon symbol="twitter"></icon>
             Twitter
           </a>
@@ -124,7 +124,7 @@ export default {
       return moment.unix(this.home.anime.updated).locale('cs').fromNow()
     },
     randomMascot () {
-      return randomMascotArray[Math.floor(Math.random() * randomMascotArray.length)]
+      return new Date().getMonth() === 11 ? 'santa' : randomMascotArray[Math.floor(Math.random() * randomMascotArray.length)]
     }
   },
   methods: {

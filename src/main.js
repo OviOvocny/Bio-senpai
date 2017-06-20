@@ -36,6 +36,9 @@ Vue.component('error', error)
 import ticker from './components/ticker-message'
 Vue.component('ticker', ticker)
 
+import bubble from './components/bubble'
+Vue.component('bubble', bubble)
+
 Vue.config.productionTip = false
 
 import Promise from 'promise-polyfill'

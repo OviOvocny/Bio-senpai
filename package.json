@@ -13,6 +13,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
+    "anchorme": "^1.1.2",
     "axios": "^0.16.1",
     "cloudinary-core": "^2.3.0",
     "fuzzysearch-js": "^0.2.0",

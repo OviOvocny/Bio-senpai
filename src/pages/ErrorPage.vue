@@ -3,7 +3,7 @@
     <cl-image src="mascot/banana" alt="Slupka od banánu" width="300"></cl-image>
     <h2>Tady nic není...</h2>
     <h3>{{what}}</h3>
-    <p>
+    <p class="center-text">
       Můžete také web projít sami a zksuit najít, co jste hledali.
     </p>
   </section>
@@ -38,7 +38,7 @@ export default {
       this.what = '...ale našli jsme nějaké stránky, které jste možná mysleli.'
     }
 
-    let resultNav = result.length === 0 ? [] : result.map(r => r.to)
+    let resultNav = result.length === 0 ? [] : result.map(r => r.label)
     this.$emit('update:subnav', resultNav)
   }
 }

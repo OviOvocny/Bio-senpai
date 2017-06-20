@@ -1,8 +1,8 @@
 <template>
   <div class="msg-container" :id="id">
-    <comment :sender="sender" :time="time" :team="team">{{msg}}</comment>
+    <comment :sender="sender" :time="time" :team="team" :text="msg"></comment>
     <transition-group name="shift-down">
-      <comment reply v-for="reply in shownReplies" :key="reply.msg" :sender="reply.sender" :time="reply.time" :team="reply.team">{{reply.msg}}</comment>
+      <comment reply v-for="reply in shownReplies" :key="reply.msg" :sender="reply.sender" :time="reply.time" :team="reply.team" :text="reply.msg"></comment>
     </transition-group>
     <div class="hidden-hint"
          v-if="replies.length > maxCompactReplies && !showingAllReplies && !replying"

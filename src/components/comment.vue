@@ -6,16 +6,17 @@
         {{humanTime}}
       </div>
     </div>
-    <div class="msg-contents">
-      <slot></slot>
+    <div class="msg-contents" v-html="sanitizedText">
     </div>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
+import anchorme from 'anchorme'
 export default {
   props: {
+    text: String,
     reply: {
       type: Boolean,
       default: false
@@ -30,6 +31,9 @@ export default {
   computed: {
     humanTime () {
       return this.time ? moment(this.time).locale('cs').fromNow() : null
+    },
+    sanitizedText () {
+      return anchorme(this.text.replace(/(?:\r\n|\r|\n)/g, '<br/>'))
     }
   }
 }

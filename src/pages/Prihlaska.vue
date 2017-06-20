@@ -133,7 +133,6 @@ let suggestions = [
 ]
 
 import API from 'api'
-import bubble from '@/components/bubble'
 import nano from '@/scripts/nano-scroll'
 export default {
   submenu: ['Tým', 'Přidat se'],
@@ -186,9 +185,6 @@ export default {
           this.$emit('error', 'Přihlášku se nepovedlo uložit')
         })
     }
-  },
-  components: {
-    bubble
   }
 }
 </script>

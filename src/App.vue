@@ -176,7 +176,7 @@ main
   max-width 1100px
   margin auto
 
-input[type=text]
+input[type=text], input[type=search], input[type=number]
   border-radius 1em
   padding .3em .7em
   border 2px solid lighten(#1e2430, 30%)
