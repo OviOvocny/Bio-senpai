@@ -86,6 +86,12 @@ export default {
 </script>
 
 <style lang="stylus">
+.list-enter-active, .list-leave-active, .list-move
+  transition all .3s
+.list-enter, .list-leave-to
+  opacity 0
+  transform scale(.5)
+  
 .shift-enter-active
   transition .6s cubic-bezier(0.190, 1.000, 0.220, 1.000)
   overflow hidden

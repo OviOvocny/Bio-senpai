@@ -16,21 +16,18 @@
       <h2>Prohledejte všechny dotazy...</h2>
       <input type="search" placeholder="Vyhledat dotaz" @input="searchFAQs">
     </div>
-    <h2 class="center-text">...nebo vyberte kategorii</h2>
-    <div class="faq-categories">
-      <router-link replace v-for="cat in categories" :to="'/faq/' + cat.slug" :key="cat.slug" class="faq-category">
-          <icon :symbol="cat.icon" class="faq-category__icon"></icon>
-          <div class="faq-category__name">{{cat.category}}</div>
-      </router-link>
-    </div>
+    <h2 v-show="this.found.length === 0" class="center-text">...nebo vyberte kategorii</h2>
+    <category-cards v-show="this.found.length === 0" page="faq" :categories="categories"></category-cards>
     <div ref="faqView" class="faq-category-view" v-if="results">
       <h3>{{results.category}}</h3>
-      <article class="qa" v-for="qa in results.qa">
-        <h4>{{qa[0]}}</h4>
-        <bubble>
-          <span v-html="qa[1]"></span>
-        </bubble>
-      </article>
+      <transition-group name="list">
+        <article class="qa" v-for="qa in results.qa" :key="qa[0]">
+          <h4>{{qa[0]}}</h4>
+          <bubble>
+            <span v-html="qa[1]"></span>
+          </bubble>
+        </article>
+      </transition-group>
     </div>
   </section>
 </template>
@@ -42,6 +39,7 @@ import FuzzySearch from 'fuzzysearch-js'
 import lfs from 'fuzzysearch-js/js/modules/LevenshteinFS'
 import iofs from 'fuzzysearch-js/js/modules/IndexOfFS'
 import wcfs from 'fuzzysearch-js/js/modules/WordCountFS'
+import categoryCards from '@/components/category-cards'
 export default {
   data () {
     return {
@@ -110,6 +108,9 @@ export default {
         this.beforeSearch = this.$route.path
       }
     }
+  },
+  components: {
+    categoryCards
   }
 }
 </script>
@@ -131,53 +132,4 @@ export default {
   text-align center
   line-height 1.2em
   margin-right .5em
-
-.faq-categories
-  display flex
-  justify-content center
-  flex-wrap wrap
-
-.faq-category
-  color #1e2430
-  text-decoration none
-  background-color white
-  border-radius 15px
-  text-align center
-  width 120px
-  margin 1em
-  padding 1em
-  &:visited
-    color @color
-  &:hover .faq-category__icon
-    color hsl(150, 80%, 60%)
-  &.router-link-active .faq-category__icon
-    color white
-    background-color hsl(150, 80%, 40%)
-
-.faq-category__icon
-  background-color #1e2430
-  color white
-  padding .4em
-  font-size 2em
-  border-radius @font-size
-  margin-bottom .35em
-  transition background-color .3s, color.2s
-
-.faq-category__name
-  font-size 1.1em
-
-@media (max-width: 690px)
-  .faq-category
-    width 100%
-    text-align left
-    margin .5em
-
-  .faq-category__icon
-    font-size 1.3em
-    margin-bottom 0
-    margin-right .5em
-
-  .faq-category__name
-    font-size 1em
-    display inline
 </style>

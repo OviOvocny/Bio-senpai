@@ -21,7 +21,7 @@ let rt = new Router({
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
       nano(savedPosition.y, 0.2, () => savedPosition)
-    } else if (to.name === 'FAQ' && to.params.category) {
+    } else if (to.meta.categorized && to.params.category) {
       return false
     } else {
       nano(0, 0.2, () => ({ x: 0, y: 0 }))
