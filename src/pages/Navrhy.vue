@@ -12,7 +12,7 @@
         <input type="submit" value="Hledat">
       </form>
       <p class="center-text" v-if="hentai">Ano, ty růžové jsou <span class="hentai"><icon symbol="brightness-3"></icon> hentai</span>. To je jen pro vaši informaci, nebojte se je navrhnout.</p>
-      <isotope ref="searchiso" :list="results" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden}">
+      <isotope ref="searchiso" :list="results" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden}" v-show="results.length > 0">
         <anilist-anime v-for="result in results" :key="result.id" :id="result.id" @done="resultDone" @click.native="handleSuggestion"></anilist-anime>
       </isotope>
     </div>
@@ -25,7 +25,7 @@
     <div class="center-text">
       <input class="searchfield" type="text" v-model="search" @input="$refs.iso.filter('text')" placeholder="Prohledat navržené...">
     </div>
-    <isotope ref="iso" :list="suggestions" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden}">
+    <isotope ref="iso" :list="suggestions" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden}" v-show="suggestions.length > 0">
       <a class="tl-link" v-for="suggestion in suggestions" :data-dbid="suggestion.id" :key="suggestion.id" :href="'https://anilist.co/anime/' + suggestion.anime_id">
         <anilist-anime :id="suggestion.anime_id" :status="suggestion.status" @done="cardDone"></anilist-anime>
       </a>

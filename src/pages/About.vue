@@ -42,7 +42,13 @@
           <div class="top-title">Bio-senpai</div>
           <div class="top-version">{{latest.hana}} | {{latest.version}}</div>
 
-          <div class="licence">Bio-senpai je progresivní webová aplikace postavená na <a href="https://vuejs.org">Vue 2</a>, <a href="https://github.com/mzabriskie/axios">Axiosu</a> a <a href="https://cloudinary.com">Cloudinary</a>. O data se nám stará <a href="https://loopback.io">LoopBack</a> a <a href="https://www.mongodb.com">MongoDB</a>. Aplikaci distribuuje Netlify.</div>
+          <div class="licence">
+            Bio-senpai je progresivní webová aplikace postavená na <a href="https://vuejs.org">Vue 2</a>,
+            <a href="https://github.com/mzabriskie/axios">Axiosu</a> a <a href="https://cloudinary.com">Cloudinary</a>.
+            O data se nám stará <a href="https://loopback.io">LoopBack</a> a <a href="https://www.mongodb.com">MongoDB</a>.
+            Aplikaci distribuuje <a href="https://netlify.com">Netlify</a>. API server a databázi hostuje
+            <router-link to="/tym/Cerx">Cerx</router-link> na Mugi.
+          </div>
       </div>
     </section>
 

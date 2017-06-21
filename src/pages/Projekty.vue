@@ -3,7 +3,7 @@
     <div class="searchfield-wrap">
       <input class="searchfield" type="text" v-model="search" @input="$refs.iso.filter('text')" placeholder="Vyhledat..." autofocus>
     </div>
-    <isotope ref="iso" :list="anime" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden, 'zooming': zooming}">
+    <isotope ref="iso" :list="anime" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden, 'zooming': zooming}" v-show="anime.length > 0">
       <router-link class="tl-link" v-for="show in anime" v-if="!show.hidden" :key="show.url_title" :to="'/projekty/' + show.url_title">
         <anime :data="show"></anime>
       </router-link>

@@ -91,7 +91,7 @@ export default {
 .list-enter, .list-leave-to
   opacity 0
   transform scale(.5)
-  
+
 .shift-enter-active
   transition .6s cubic-bezier(0.190, 1.000, 0.220, 1.000)
   overflow hidden
@@ -127,8 +127,9 @@ export default {
 *
   outline-color hsl(150, 80%, 50%)
 
-p
-  text-align justify
+@media (min-width: 600px)
+  p
+    text-align justify
 
 .center-text
   text-align center

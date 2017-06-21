@@ -73,6 +73,12 @@ export default {
   display flex
   justify-content space-between
   align-items center
+  flex-wrap wrap
+@media (max-width: 420px)
+  .tr-detail > div, .tr-detail button, .tr-detail > input
+    width 100%
+  .tr-detail button
+    margin .3em 0
 
 .text
   width 100%
