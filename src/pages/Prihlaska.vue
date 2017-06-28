@@ -110,6 +110,12 @@
             <label for="submitBtn"><span class="num">4</span> A je to!</label>
             <input type="submit" id="submitBtn" value="Poslat">
         </form>
+        <show-offline>
+          <p>
+            <icon symbol="wifi-off"></icon>
+            Zdáte se být offline. Nebojte, i tak můžete napsat přihlášku, pošleme jí, až se připojíte.
+          </p>
+        </show-offline>
         <bubble speaker="Bio-senpai" v-if="sugoi">Díky, jste skvělí! Ozveme se.</bubble>
         <div v-if="pending.length > 0" class="pending-applications">
           <p class="center-text">
@@ -148,6 +154,7 @@ let suggestions = [
 
 import API from 'api'
 import nano from '@/scripts/nano-scroll'
+import showOffline from '@/components/show-offline'
 export default {
   submenu: ['Tým', 'Přidat se'],
   data () {
@@ -223,6 +230,9 @@ export default {
           this.$emit('error', 'Odesílání čekajících přihlášek selhalo.')
         })
     }
+  },
+  components: {
+    showOffline
   }
 }
 </script>

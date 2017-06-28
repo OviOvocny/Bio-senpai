@@ -1,6 +1,12 @@
 <template>
   <section>
     <h2 class="center-text">Zprávy</h2>
+    <show-offline>
+      <p class="center-text">
+        <icon symbol="wifi-off"></icon>
+        Zdáte se být offline. Nebojte, i tak můžete napsat zprávu, pošleme jí, až se připojíte.
+      </p>
+    </show-offline>
     <div class="comment-form-wrap">
       <comment-form :disabled="formDisabled" @send="handleMessage"></comment-form>
       <div v-if="pending.length > 0" class="pending-messages">
@@ -35,6 +41,7 @@ import comment from '@/components/comment'
 import commentThread from '@/components/comment-thread'
 import commentForm from '@/components/comment-form'
 import Infinite from 'vue-infinite-loading'
+import showOffline from '@/components/show-offline'
 import nano from '@/scripts/nano-scroll'
 export default {
   data () {
@@ -159,7 +166,8 @@ export default {
     comment,
     commentThread,
     commentForm,
-    Infinite
+    Infinite,
+    showOffline
   }
 }
 </script>

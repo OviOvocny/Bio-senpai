@@ -103,7 +103,7 @@ export default {
   transition .1s ease-in
 
 .zooming
-  transform scale(1.2)
+  transform scale(0.8)
 
 .tl-link
   text-decoration none

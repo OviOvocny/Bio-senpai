@@ -20,6 +20,13 @@
         ></router-view>
       </transition-spring>
     </main>
+    <show-offline>
+      <transition-spring from="left">
+        <div class="offline-badge">
+          <icon symbol="wifi-off"></icon>
+        </div>
+      </transition-spring>
+    </show-offline>
     <audio-player :source="audioSource" :metadata="audioMeta" :active="audioActive" @close="updateAudio" autosave></audio-player>
     <bio-footer></bio-footer>
   </div>
@@ -32,6 +39,7 @@ import bioNav from './components/bio-nav'
 import backdrop from './components/backdrop'
 import bioFooter from './components/bio-footer'
 import audioPlayer from './components/audio-player'
+import showOffline from './components/show-offline'
 import {navItems} from './router/routes'
 
 export default {
@@ -89,7 +97,8 @@ export default {
     bioNav,
     backdrop,
     bioFooter,
-    audioPlayer
+    audioPlayer,
+    showOffline
   },
   watch: {
     '$route' (to, from) {
@@ -116,34 +125,6 @@ export default {
 .list-enter, .list-leave-to
   opacity 0
   transform scale(.5)
-
-.shift-enter-active
-  transition .6s cubic-bezier(0.190, 1.000, 0.220, 1.000)
-  overflow hidden
-.shift-leave-active
-  transition .1s ease-in
-  overflow hidden
-
-.shift-leave-to
-  opacity 0
-  transform translateY(-1em)
-.shift-enter
-  opacity 0
-  transform translateY(2em)
-
-.zoom-enter-active
-  transition .6s cubic-bezier(0.190, 1.000, 0.220, 1.000)
-  overflow hidden
-.zoom-leave-active
-  transition .1s ease-in
-  overflow hidden
-
-.zoom-leave-to
-  opacity 0
-  transform scale(1.2)
-.zoom-enter
-  opacity 0
-  transform scale(.8)
 
 #app
   min-height 100vh
@@ -204,6 +185,19 @@ a:visited
 
 .no-scroll
   overflow-y hidden
+
+.offline-badge
+  position fixed
+  position sticky
+  bottom 1em
+  left 1em
+  text-align center
+  width 2.5em
+  height @width
+  line-height @height - 0.2
+  background-color hsl(350, 80%, 50%)
+  border 2px solid darken(@background-color, 40%)
+  border-radius 2em
 
 main
   padding 1em

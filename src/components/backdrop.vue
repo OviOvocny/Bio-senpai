@@ -73,12 +73,12 @@ bgcolor = #1e2430
   top 0
   left 0
   width 100%
-  animation fadeIn 1s
+  animation backdropFadeIn 1s
   &.hiding
     transition opacity .6s
     opacity 0
 
-@keyframes fadeIn
+@keyframes backdropFadeIn
   from
     opacity 0
     transform scale(1.1)
