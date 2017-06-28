@@ -7,7 +7,11 @@
         Pokud víte o anime, které potřebuje přeložit, můžete ho níže vyhledat a navrhnout k překladu našemu týmu (ne)trénovaných lenochů.
         Uvidíte je pak dole mezi ostatními návrhy.
       </p>
-      <form class="center-text" @submit.prevent="fetchSearchResults">
+      <p v-if="noService">
+        Stránka s návrhy bohužel offline nefunguje, protože je závislá na připojení k AniListu.
+        Až se znovu připojíte, vraťte se a můžete navrhovat. Nebo napište <router-link to="/zpravy">do zpráv</router-link>.
+      </p>
+      <form v-if="!noService" class="center-text" @submit.prevent="fetchSearchResults">
         <input type="text" v-model="anilistSearch" placeholder="Najít anime...">
         <input type="submit" value="Hledat">
       </form>
@@ -17,19 +21,21 @@
       </isotope>
     </div>
     <!-- Current suggestions -->
-    <h2 ref="currentAnchor">Současné návrhy</h2>
-    <p>
-      Tady si můžete prohlédnout kartičky se vším, co jste nám již navrhnuli. Každá ukazuje aktualní stav návrhu a také odkazuje na
-      AniList, kde si o daném anime můžete zjistit další informace.
-    </p>
-    <div class="center-text">
-      <input class="searchfield" type="text" v-model="search" @input="$refs.iso.filter('text')" placeholder="Prohledat navržené...">
+    <div v-if="!noService">
+      <h2 ref="currentAnchor">Současné návrhy</h2>
+      <p>
+        Tady si můžete prohlédnout kartičky se vším, co jste nám již navrhnuli. Každá ukazuje aktualní stav návrhu a také odkazuje na
+        AniList, kde si o daném anime můžete zjistit další informace.
+      </p>
+      <div class="center-text">
+        <input class="searchfield" type="text" v-model="search" @input="$refs.iso.filter('text')" placeholder="Prohledat navržené...">
+      </div>
+      <isotope ref="iso" :list="suggestions" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden}" v-show="suggestions.length > 0">
+        <a class="tl-link" v-for="suggestion in suggestions" :data-dbid="suggestion.id" :key="suggestion.id" :href="'https://anilist.co/anime/' + suggestion.anime_id">
+          <anilist-anime :id="suggestion.anime_id" :status="suggestion.status" @done="cardDone"></anilist-anime>
+        </a>
+      </isotope>
     </div>
-    <isotope ref="iso" :list="suggestions" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden}" v-show="suggestions.length > 0">
-      <a class="tl-link" v-for="suggestion in suggestions" :data-dbid="suggestion.id" :key="suggestion.id" :href="'https://anilist.co/anime/' + suggestion.anime_id">
-        <anilist-anime :id="suggestion.anime_id" :status="suggestion.status" @done="cardDone"></anilist-anime>
-      </a>
-    </isotope>
   </section>
 </template>
 
@@ -53,6 +59,7 @@ export default {
   data () {
     let self = this
     return {
+      noService: false,
       error: false,
       anilistSearch: '',
       results: [],
@@ -99,14 +106,15 @@ export default {
         .byIdDesc()
         .call()
         .then(res => {
-          this.suggestions = res.data
+          this.suggestions = res
           // Get IDS of already accepted anime
           new API('anime/anilist-ids').call().then(res => {
-            this.accepted = res.data.anilistIds
+            this.accepted = res.anilistIds
           })
         })
         .catch(err => {
           this.$emit('error', err)
+          this.noService = true
         })
     },
     fetchSearchResults () {
@@ -121,11 +129,11 @@ export default {
       new API(`anilist/search?query=${this.anilistSearch}`)
         .call()
         .then(res => {
-          if (res.data.results.length > 0) {
+          if (res.results.length > 0) {
             let results = []
             let hiddenCount = 0
-            this.hentai = res.data.results.filter(r => r.adult).length > 0
-            res.data.results.forEach(r => {
+            this.hentai = res.results.filter(r => r.adult).length > 0
+            res.results.forEach(r => {
               if (this.suggestions.map(s => s.anime_id).includes(r.id) || this.accepted.includes(r.id)) {
                 hiddenCount++
               } else {

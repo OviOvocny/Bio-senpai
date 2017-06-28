@@ -20,14 +20,14 @@
     <category-cards v-show="this.found.length === 0" page="faq" :categories="categories"></category-cards>
     <div ref="faqView" class="faq-category-view" v-if="results">
       <h3>{{results.category}}</h3>
-      <transition-group name="list">
+      <transition-group-spring :distance="2">
         <article class="qa" v-for="qa in results.qa" :key="qa[0]">
           <h4>{{qa[0]}}</h4>
           <bubble>
             <span v-html="qa[1]"></span>
           </bubble>
         </article>
-      </transition-group>
+      </transition-group-spring>
     </div>
   </section>
 </template>
@@ -43,6 +43,7 @@ import categoryCards from '@/components/category-cards'
 export default {
   data () {
     return {
+      onlineData: false,
       categories: [],
       beforeSearch: '',
       found: []
@@ -68,14 +69,24 @@ export default {
   methods: {
     fetchData () {
       this.$emit('error', false)
-      new API('faqs')
+      const api = new API('faqs')
         .order('category')
-        .call()
+      api.offline()
         .then(res => {
-          this.categories = res.data
+          if (res === null) return
+          if (!this.onlineData) this.categories = res
         })
         .catch(err => {
-          this.$emit('error', err)
+          console.error(err)
+          this.$emit('error', new Error('Network Error'))
+        })
+      api.call()
+        .then(res => {
+          this.onlineData = true
+          this.categories = res
+        })
+        .catch(err => {
+          console.error(err)
         })
     },
     searchFAQs (e) {

@@ -1,8 +1,8 @@
 <template>
-  <section style="position:relative">
-    <transition name="shift">
+  <section class="relative">
+    <transition-spring :distance="3">
       <cl-image v-if="entered" class="top-anime__mascot" :src="'mascot/' + randomMascot" width="250"></cl-image>
-    </transition>
+    </transition-spring>
     <div class="top-anime">
       <div class="top-anime__cover">
         <cl-image ref="topImage" v-if="ready" :src="'cover/' + home.anime.url_title"></cl-image>
@@ -116,6 +116,7 @@ import moment from 'moment'
 export default {
   data () {
     return {
+      onlineData: false,
       ready: false,
       entered: false,
       home: {
@@ -136,14 +137,26 @@ export default {
   methods: {
     fetchData () {
       this.$emit('error', false)
-      new API('utils/home')
-        .call()
+      const api = new API('utils/home')
+      api.offline()
         .then(res => {
-          this.home = res.data.results
+          if (res === null) return
+          if (!this.onlineData) this.home = res.results
           this.ready = true
         })
         .catch(err => {
-          this.$emit('error', err)
+          console.error(err)
+          this.$emit('error', new Error('Network Error'))
+        })
+      api.call()
+        .then(res => {
+          this.home = res.results
+          this.onlineData = true
+          this.ready = true
+        })
+        .catch(err => {
+          console.error(err)
+          this.$emit('ticker', 'Jste offline. Obsah nemusí být aktuální.')
         })
     },
     handleScroll () {
@@ -339,7 +352,7 @@ bgcolor = #1e2430
   position absolute
   top -.5rem
   left -5%
-  transition .5s
+  transition top .5s, left .5s
 
 @media (max-width: 1200px)
   .top-anime__mascot

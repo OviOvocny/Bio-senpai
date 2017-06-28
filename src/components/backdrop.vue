@@ -1,0 +1,98 @@
+<template>
+  <div ref="wrapper" class="backdrop-wrap" v-show="!hidden">
+  </div>
+</template>
+
+<script>
+import cl from 'cloudinary-core'
+function getUrl (src) {
+  const c = cl.Cloudinary.new({cloud_name: 'bio-senpai'})
+  let parameters = {
+    fetch_format: 'auto',
+    quality: 90,
+    effect: 'gradient_fade:20',
+    background: '#1e2430',
+    y: -0.9,
+    opacity: 50
+  }
+  return c.url(src, parameters)
+}
+
+export default {
+  data () {
+    return {
+      hidden: true
+    }
+  },
+  props: {
+    src: String
+  },
+  methods: {
+  },
+  watch: {
+    'src' () {
+      const {wrapper} = this.$refs
+      if (this.src === '') {
+        wrapper.children[0].classList.add('hiding')
+        setTimeout(() => {
+          wrapper.removeChild(wrapper.children[0])
+          this.hidden = true
+        }, 1000)
+        return
+      }
+      const source = getUrl(this.src)
+      const next = new Image()
+      next.className = 'backdrop'
+      next.addEventListener('load', () => {
+        this.hidden = false
+        wrapper.appendChild(next)
+        setTimeout(() => {
+          if (wrapper.children.length > 1) wrapper.removeChild(wrapper.children[0])
+        }, 1000)
+      })
+      next.src = source
+    }
+  }
+}
+</script>
+
+<style lang="stylus">
+bgcolor = #1e2430
+
+.backdrop-fade-enter-active, .backdrop-fade-leave-active
+  transition opacity 1s
+.backdrop-fade-enter, .backdrop-fade-leave-to
+  opacity 0
+
+.backdrop-wrap
+  position absolute
+  z-index -1
+  top 200px
+  left 0
+  width 100%
+  //filter blur(0.3vw)
+  //transform scale(1.05)
+
+.backdrop
+  position absolute
+  top 0
+  left 0
+  width 100%
+  animation fadeIn 1s ease-out
+  &.hiding
+    transition opacity 1s ease-in
+    opacity 0
+
+@keyframes fadeIn
+  from
+    opacity 0
+
+@media (orientation: portrait)
+  .backdrop-wrap
+    top 0
+
+.backdrop-overlay
+  position absolute
+  width 100%
+  background linear-gradient(alpha(bgcolor, 60%) 0%, alpha(bgcolor, 90%) 50%, bgcolor 80%)
+</style>

@@ -19,6 +19,7 @@ export default {
   data () {
     let self = this
     return {
+      onlineData: false,
       error: false,
       anime: [],
       hidden: false,
@@ -50,14 +51,24 @@ export default {
   methods: {
     fetchData () {
       this.$emit('error', false)
-      new API('anime')
+      const api = new API('anime')
         .byIdDesc()
-        .call()
+      api.offline()
         .then(res => {
-          this.anime = res.data
+          if (res === null) return
+          if (!this.onlineData) this.anime = res
         })
         .catch(err => {
-          this.$emit('error', err)
+          console.error(err)
+          this.$emit('error', new Error('Network Error'))
+        })
+      api.call()
+        .then(res => {
+          this.onlineData = true
+          this.anime = res
+        })
+        .catch(err => {
+          console.error(err)
         })
     }
   },

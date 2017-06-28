@@ -51,10 +51,11 @@ export default {
   methods: {
     fetchData () {
       this.quoteVisible = false
-      new API('quotes/random')
-        .call()
+      const api = new API('quotes/random')
+      api.offline()
         .then(res => {
-          this.quote = res.data.quote
+          if (res === null) return
+          this.quote = res.quote
           this.quoteVisible = true
         })
         .catch(err => {
@@ -64,6 +65,14 @@ export default {
             author: 'Bio-senpai API'
           }
           this.quoteVisible = true
+        })
+      api.call()
+        .then(res => {
+          this.quote = res.quote
+          this.quoteVisible = true
+        })
+        .catch(err => {
+          console.error(err)
         })
     }
   },

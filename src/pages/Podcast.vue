@@ -56,7 +56,7 @@ export default {
         .byIdDesc()
         .call()
         .then(res => {
-          this.podcasts = res.data
+          this.podcasts = res
         })
         .catch(err => {
           this.$emit('error', err)

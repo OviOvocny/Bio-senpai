@@ -26,6 +26,7 @@ export default {
   data () {
     let self = this
     return {
+      onlineData: false,
       error: false,
       hidden: false,
       team: [],
@@ -64,14 +65,27 @@ export default {
   methods: {
     fetchData () {
       this.$emit('error', false)
-      new API('members')
-        .call()
+      const api = new API('members')
+      api.offline()
         .then(res => {
-          this.team = res.data
+          if (res === null) return
+          if (!this.onlineData) {
+            this.team = res
+            this.$refs.iso.filter('text')
+          }
+        })
+        .catch(err => {
+          console.error(err)
+          this.$emit('error', new Error('Network Error'))
+        })
+      api.call()
+        .then(res => {
+          this.onlineData = true
+          this.team = res
           this.$refs.iso.filter('text')
         })
         .catch(err => {
-          this.$emit('error', err)
+          console.error(err)
         })
     }
   },

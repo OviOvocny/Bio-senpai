@@ -5,18 +5,20 @@
     <bio-header @error="updateError">
       <bio-nav :items="navItems"></bio-nav>
     </bio-header>
+    <backdrop :src="backdropImage"></backdrop>
     <main>
       <submenu :items="subnav"></submenu>
-      <transition :name="routeTransition" mode="out-in" @after-enter="$refs.view.entered = true">
+      <transition-spring :distance="2" :stiffness="150" mode="out-in" @after-enter="$refs.view.entered = true">
         <router-view
           ref="view"
           @update:subnav="val => subnav = val"
           @update:audio="updateAudio"
           @update:audio-meta="val => audioMeta = val"
+          @update:backdrop="val => backdropImage = val"
           @error="updateError"
           @ticker="updateTicker"
         ></router-view>
-      </transition>
+      </transition-spring>
     </main>
     <audio-player :source="audioSource" :metadata="audioMeta" :active="audioActive" @close="updateAudio" autosave></audio-player>
     <bio-footer></bio-footer>
@@ -24,8 +26,10 @@
 </template>
 
 <script>
+import API from 'api'
 import bioHeader from './components/bio-header'
 import bioNav from './components/bio-nav'
+import backdrop from './components/backdrop'
 import bioFooter from './components/bio-footer'
 import audioPlayer from './components/audio-player'
 import {navItems} from './router/routes'
@@ -36,9 +40,9 @@ export default {
     return {
       navItems,
       subnav: [],
-      routeTransition: 'shift',
       audioSource: '',
       audioMeta: {},
+      backdropImage: '',
       error: false,
       ticker: false,
       tickerIcon: ''
@@ -62,16 +66,29 @@ export default {
     },
     reFetchView () {
       this.$refs.view.fetchData()
+    },
+    retryPending () {
+      if (navigator.onLine || !('onLine' in navigator)) {
+        API.retryPending().then(res => {
+          if (res === false) return
+          this.updateTicker(`Odeslali jsme všechny čekající zprávy, návrhy, apod.`, 'thumb-up')
+        })
+        .catch(err => {
+          console.error(err)
+        })
+      }
     }
   },
   components: {
-    'bio-header': bioHeader,
-    'bio-nav': bioNav,
-    'bio-footer': bioFooter,
-    'audio-player': audioPlayer
+    bioHeader,
+    bioNav,
+    backdrop,
+    bioFooter,
+    audioPlayer
   },
   watch: {
     '$route' (to, from) {
+      this.retryPending()
       switch (to.name) {
         case 'Překlad':
           this.routeTransition = 'zoom'
@@ -81,6 +98,9 @@ export default {
           break
       }
     }
+  },
+  created () {
+    window.addEventListener('online', () => this.retryPending())
   }
 }
 </script>
@@ -133,6 +153,9 @@ export default {
 
 .center-text
   text-align center
+
+.relative
+  position relative
 
 @keyframes pop
   0%

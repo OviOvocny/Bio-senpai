@@ -1,9 +1,9 @@
 <template>
-    <transition-group name="list" tag="div" class="submenu">
-      <router-link v-for="item in subnavItems" :to="item.to" :key="item.to">
+    <transition-group-spring tag="div" class="submenu" :stagger="60" noStaggerLeave>
+      <router-link v-for="(item, index) in subnavItems" :to="item.to" :key="item.to" :data-idx="index">
         <icon :symbol="item.icon"></icon> {{item.label}}
       </router-link>
-    </transition-group>
+    </transition-group-spring>
 </template>
 
 <script>

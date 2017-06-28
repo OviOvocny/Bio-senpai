@@ -70,6 +70,7 @@ import API from 'api'
 export default {
   data () {
     return {
+      onlineData: false,
       error: false,
       logs: [],
       latest: {}
@@ -81,15 +82,28 @@ export default {
   methods: {
     fetchData () {
       this.$emit('error', false)
-      new API('changelogs')
+      const api = new API('changelogs')
         .byIdDesc()
-        .call()
+      api.offline()
         .then(res => {
-          this.logs = res.data
+          if (res === null) return
+          if (!this.onlineData) {
+            this.logs = res
+            this.latest = this.logs[0]
+          }
+        })
+        .catch(err => {
+          console.error(err)
+          this.$emit('error', new Error('Network Error'))
+        })
+      api.call()
+        .then(res => {
+          this.onlineData = true
+          this.logs = res
           this.latest = this.logs[0]
         })
         .catch(err => {
-          this.$emit('error', err)
+          console.error(err)
         })
     }
   }

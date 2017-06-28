@@ -120,10 +120,10 @@ const routes = [
   },
   {
     path: '/about',
-    name: 'O webu',
+    name: 'O aplikaci',
     component: About,
     meta: {
-      title: 'O webu Bio-senpai',
+      title: 'O aplikaci Bio-senpai',
       icon: 'hexagon'
     }
   },
