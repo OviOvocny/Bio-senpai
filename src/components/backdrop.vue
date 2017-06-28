@@ -1,11 +1,11 @@
 <template>
-  <div ref="wrapper" class="backdrop-wrap" v-show="!hidden">
+  <div ref="wrapper" class="backdrop-wrap">
   </div>
 </template>
 
 <script>
 import cl from 'cloudinary-core'
-function getUrl (src) {
+function getUrl (src, params) {
   const c = cl.Cloudinary.new({cloud_name: 'bio-senpai'})
   let parameters = {
     fetch_format: 'auto',
@@ -13,19 +13,16 @@ function getUrl (src) {
     effect: 'gradient_fade:20',
     background: '#1e2430',
     y: -0.9,
-    opacity: 50
+    opacity: 40,
+    ...params
   }
   return c.url(src, parameters)
 }
 
 export default {
-  data () {
-    return {
-      hidden: true
-    }
-  },
   props: {
-    src: String
+    src: String,
+    params: Object
   },
   methods: {
   },
@@ -36,15 +33,13 @@ export default {
         wrapper.children[0].classList.add('hiding')
         setTimeout(() => {
           wrapper.removeChild(wrapper.children[0])
-          this.hidden = true
         }, 1000)
         return
       }
-      const source = getUrl(this.src)
+      const source = getUrl(this.src, this.params)
       const next = new Image()
       next.className = 'backdrop'
       next.addEventListener('load', () => {
-        this.hidden = false
         wrapper.appendChild(next)
         setTimeout(() => {
           if (wrapper.children.length > 1) wrapper.removeChild(wrapper.children[0])
@@ -78,14 +73,15 @@ bgcolor = #1e2430
   top 0
   left 0
   width 100%
-  animation fadeIn 1s ease-out
+  animation fadeIn 1s
   &.hiding
-    transition opacity 1s ease-in
+    transition opacity .6s
     opacity 0
 
 @keyframes fadeIn
   from
     opacity 0
+    transform scale(1.1)
 
 @media (orientation: portrait)
   .backdrop-wrap

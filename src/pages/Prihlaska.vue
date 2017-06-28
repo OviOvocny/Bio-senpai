@@ -111,6 +111,20 @@
             <input type="submit" id="submitBtn" value="Poslat">
         </form>
         <bubble speaker="Bio-senpai" v-if="sugoi">Díky, jste skvělí! Ozveme se.</bubble>
+        <div v-if="pending.length > 0" class="pending-applications">
+          <p class="center-text">
+            <icon symbol="alert"></icon>
+            Tyto přihlášky se zatím nepodařilo poslat
+          </p>
+          <div v-for="appl in pending" class="pending-application">
+            <div><icon symbol="account"></icon> {{appl.data.name}}</div>
+            <div><icon symbol="chart-bubble"></icon> {{appl.data.role}}</div>
+            <div><icon symbol="email"></icon> {{appl.data.contact}}</div>
+          </div>
+          <p>
+            <btn variant="red" icon="autorenew" @click="retryPendingApplications">Zkusit znovu odeslat</btn>
+          </p>
+        </div>
 
     </div>
 
@@ -139,7 +153,8 @@ export default {
   data () {
     return {
       category: 'preklad',
-      sugoi: false
+      sugoi: false,
+      pending: []
     }
   },
   computed: {
@@ -182,7 +197,30 @@ export default {
         })
         .catch(err => {
           console.error(err)
-          this.$emit('error', 'Přihlášku se nepovedlo uložit')
+          API.addPending('applicants', data)
+            .then(res => {
+              this.$emit('ticker', 'Přihláška nešla odeslat, tak jsme ji uložili. Až to půjde, odešleme ji.', 'archive')
+              this.updatePending()
+            })
+            .catch(err => {
+              console.error(err)
+              this.$emit('error', 'Přihlášku se nepodařilo odeslat, zkuste to znovu.')
+            })
+        })
+    },
+    updatePending () {
+      API.getPending('applicants').then(pending => {
+        this.pending = pending
+      })
+    },
+    retryPendingApplications () {
+      API.retryPending('applicants')
+        .then(res => {
+          this.updatePending()
+        })
+        .catch(err => {
+          console.error(err)
+          this.$emit('error', 'Odesílání čekajících přihlášek selhalo.')
         })
     }
   }
@@ -190,6 +228,12 @@ export default {
 </script>
 
 <style lang="stylus">
+.pending-application
+  border 2px solid lighten(#1e2430, 20%)
+  border-radius 15px
+  padding 1em
+  margin-bottom 1em
+
 .num
     display inline-block
     background #eee

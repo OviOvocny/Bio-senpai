@@ -10,7 +10,7 @@
       <router-link to="/tym/podcast">
         <btn>Tým podcastu</btn>
       </router-link>
-      <a href="//akari.in/yoimiru">
+      <a href="//akari.in/yoimiru" target="_blank" rel="noopener noreferrer">
         <btn>Naše poznámky (NSFW)</btn>
       </a>
     </div>
@@ -76,12 +76,12 @@ export default {
   margin-bottom 3em
 
 .yoiSVG
-  stroke hsl(150, 80%, 60%)
+  stroke white
   stroke-width 0
-  fill transparent
+  fill alpha(white, 70%)
   stroke-dasharray 1200
   stroke-dashoffset 0
-  animation draw 3s, fadeIn 1s .5s forwards
+  animation draw 3s, fadeIn 1s
   max-width 400px
   transition stroke-dashoffset 2s, stroke-width 2s, stroke 2s
   &:hover
@@ -94,11 +94,11 @@ export default {
     stroke transparent
     stroke-dashoffset 1200
     stroke-width 15px
-    filter drop-shadow(0 0 1em hsl(150, 80%, 60%))
+    filter drop-shadow(0 0 1em white)
 
 @keyframes fadeIn
-  to
-    fill alpha(white, 70%)
+  from
+    fill transparent
 
 
 .podcast-episode

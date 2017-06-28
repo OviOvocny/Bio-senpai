@@ -5,7 +5,7 @@
     <bio-header @error="updateError">
       <bio-nav :items="navItems"></bio-nav>
     </bio-header>
-    <backdrop :src="backdropImage"></backdrop>
+    <backdrop :src="backdropImage" :params="backdropParameters"></backdrop>
     <main>
       <submenu :items="subnav"></submenu>
       <transition-spring :distance="2" :stiffness="150" mode="out-in" @after-enter="$refs.view.entered = true">
@@ -14,7 +14,7 @@
           @update:subnav="val => subnav = val"
           @update:audio="updateAudio"
           @update:audio-meta="val => audioMeta = val"
-          @update:backdrop="val => backdropImage = val"
+          @update:backdrop="updateBackdrop"
           @error="updateError"
           @ticker="updateTicker"
         ></router-view>
@@ -43,6 +43,7 @@ export default {
       audioSource: '',
       audioMeta: {},
       backdropImage: '',
+      backdropParameters: {},
       error: false,
       ticker: false,
       tickerIcon: ''
@@ -64,6 +65,10 @@ export default {
       this.ticker = msg
       this.tickerIcon = icon
     },
+    updateBackdrop (src = '', params = {}) {
+      this.backdropImage = src
+      this.backdropParameters = params
+    },
     reFetchView () {
       this.$refs.view.fetchData()
     },
@@ -71,7 +76,7 @@ export default {
       if (navigator.onLine || !('onLine' in navigator)) {
         API.retryPending().then(res => {
           if (res === false) return
-          this.updateTicker(`Odeslali jsme všechny čekající zprávy, návrhy, apod.`, 'thumb-up')
+          this.updateTicker(`Odeslali jsme všechny čekající zprávy, přihlášky, apod.`, 'thumb-up')
         })
         .catch(err => {
           console.error(err)
