@@ -2,7 +2,7 @@
   <div>
     <section>
       <div class="top-container">
-          <svg id="bio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" version="1.1">
+          <svg id="bio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" version="1.1" @click="party">
               <g>
                   <path d="m45.041 198.32a119.61 100.17 0 0 0 220.14 -16.18"/>
                   <g id="eyes">
@@ -66,6 +66,7 @@
 </template>
 
 <script>
+let party = 0
 import API from 'api'
 export default {
   data () {
@@ -110,6 +111,9 @@ export default {
         .catch(err => {
           console.error(err)
         })
+    },
+    party () {
+      document.body.classList[++party % 3 === 0 ? 'add' : 'remove']('super-ultra-party-mode')
     }
   }
 }
@@ -122,8 +126,12 @@ export default {
 
 .top-title
   font calc(2em + 1.5vw) Unica One
+  user-select none
+  cursor default
 .top-version
   font-size calc(.9em + .8vw)
+  user-select none
+  cursor default
   margin-bottom 1em
 
 .log

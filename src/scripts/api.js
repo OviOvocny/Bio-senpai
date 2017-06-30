@@ -1,4 +1,5 @@
-const base = 'api.bio-senpai.tk/api'
+/* global API_BASE */
+const base = API_BASE
 
 import axios from 'axios'
 import localForage from 'localforage'

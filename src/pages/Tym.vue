@@ -95,6 +95,12 @@ export default {
       this.$refs.iso.arrange({
         sortAscending: cat === 'bio'
       })
+    },
+    search () {
+      this.$router.replace(this.search ? '/tym/' + this.search : '/tym')
+    },
+    $route () {
+      this.search = this.$route.params.member || ''
     }
   },
   beforeRouteLeave (to, from, next) {

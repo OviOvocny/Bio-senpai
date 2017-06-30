@@ -12,10 +12,10 @@
     </router-link>
     <header :style="{ backgroundImage: bg }">
       <div class="kec">
-        <transition name="fade">
-          <div class="kec-inner" v-if="quoteVisible">
+        <transition name="fade" mode="out-in">
+          <div class="kec-inner" :key="quote.quote">
             <q>{{quote.quote}}</q>
-            <div class="author">{{quote.author}}</div>
+            <div class="author"><router-link :to="'/tym/' + quote.author">{{quote.author}}</router-link></div>
           </div>
         </transition>
       </div>
@@ -46,7 +46,9 @@ export default {
     Stickyfill().add(this.$el)
   },
   watch: {
-    $route: 'fetchData'
+    $route (to, from) {
+      if (to.name !== from.name) this.fetchData()
+    }
   },
   methods: {
     fetchData () {
@@ -89,130 +91,137 @@ export default {
 </script>
 
 <style lang="stylus">
-  .fade-enter-active
-    transition .6s cubic-bezier(0.190, 1.000, 0.220, 1.000)
-  .fade-leave-active
-    transition .1s ease-in
+.fade-enter-active
+  transition .6s cubic-bezier(0.190, 1.000, 0.220, 1.000)
+.fade-leave-active
+  transition .1s ease-in
 
-  .fade-leave-to
-    opacity 0
-    transform translateX(-.2em)
-  .fade-enter
-    opacity 0
-    transform translateX(.5em)
+.fade-leave-to
+  opacity 0
+  transform translateX(-.2em)
+.fade-enter
+  opacity 0
+  transform translateX(.5em)
 
-  .logo
-    display block
-    position fixed
-    z-index 20
-    left 15px
-    text-decoration none
-    div
-      display flex
-      align-items center
-      span
-        margin-left .2em
-        color white
-        font 1.5em Unica One
-    &:focus
-      animation pop .5s
+.logo
+  display block
+  position fixed
+  z-index 20
+  left 15px
+  text-decoration none
+  div
+    display flex
+    align-items center
+    span
+      margin-left .2em
+      color white
+      font 1.5em Unica One
+  &:focus
+    animation pop .5s
 
-  .sticky
-    position -webkit-sticky
-    position sticky
+.sticky
+  position -webkit-sticky
+  position sticky
 
-  header
-    position -webkit-sticky
-    position sticky
-    height 200px
-    background-color hsl(150, 80%, 80%)
-    background-position center 20%
-    background-size cover
-    background-blend-mode luminosity
-    transition height .3s .2s, background .2s
-    z-index 10
-    &::before
-      content ""
-      position absolute
-      top 0
-      left 0
-      width 100%
-      height 100%
-      background-color hsl(150,80%,25%)
-      background-image linear-gradient(black, transparent)
-      //background-position center
-      opacity .7
-      z-index 0
-      transition background .2s
-    &.fullscreen
-      height 100vh
-      height calc(100vw * (9/16))
-      max-height 100vh
-      background-color transparent
-      transition height .3s, background .2s .2s
-      &::before
-        background-color transparent
-        background-size 100%
-        transition background .2s .2s
-      .kec
-        opacity 0
-        transform translateY(-100%)
-  @media (orientation: landscape)
-    .sticky
-      top -140px
-    .logo
-      top 12px
-
-  .kec
-    position relative
-    display table
+header
+  // position -webkit-sticky
+  // position sticky
+  height 200px
+  background-color hsl(150, 80%, 80%)
+  background-position center 20%
+  background-size cover
+  background-blend-mode luminosity
+  transition height .3s .2s, background .2s
+  z-index 10
+  &::before
+    content ""
+    position absolute
+    top 0
+    left 0
     width 100%
-    color white
-    height 140px
-    text-align right
-    font-size 2em
-    padding .25em 1em 0 30%
-    line-height 1.2em
-    transition opacity .3s .2s, transform .3s .2s
-  .kec-inner
-    display table-cell
-    vertical-align middle
-    q::before
-      content '„'
-    q::after
-      content '“'
-    .author
-      font-size .7em
-      &::before
-        content '— '
-
-  @media (max-width: 900px)
+    height 100%
+    background-color hsl(150,80%,25%)
+    background-image linear-gradient(black, transparent)
+    //background-position center
+    opacity .7
+    z-index 0
+    transition background .2s
+  &.fullscreen
+    height 100vh
+    height calc(100vw * (9/16))
+    max-height 100vh
+    background-color transparent
+    transition height .3s, background .2s .2s
+    &::before
+      background-color transparent
+      background-size 100%
+      transition background .2s .2s
     .kec
-      font-size 1.5em
-  @media (max-width: 500px)
-    .kec
-      font-size 1.1em
+      opacity 0
+      transform translateY(-100%)
+@media (orientation: landscape)
+  .sticky
+    top -140px
+  .logo
+    top 12px
 
-  // mobile header
+.kec
+  position relative
+  display table
+  width 100%
+  color white
+  height 140px
+  text-align right
+  font-size 2em
+  padding .25em 1em 0 30%
+  line-height 1.2em
+  transition opacity .3s .2s, transform .3s .2s
+.kec-inner
+  display table-cell
+  vertical-align middle
+  q::before
+    content '„'
+  q::after
+    content '“'
+  .author
+    font-size .7em
+    &::before
+      content '— '
+    a
+      color white
+      text-decoration none
+      &:visited
+        color white
 
-  @media (orientation: portrait)
-    body
-      padding-bottom 60px
-    header
-      width 100%
-      height 60px
-      position fixed
-      bottom 0
-    .logo
-      bottom 12px
-      span
-        display none
-    .kec
+@media (max-width: 900px)
+  .kec
+    font-size 1.5em
+@media (max-width: 500px)
+  .kec
+    font-size 1.1em
+  .logo span
+    display none
+
+// mobile header
+
+@media (orientation: portrait)
+  body
+    padding-bottom 60px
+  header
+    width 100%
+    height 60px
+    position fixed
+    bottom 0
+  .logo
+    bottom 12px
+    span
       display none
-    .fullscreen-toggle
-      display none
-    nav ul
-      padding-left 3em
-      li
-        border-bottom-color white
+  .kec
+    display none
+  .fullscreen-toggle
+    display none
+  nav ul
+    padding-left 3em
+    li
+      border-bottom-color white
 </style>
