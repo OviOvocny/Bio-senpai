@@ -1,11 +1,17 @@
 <template>
-  <button :class="[variantClass, {'btn-icon-only': iconOnly}]" @click="$emit('click')">
+  <button :class="[variantClass, {'btn-icon-only': iconOnly}]"
+    @click="$emit('click')"
+    @mousedown="press"
+    @mouseup="release"
+    @mouseleave="leave"
+  >
     <icon v-if="icon" :symbol="icon"></icon>
     <slot></slot>
   </button>
 </template>
 
 <script>
+import dynamics from 'dynamics.js'
 export default {
   props: {
     icon: String,
@@ -22,6 +28,35 @@ export default {
     iconOnly () {
       return !this.$slots.default && !this.forceSmall
     }
+  },
+  methods: {
+    press () {
+      dynamics.animate(this.$el, {
+        scale: 0.9
+      }, {
+        type: dynamics.spring,
+        frequency: 220,
+        friction: 170,
+        duration: 500
+      })
+    },
+    release () {
+      dynamics.animate(this.$el, {
+        scale: 1
+      }, {
+        type: dynamics.spring,
+        frequency: 220,
+        friction: 170,
+        duration: 700
+      })
+    },
+    leave () {
+      dynamics.animate(this.$el, {
+        scale: 1
+      }, {
+        duration: 300
+      })
+    }
   }
 }
 </script>
@@ -36,7 +71,7 @@ export default {
     border-width 2px
     border-style solid
     outline none
-    transition-property box-shadow, border-color, transform
+    transition-property border-color
     transition-duration: 0.5s
     &:focus
       &:not(:hover)
@@ -46,9 +81,6 @@ export default {
       &:not([disabled])
         border-color currentColor
         transition-duration 0.15s
-    &:active
-      transform scale(0.95)
-      transition-duration 0.1s
 
   .btn-green
     &:not([disabled])

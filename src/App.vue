@@ -5,29 +5,41 @@
     <bio-header @error="updateError">
       <bio-nav :items="navItems"></bio-nav>
     </bio-header>
+    <backdrop :src="backdropImage" :params="backdropParameters"></backdrop>
     <main>
       <submenu :items="subnav"></submenu>
-      <transition :name="routeTransition" mode="out-in" @after-enter="$refs.view.entered = true">
+      <transition-spring :distance="2" :stiffness="150" mode="out-in" @after-enter="$refs.view.entered = true">
         <router-view
           ref="view"
           @update:subnav="val => subnav = val"
           @update:audio="updateAudio"
           @update:audio-meta="val => audioMeta = val"
+          @update:backdrop="updateBackdrop"
           @error="updateError"
           @ticker="updateTicker"
         ></router-view>
-      </transition>
+      </transition-spring>
     </main>
+    <show-offline>
+      <transition-spring from="left">
+        <div class="offline-badge">
+          <icon symbol="wifi-off"></icon>
+        </div>
+      </transition-spring>
+    </show-offline>
     <audio-player :source="audioSource" :metadata="audioMeta" :active="audioActive" @close="updateAudio" autosave></audio-player>
     <bio-footer></bio-footer>
   </div>
 </template>
 
 <script>
+import API from 'api'
 import bioHeader from './components/bio-header'
 import bioNav from './components/bio-nav'
+import backdrop from './components/backdrop'
 import bioFooter from './components/bio-footer'
 import audioPlayer from './components/audio-player'
+import showOffline from './components/show-offline'
 import {navItems} from './router/routes'
 
 export default {
@@ -36,9 +48,10 @@ export default {
     return {
       navItems,
       subnav: [],
-      routeTransition: 'shift',
       audioSource: '',
       audioMeta: {},
+      backdropImage: '',
+      backdropParameters: {},
       error: false,
       ticker: false,
       tickerIcon: ''
@@ -60,18 +73,36 @@ export default {
       this.ticker = msg
       this.tickerIcon = icon
     },
+    updateBackdrop (src = '', params = {}) {
+      this.backdropImage = src
+      this.backdropParameters = params
+    },
     reFetchView () {
       this.$refs.view.fetchData()
+    },
+    retryPending () {
+      if (navigator.onLine || !('onLine' in navigator)) {
+        API.retryPending().then(res => {
+          if (res === false) return
+          this.updateTicker(`Odeslali jsme všechny čekající zprávy, přihlášky, apod.`, 'thumb-up')
+        })
+        .catch(err => {
+          console.error(err)
+        })
+      }
     }
   },
   components: {
-    'bio-header': bioHeader,
-    'bio-nav': bioNav,
-    'bio-footer': bioFooter,
-    'audio-player': audioPlayer
+    bioHeader,
+    bioNav,
+    backdrop,
+    bioFooter,
+    audioPlayer,
+    showOffline
   },
   watch: {
     '$route' (to, from) {
+      this.retryPending()
       switch (to.name) {
         case 'Překlad':
           this.routeTransition = 'zoom'
@@ -81,38 +112,19 @@ export default {
           break
       }
     }
+  },
+  created () {
+    window.addEventListener('online', () => this.retryPending())
   }
 }
 </script>
 
 <style lang="stylus">
-.shift-enter-active
-  transition .6s cubic-bezier(0.190, 1.000, 0.220, 1.000)
-  overflow hidden
-.shift-leave-active
-  transition .1s ease-in
-  overflow hidden
-
-.shift-leave-to
+.list-enter-active, .list-leave-active, .list-move
+  transition all .3s
+.list-enter, .list-leave-to
   opacity 0
-  transform translateY(-1em)
-.shift-enter
-  opacity 0
-  transform translateY(2em)
-
-.zoom-enter-active
-  transition .6s cubic-bezier(0.190, 1.000, 0.220, 1.000)
-  overflow hidden
-.zoom-leave-active
-  transition .1s ease-in
-  overflow hidden
-
-.zoom-leave-to
-  opacity 0
-  transform scale(1.2)
-.zoom-enter
-  opacity 0
-  transform scale(.8)
+  transform scale(.5)
 
 #app
   min-height 100vh
@@ -121,11 +133,15 @@ export default {
 *
   outline-color hsl(150, 80%, 50%)
 
-p
-  text-align justify
+@media (min-width: 600px)
+  p
+    text-align justify
 
 .center-text
   text-align center
+
+.relative
+  position relative
 
 @keyframes pop
   0%
@@ -160,6 +176,13 @@ body
   min-height 100vh
   overflow-x hidden
   line-height normal
+.super-ultra-party-mode
+  animation supm 5s infinite
+  background-image linear-gradient(rgba(206,106,255,.2) 0%,rgba(201,97,252,.2) 0%,rgba(95,255,255,.2) 34%,rgba(102,249,98,.2) 65%,rgba(255,96,96,.2) 100%,rgba(255,105,106,.2) 100%)
+
+@keyframes supm
+  to
+    filter hue-rotate(1turn)
 
 a
   display inline-block
@@ -170,13 +193,26 @@ a:visited
 .no-scroll
   overflow-y hidden
 
+.offline-badge
+  position fixed
+  position sticky
+  bottom 1em
+  left 1em
+  text-align center
+  width 2.5em
+  height @width
+  line-height @height - 0.2
+  background-color hsl(350, 80%, 50%)
+  border 2px solid darken(@background-color, 40%)
+  border-radius 2em
+
 main
   padding 1em
   width 100%
   max-width 1100px
   margin auto
 
-input[type=text]
+input[type=text], input[type=search], input[type=number]
   border-radius 1em
   padding .3em .7em
   border 2px solid lighten(#1e2430, 30%)

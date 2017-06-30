@@ -1,8 +1,10 @@
 {
   "name": "bio4-vue",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "description": "Bio-senpai v4",
   "author": "OviOvocny <werint.pp@gmail.com>",
+  "repository": "bitbucket:OviOvocny/bio-senpai-v4-web-app",
+  "license": "AGPL-3.0",
   "private": false,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -13,9 +15,12 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
+    "anchorme": "^1.1.2",
     "axios": "^0.16.1",
     "cloudinary-core": "^2.3.0",
+    "dynamics.js": "^1.1.5",
     "fuzzysearch-js": "^0.2.0",
+    "localforage": "^1.5.0",
     "moment": "^2.18.1",
     "promise-polyfill": "^6.0.2",
     "stickyfill": "^1.1.1",

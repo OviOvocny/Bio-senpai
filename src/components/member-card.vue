@@ -13,9 +13,7 @@
         </div>
       </div>
     </div>
-    <div class="member-desc">
-      {{data.desc}}
-    </div>
+    <div class="member-desc" v-html="data.desc"></div>
   </div>
 </template>
 

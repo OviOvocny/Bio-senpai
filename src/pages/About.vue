@@ -2,7 +2,7 @@
   <div>
     <section>
       <div class="top-container">
-          <svg id="bio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" version="1.1">
+          <svg id="bio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" version="1.1" @click="party">
               <g>
                   <path d="m45.041 198.32a119.61 100.17 0 0 0 220.14 -16.18"/>
                   <g id="eyes">
@@ -42,7 +42,13 @@
           <div class="top-title">Bio-senpai</div>
           <div class="top-version">{{latest.hana}} | {{latest.version}}</div>
 
-          <div class="licence">Bio-senpai je progresivní webová aplikace postavená na <a href="https://vuejs.org">Vue 2</a>, <a href="https://github.com/mzabriskie/axios">Axiosu</a> a <a href="https://cloudinary.com">Cloudinary</a>. O data se nám stará <a href="https://loopback.io">LoopBack</a> a <a href="https://www.mongodb.com">MongoDB</a>. Aplikaci distribuuje Netlify.</div>
+          <div class="licence">
+            Bio-senpai je progresivní webová aplikace postavená na <a href="https://vuejs.org">Vue 2</a>,
+            <a href="https://github.com/mzabriskie/axios">Axiosu</a> a <a href="https://cloudinary.com">Cloudinary</a>.
+            O data se nám stará <a href="https://loopback.io">LoopBack</a> a <a href="https://www.mongodb.com">MongoDB</a>.
+            Aplikaci distribuuje <a href="https://netlify.com">Netlify</a>. API server a databázi hostuje
+            <router-link to="/tym/Cerx">Cerx</router-link> na Mugi.
+          </div>
       </div>
     </section>
 
@@ -60,10 +66,12 @@
 </template>
 
 <script>
+let party = 0
 import API from 'api'
 export default {
   data () {
     return {
+      onlineData: false,
       error: false,
       logs: [],
       latest: {}
@@ -71,20 +79,41 @@ export default {
   },
   created () {
     this.fetchData()
+    this.$emit('update:backdrop', 'header/header', {opacity: 15})
+  },
+  beforeRouteLeave (to, from, next) {
+    this.$emit('update:backdrop', '')
+    next()
   },
   methods: {
     fetchData () {
       this.$emit('error', false)
-      new API('changelogs')
+      const api = new API('changelogs')
         .byIdDesc()
-        .call()
+      api.offline()
         .then(res => {
-          this.logs = res.data
+          if (res === null) return
+          if (!this.onlineData) {
+            this.logs = res
+            this.latest = this.logs[0]
+          }
+        })
+        .catch(err => {
+          console.error(err)
+          this.$emit('error', new Error('Network Error'))
+        })
+      api.call()
+        .then(res => {
+          this.onlineData = true
+          this.logs = res
           this.latest = this.logs[0]
         })
         .catch(err => {
-          this.$emit('error', err)
+          console.error(err)
         })
+    },
+    party () {
+      document.body.classList[++party % 3 === 0 ? 'add' : 'remove']('super-ultra-party-mode')
     }
   }
 }
@@ -97,8 +126,12 @@ export default {
 
 .top-title
   font calc(2em + 1.5vw) Unica One
+  user-select none
+  cursor default
 .top-version
   font-size calc(.9em + .8vw)
+  user-select none
+  cursor default
   margin-bottom 1em
 
 .log

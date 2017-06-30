@@ -36,6 +36,16 @@ Vue.component('error', error)
 import ticker from './components/ticker-message'
 Vue.component('ticker', ticker)
 
+import bubble from './components/bubble'
+Vue.component('bubble', bubble)
+
+// Animations
+import transitionSpring from './animations/transition-spring'
+Vue.component('transition-spring', transitionSpring)
+
+import transitionGroupSpring from './animations/transition-group-spring'
+Vue.component('transition-group-spring', transitionGroupSpring)
+
 Vue.config.productionTip = false
 
 import Promise from 'promise-polyfill'

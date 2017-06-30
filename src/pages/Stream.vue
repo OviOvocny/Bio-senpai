@@ -1,3 +1,5 @@
+DEPRECATED
+
 <template>
   <div>
     <h1>{{title}}</h1>
@@ -28,8 +30,8 @@ export default {
         .call()
         .then(res => {
           let ep = this.$route.params.episode ? parseInt(this.$route.params.episode) - 1 : 0
-          this.file = res.data[0].stream[ep]
-          this.title = res.data[0].title
+          this.file = res[0].stream[ep]
+          this.title = res[0].title
         })
         .catch(err => {
           this.$emit('error', err)

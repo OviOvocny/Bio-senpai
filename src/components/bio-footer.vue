@@ -18,6 +18,7 @@ import API from 'api'
 export default {
   data () {
     return {
+      onlineData: false,
       fHana: '',
       fVersion: '4'
     }
@@ -32,13 +33,25 @@ export default {
   },
   methods: {
     fetchVersion () {
-      new API('changelogs')
+      const api = new API('changelogs')
         .byIdDesc()
         .limit(1)
-        .call()
+      api.offline()
         .then(res => {
-          this.fHana = res.data[0].hana
-          this.fVersion = res.data[0].version
+          if (res === null) return
+          if (!this.onlineData) {
+            this.fHana = res[0].hana
+            this.fVersion = res[0].version
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+      api.call()
+        .then(res => {
+          this.onlineData = true
+          this.fHana = res[0].hana
+          this.fVersion = res[0].version
         })
         .catch(err => {
           console.error(err)

@@ -3,7 +3,7 @@
     <div class="searchfield-wrap">
       <input class="searchfield" type="text" v-model="search" @input="$refs.iso.filter('text')" placeholder="Vyhledat..." autofocus>
     </div>
-    <isotope ref="iso" :list="anime" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden, 'zooming': zooming}">
+    <isotope ref="iso" :list="anime" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden, 'zooming': zooming}" v-show="anime.length > 0">
       <router-link class="tl-link" v-for="show in anime" v-if="!show.hidden" :key="show.url_title" :to="'/projekty/' + show.url_title">
         <anime :data="show"></anime>
       </router-link>
@@ -19,6 +19,7 @@ export default {
   data () {
     let self = this
     return {
+      onlineData: false,
       error: false,
       anime: [],
       hidden: false,
@@ -50,14 +51,24 @@ export default {
   methods: {
     fetchData () {
       this.$emit('error', false)
-      new API('anime')
+      const api = new API('anime')
         .byIdDesc()
-        .call()
+      api.offline()
         .then(res => {
-          this.anime = res.data
+          if (res === null) return
+          if (!this.onlineData) this.anime = res
         })
         .catch(err => {
-          this.$emit('error', err)
+          console.error(err)
+          this.$emit('error', new Error('Network Error'))
+        })
+      api.call()
+        .then(res => {
+          this.onlineData = true
+          this.anime = res
+        })
+        .catch(err => {
+          console.error(err)
         })
     }
   },
@@ -92,7 +103,7 @@ export default {
   transition .1s ease-in
 
 .zooming
-  transform scale(1.2)
+  transform scale(0.8)
 
 .tl-link
   text-decoration none

@@ -1,9 +1,9 @@
 <template>
   <div class="msg-container" :id="id">
-    <comment :sender="sender" :time="time" :team="team">{{msg}}</comment>
-    <transition-group name="shift-down">
-      <comment reply v-for="reply in shownReplies" :key="reply.msg" :sender="reply.sender" :time="reply.time" :team="reply.team">{{reply.msg}}</comment>
-    </transition-group>
+    <comment :sender="sender" :time="time" :team="team" :text="msg"></comment>
+    <transition-group-spring back from="top" :distance="2">
+      <comment reply v-for="reply in shownReplies" :key="reply.msg" :sender="reply.sender" :time="reply.time" :team="reply.team" :text="reply.msg"></comment>
+    </transition-group-spring>
     <div class="hidden-hint"
          v-if="replies.length > maxCompactReplies && !showingAllReplies && !replying"
          @click="showingAllReplies = !showingAllReplies"
@@ -11,7 +11,7 @@
       Kliknutím zobrazíte zbytek odpovědí (celkem {{remainingReplies}})
     </div>
 
-    <transition name="shift-down">
+    <transition-spring back from="top" :distance="2">
       <div class="reply-box" v-if="replying" ref="replyBoxRef">
         <comment-form reply
                       @send="handleReply"
@@ -20,7 +20,7 @@
                       :disabled="formDisabled"
         ></comment-form>
       </div>
-    </transition>
+    </transition-spring>
     <div class="reply-btn-outer" v-show="!replying">
       <button v-if="replies.length > maxCompactReplies"
               class="reply-buttons reply-btn"
@@ -50,8 +50,11 @@ export default {
     }
   },
   computed: {
+    sortedReplies () {
+      return this.replies.sort((a, b) => a.time - b.time)
+    },
     shownReplies () {
-      return this.showingAllReplies || this.replying ? this.replies : this.replies.slice(0, this.maxCompactReplies)
+      return this.showingAllReplies || this.replying ? this.sortedReplies : this.sortedReplies.slice(0, this.maxCompactReplies)
     },
     allRepliesLabel () {
       return this.showingAllReplies ? `Skrýt ostatní odpovědi (celkem ${this.remainingReplies})` : 'Všechny odpovědi'

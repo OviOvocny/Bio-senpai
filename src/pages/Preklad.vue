@@ -1,8 +1,8 @@
 <template>
   <section>
-    <div :class="{'hero-wrap': true, 'revealed': entered && heroLoaded}">
+    <!-- <div :class="{'hero-wrap': true, 'revealed': entered && heroLoaded}">
       <cl-image class="hero" :src="'cover/' + $route.params.anime" :alt="'Obal ' + project.title" @imageloaded="heroLoaded = true"></cl-image>
-    </div>
+    </div> -->
 
     <h1 :class="{'hero-title': true, 'long': isLong}">{{project.title}}</h1>
     <div class="project-data-wrap">
@@ -103,6 +103,7 @@ import API from 'api'
 export default {
   data () {
     return {
+      onlineData: false,
       entered: false,
       error: false,
       project: {
@@ -127,8 +128,8 @@ export default {
   },
   beforeRouteLeave (to, from, next) {
     if (to.params.anime !== this.$route.params.anime) {
-      this.entered = false
-      setTimeout(next, 200)
+      this.$emit('update:backdrop', '')
+      next()
     } else {
       next()
     }
@@ -189,24 +190,47 @@ export default {
         })
       }
       apicall.call().then(res => {
-        this.relativeArr = res.data
+        this.relativeArr = res
       }).catch(err => {
         this.$emit('error', err)
       })
     },
     fetchData () {
+      let cacheFailed = false
+      let liveFailed = false
       this.$emit('error', false)
-      new API('anime')
+      const api = new API('anime')
         .where('url_title', this.$route.params.anime)
         .limit(1)
-        .call()
+      api.offline()
         .then(res => {
-          this.project = res.data[0]
+          if (liveFailed && res === null) {
+            this.project.title = 'Tak nic...'
+            this.$emit('error', 'Je nám líto, všechny taktiky selahly. Projekt se nedá načíst.')
+          }
+          if (!this.onlineData) {
+            this.project = res[0]
+            document.title = `${this.project.title} | Bio-senpai`
+          }
+        })
+        .catch(err => {
+          cacheFailed = true
+          console.error(err)
+        })
+      api.call()
+        .then(res => {
+          this.onlineData = true
+          this.project = res[0]
           document.title = `${this.project.title} | Bio-senpai`
           if (this.project.relatives) this.relativeData()
         })
         .catch(err => {
-          this.$emit('error', err)
+          liveFailed = true
+          console.error(err)
+          if (cacheFailed) {
+            this.project.title = 'Tak nic...'
+            this.$emit('error', 'Je nám líto, všechny taktiky selahly. Projekt se nedá načíst.')
+          }
         })
     }
   },
@@ -215,6 +239,9 @@ export default {
       if (to.params.anime !== from.params.anime) {
         this.fetchData()
       }
+    },
+    'project' () {
+      this.$emit('update:backdrop', 'cover/' + this.$route.params.anime)
     }
   }
 }

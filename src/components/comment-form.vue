@@ -7,13 +7,14 @@
       <input :disabled="disabled" type="text" name="sender" placeholder="Jméno" @input="storeName" :value="storedName">
       <div>
         <btn :disabled="disabled" v-if="reply" @click="$emit('cancel')" icon="close">Zrušit</btn>
-        <btn :disabled="disabled" type="submit" icon="send">Odeslat</btn>
+        <btn :disabled="disabled" type="submit" icon="send">Odeslat<show-offline> později</show-offline></btn>
       </div>
     </div>
   </form>
 </template>
 
 <script>
+import showOffline from '@/components/show-offline'
 export default {
   props: {
     reply: {
@@ -57,6 +58,9 @@ export default {
   mounted () {
     this.$refs.txt.focus()
     this.$emit('mount')
+  },
+  components: {
+    showOffline
   }
 }
 </script>
@@ -73,6 +77,12 @@ export default {
   display flex
   justify-content space-between
   align-items center
+  flex-wrap wrap
+@media (max-width: 420px)
+  .tr-detail > div, .tr-detail button, .tr-detail > input
+    width 100%
+  .tr-detail button
+    margin .3em 0
 
 .text
   width 100%

@@ -1,8 +1,8 @@
 <template>
-  <section style="position:relative">
-    <transition name="shift">
+  <section class="relative">
+    <transition-spring :distance="3">
       <cl-image v-if="entered" class="top-anime__mascot" :src="'mascot/' + randomMascot" width="250"></cl-image>
-    </transition>
+    </transition-spring>
     <div class="top-anime">
       <div class="top-anime__cover">
         <cl-image ref="topImage" v-if="ready" :src="'cover/' + home.anime.url_title"></cl-image>
@@ -29,15 +29,15 @@
         <div class="social-links">
           <router-link to="/kontakt" class="social-links__native">
             <icon symbol="message"></icon>
-            Zprávy
+            <span class="social-links__label">Zprávy</span>
           </router-link>
           <a href="//facebook.com/bio-senpai" class="social-links__facebook">
             <icon symbol="facebook"></icon>
-            Facebook
+            <span class="social-links__label">Facebook</span>
           </a>
-          <a href="//twitter.com/" class="social-links__twitter">
+          <a href="//twitter.com/bio_senpai" class="social-links__twitter">
             <icon symbol="twitter"></icon>
-            Twitter
+            <span class="social-links__label">Twitter</span>
           </a>
         </div>
       </div>
@@ -66,12 +66,18 @@
         </p>
         <div>
           <a href="https://join.skype.com/bot/283f634c-6815-4bcb-a3c9-4b711cb35665">
-            <btn icon="skype">Přidat kontakt na Skype</btn>
+            <btn icon="skype">
+              <span class="bot-btn-long-label">Přidat kontakt na Skype</span>
+              <span class="bot-btn-short-label">Skype</span>
+            </btn>
           </a>
         </div>
         <div>
           <a href="https://www.messenger.com/t/1642204556087603">
-            <btn icon="facebook-messenger">Kontaktovat na Messengeru</btn>
+            <btn icon="facebook-messenger">
+              <span class="bot-btn-long-label">Kontaktovat na Messengeru</span>
+              <span class="bot-btn-short-label">Messenger</span>
+            </btn>
           </a>
         </div>
         <router-link class="tegami__details" to="/tegami">Podrobnosti o botu</router-link>
@@ -110,6 +116,7 @@ import moment from 'moment'
 export default {
   data () {
     return {
+      onlineData: false,
       ready: false,
       entered: false,
       home: {
@@ -124,20 +131,32 @@ export default {
       return moment.unix(this.home.anime.updated).locale('cs').fromNow()
     },
     randomMascot () {
-      return randomMascotArray[Math.floor(Math.random() * randomMascotArray.length)]
+      return new Date().getMonth() === 11 ? 'santa' : randomMascotArray[Math.floor(Math.random() * randomMascotArray.length)]
     }
   },
   methods: {
     fetchData () {
       this.$emit('error', false)
-      new API('utils/home')
-        .call()
+      const api = new API('utils/home')
+      api.offline()
         .then(res => {
-          this.home = res.data.results
+          if (res === null) return
+          if (!this.onlineData) this.home = res.results
           this.ready = true
         })
         .catch(err => {
-          this.$emit('error', err)
+          console.error(err)
+          this.$emit('error', new Error('Network Error'))
+        })
+      api.call()
+        .then(res => {
+          this.home = res.results
+          this.onlineData = true
+          this.ready = true
+        })
+        .catch(err => {
+          console.error(err)
+          this.$emit('ticker', 'Jste offline. Obsah nemusí být aktuální.')
         })
     },
     handleScroll () {
@@ -242,6 +261,12 @@ bgcolor = #1e2430
       color white
     &:hover
       border-color white
+@media (max-width: 410px)
+  .social-links__label
+    display none
+  .social-links > *
+    padding .5em
+
 .social-links__native
   color white
   background-color hsl(150, 80%, 40%)
@@ -276,8 +301,15 @@ bgcolor = #1e2430
   55%, 60%, 65%
     transform rotateZ(20deg) rotateY(180deg)
 
+.bot-btn-short-label
+  display none
+
 @media (max-width: 500px)
   .tegami__mascot
+    display none
+  .bot-btn-short-label
+    display initial
+  .bot-btn-long-label
     display none
 
 .tegami__details
@@ -320,7 +352,7 @@ bgcolor = #1e2430
   position absolute
   top -.5rem
   left -5%
-  transition .5s
+  transition top .5s, left .5s
 
 @media (max-width: 1200px)
   .top-anime__mascot
@@ -328,9 +360,9 @@ bgcolor = #1e2430
     top 10em
     transform translateY(-50%)
     width 20vw
-@media (max-width: 600px), (orientation: portrait)
-  .top-anime__mascot
-    display none
+    @media (max-width: 600px), (orientation: portrait)
+      .top-anime__mascot
+        display none
 
 .top-anime__cover
   position absolute
@@ -360,6 +392,9 @@ bgcolor = #1e2430
   & > *
     padding 0.3rem
     margin 0 1rem
+@media (max-width: 600px), (orientation: portrait)
+  .top-anime--info
+    text-align center
 
 .top-anime__title
   font-size 3em

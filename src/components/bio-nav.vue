@@ -65,7 +65,7 @@ nav ul
   font-size 1.1em
   font-weight 300
   list-style none
-  padding-left 6em
+  padding-left 8em
   height 60px
   overflow-y hidden
   text-align right
@@ -75,7 +75,7 @@ nav ul
     position relative
     display inline-block
     height 60px
-    line-height @height*1.1
+    line-height @height
     padding 0 .5em
     cursor pointer
     border-bottom 0px solid white
@@ -97,7 +97,7 @@ nav ul
 .show-all
   color white
   position absolute
-  height 55px
+  height 60px
   line-height @height
   bottom 0
   right .4em

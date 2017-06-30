@@ -78,7 +78,7 @@ export default {
       new API(`anilist/show?id=${id}`)
         .call()
         .then(res => {
-          this.anilistData = res.data.anime
+          this.anilistData = res.anime
           this.$emit('done')
         })
         .catch(err => {

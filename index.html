@@ -26,10 +26,10 @@
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
     <link rel="stylesheet" href="/static/css/normalize.css">
   </head>
-  <body style="background:#1e2430;color:#fff">
+  <body>
     <div id="app">
       <style>
-      body{display:flex;height:100vh;justify-content:center;align-items:center}.loader{font-size:10px;margin:50px auto;text-indent:-9999em;width:11em;height:11em;border-radius:50%;background:#fff;background:-moz-linear-gradient(left,#fff 10%,rgba(255,255,255,0) 42%);background:-webkit-linear-gradient(left,#fff 10%,rgba(255,255,255,0) 42%);background:-o-linear-gradient(left,#fff 10%,rgba(255,255,255,0) 42%);background:-ms-linear-gradient(left,#fff 10%,rgba(255,255,255,0) 42%);background:linear-gradient(to right,#fff 10%,rgba(255,255,255,0) 42%);position:relative;-webkit-animation:load3 1.4s infinite linear;animation:load3 1.4s infinite linear;-webkit-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0)}.loader:after,.loader:before{content:'';position:absolute;top:0;left:0}.loader:before{width:50%;height:50%;background:#fff;border-radius:100% 0 0}.loader:after{background:#1e2430;width:75%;height:75%;border-radius:50%;margin:auto;bottom:0;right:0}@-webkit-keyframes load3{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes load3{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
+      body{display:flex;height:100vh;justify-content:center;align-items:center;background:#1e2430;color:#fff}.loader{font-size:10px;margin:50px auto;text-indent:-9999em;width:11em;height:11em;border-radius:50%;background:#fff;background:-moz-linear-gradient(left,#fff 10%,rgba(255,255,255,0) 42%);background:-webkit-linear-gradient(left,#fff 10%,rgba(255,255,255,0) 42%);background:-o-linear-gradient(left,#fff 10%,rgba(255,255,255,0) 42%);background:-ms-linear-gradient(left,#fff 10%,rgba(255,255,255,0) 42%);background:linear-gradient(to right,#fff 10%,rgba(255,255,255,0) 42%);position:relative;-webkit-animation:load3 1.4s infinite linear;animation:load3 1.4s infinite linear;-webkit-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0)}.loader:after,.loader:before{content:'';position:absolute;top:0;left:0}.loader:before{width:50%;height:50%;background:#fff;border-radius:100% 0 0}.loader:after{background:#1e2430;width:75%;height:75%;border-radius:50%;margin:auto;bottom:0;right:0}@-webkit-keyframes load3{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes load3{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
       </style>
       <div class="loader"></div>
     </div>
@@ -75,8 +75,7 @@
                           break;
 
                         case 'redundant':
-                          throw new Error('The installing ' +
-                                          'service worker became redundant.');
+                          throw new Error('Instalovaný service worker je nepotřebný.');
 
                         default:
                           // Ignore
@@ -85,7 +84,7 @@
                   }
                 };
               }).catch(function(e) {
-                console.error('Error during service worker registration:', e);
+                console.error('Chyba při instalaci service workeru:', e);
               });
             }
         });

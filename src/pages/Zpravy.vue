@@ -1,13 +1,29 @@
 <template>
   <section>
     <h2 class="center-text">Zprávy</h2>
+    <show-offline>
+      <p class="center-text">
+        <icon symbol="wifi-off"></icon>
+        Zdáte se být offline. Nebojte, i tak můžete napsat zprávu, pošleme jí, až se připojíte.
+      </p>
+    </show-offline>
     <div class="comment-form-wrap">
       <comment-form :disabled="formDisabled" @send="handleMessage"></comment-form>
+      <div v-if="pending.length > 0" class="pending-messages">
+        <p class="center-text">
+          <icon symbol="alert"></icon>
+          Tyto zprávy se zatím nepodařilo poslat
+        </p>
+        <comment v-for="msg in pending" :key="msg.data.time" :text="msg.data.msg" :sender="msg.data.sender"></comment>
+        <p>
+          <btn variant="red" icon="autorenew" @click="retryPendingMessages">Zkusit znovu odeslat</btn>
+        </p>
+      </div>
     </div>
     <div class="comment-threads">
-      <transition-group name="shift-down">
-        <comment-thread v-for="comment in comments" :message="comment" :key="comment.id" @reply="handleReply" @replyOpen="scrollToThread"></comment-thread>
-      </transition-group>
+      <transition-group-spring :stagger="60" from="top">
+        <comment-thread v-for="(comment, index) in comments" :message="comment" :key="comment.id" :data-idx="index % 10" @reply="handleReply" @replyOpen="scrollToThread"></comment-thread>
+      </transition-group-spring>
       <infinite :on-infinite="fetchData" ref="infiniteLoading" spinner="waveDots">
         <span slot="no-more">
           <div style="color:white">Jste na konci. Nebo spíš na začátku.</div>
@@ -21,17 +37,23 @@
 
 <script>
 import API from 'api'
+import comment from '@/components/comment'
 import commentThread from '@/components/comment-thread'
 import commentForm from '@/components/comment-form'
 import Infinite from 'vue-infinite-loading'
+import showOffline from '@/components/show-offline'
 import nano from '@/scripts/nano-scroll'
 export default {
   data () {
     return {
       comments: [],
       commentCount: 0,
-      formDisabled: false
+      formDisabled: false,
+      pending: []
     }
+  },
+  created () {
+    this.updatePending()
   },
   methods: {
     fetchData () {
@@ -40,22 +62,31 @@ export default {
         return
       }
       this.$emit('error', false)
-      new API('messages')
+      const api = new API('messages')
         .limit(10)
         .skip(this.comments.length)
-        .byIdDesc()
-        .call()
+        .order('time DESC')
+      api.call()
         .then(res => {
           if (this.comments.length === 0) {
             new API('messages/count').call().then(res => {
-              this.commentCount = res.data.count
+              this.commentCount = res.count
             })
           }
-          this.comments = this.comments.concat(res.data.results)
+          this.comments = this.comments.concat(res.results)
           this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded')
         })
         .catch(err => {
-          this.$emit('error', err)
+          console.error(err)
+          api.offline().then(res => {
+            this.$emit('ticker', 'Jste offline. Možná tu chybí některé zprávy!')
+            this.comments = this.comments.concat(res.results)
+            this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded')
+          })
+          .catch(err => {
+            console.error(err)
+            this.$emit('error', new Error('Network Error'))
+          })
         })
     },
     handleMessage (data) {
@@ -65,14 +96,26 @@ export default {
         .body(data)
         .call('post')
         .then(res => {
-          this.comments.unshift(res.data)
+          this.comments.unshift(res)
           this.$emit('ticker', 'Zpráva se uložila', 'emoticon')
           this.formDisabled = false
         })
         .catch(err => {
           this.formDisabled = false
           console.error(err)
-          this.$emit('error', 'Zprávu se nepodařilo odeslat, zkuste to znovu')
+          if (err.message === 'Network Error') {
+            API.addPending('messages', data)
+              .then(res => {
+                this.$emit('ticker', 'Zpráva nešla odeslat, tak jsme ji uložili. Až to půjde, odešleme ji.', 'archive')
+                this.updatePending()
+              })
+              .catch(err => {
+                console.error(err)
+                this.$emit('error', 'Zprávu se nepodařilo odeslat, zkuste to znovu.')
+              })
+          } else {
+            this.$emit('error', 'Zprávu se nepodařilo odeslat, zkuste to znovu.')
+          }
         })
     },
     handleReply (thread, data) {
@@ -82,7 +125,7 @@ export default {
         .body(data)
         .call('post')
         .then(res => {
-          thread.replies = res.data.results.replies
+          thread.replies = res.results.replies
           this.$emit('ticker', 'Odpověď se uložila', 'emoticon')
           thread.formDisabled = false
           thread.replying = false
@@ -94,6 +137,24 @@ export default {
           this.$emit('error', 'Odpověď se nepodařilo odeslat, zkuste to znovu')
         })
     },
+    updatePending () {
+      API.getPending('messages').then(pending => {
+        this.pending = pending
+      })
+    },
+    retryPendingMessages () {
+      API.retryPending('messages')
+        .then(res => {
+          res.resolved.forEach(r => {
+            this.comments.unshift(r.data)
+          })
+          this.updatePending()
+        })
+        .catch(err => {
+          console.error(err)
+          this.$emit('error', 'Odesílání čekajících zpráv selhalo.')
+        })
+    },
     scrollToThread (offset) {
       nano(offset - window.innerHeight / 2)
     },
@@ -102,27 +163,21 @@ export default {
     }
   },
   components: {
+    comment,
     commentThread,
     commentForm,
-    Infinite
+    Infinite,
+    showOffline
   }
 }
 </script>
 
 <style lang="stylus">
-.shift-down-enter-active, .shift-down-move
-  transition .6s cubic-bezier(0.190, 1.000, 0.220, 1.000)
-.shift-down-leave-active
-  transition .1s ease-in
-
-.shift-down-leave-to
-  opacity 0
-  transform translateY(-1em)
-.shift-down-enter
-  opacity 0
-  transform translateY(-2em)
-
 .comment-form-wrap
   max-width 700px
   margin auto
+
+.pending-messages
+  .msg-infobar
+    background-color hsl(350, 70%, 50%)
 </style>
