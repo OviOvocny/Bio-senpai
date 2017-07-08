@@ -168,6 +168,7 @@ export default {
       new API('suggestions')
         .body({
           anime_id: parseInt(target.dataset.animeid),
+          coverArt: target.dataset.coverArt,
           title: target.querySelector('.anime_title').innerHTML,
           status: 0
         })

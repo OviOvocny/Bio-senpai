@@ -1,5 +1,5 @@
 <template>
-    <div :style='{background: bg}' class="tl" @mousemove.passive="tilt" :data-animeID="id">
+    <div :style='{background: bg}' class="tl" @mousemove.passive="tilt" :data-animeID="id" :data-coverArt="banner">
       <div class="title">
         <span :class="{hentai: anilistData.adult}"><icon v-if="anilistData.adult" symbol="brightness-3"></icon> <span class="anime_title">{{anilistData.title_romaji}}</span></span>
         <div class="how-to" v-if="status === undefined">Kliknutím navrhnete</div>
@@ -35,9 +35,11 @@ export default {
     }
   },
   computed: {
+    banner () {
+      return this.anilistData.image_url_banner ? this.anilistData.image_url_banner : this.anilistData.image_url_lge
+    },
     bg () {
-      const banner = this.anilistData.image_url_banner ? this.anilistData.image_url_banner : this.anilistData.image_url_lge
-      return `linear-gradient(45deg, rgba(30,36,48,0.8), rgba(30,36,48,0.733), rgba(30,36,48,0.6)), url(${banner}) center / cover`
+      return `linear-gradient(45deg, rgba(30,36,48,0.8), rgba(30,36,48,0.733), rgba(30,36,48,0.6)), url(${this.banner}) center / cover`
     },
     episodes () {
       if (this.anilistData.type === 'Movie') {

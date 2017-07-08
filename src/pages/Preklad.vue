@@ -60,7 +60,7 @@
           <div class="episode" v-else v-for="i in eps.done" :key="i">
             Epizoda {{i}}
             <div class="episode-actions">
-              <a tabindex="-1" :href="`/static/data/${project.url_title}/[Bio-senpai] ${project.title} - Epizoda ${i}.ass`" download>
+              <a tabindex="-1" :href="`/static/data/${project.url_title}/[Bio-senpai] ${pad(i)} - ${project.title}.ass`" download>
                 <btn icon="attachment"></btn>
               </a>
               <router-link tabindex="-1" :to="`/stream/${project.url_title}/${i}`">
@@ -172,6 +172,9 @@ export default {
     }
   },
   methods: {
+    pad (num) {
+      if (String(num).length === 1) return '0' + num
+    },
     relativeData () {
       let apicall = new API('anime')
       if (this.project.relatives.prequels) {
