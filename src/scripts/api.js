@@ -21,6 +21,10 @@ export default class {
 
   body (hash) {
     this.postBody = hash
+    if (window.TEGAMI_TESTER_FLAG) {
+      this.postBody.tester = true
+      console.log('Will send with tester flag!')
+    }
     return this
   }
 

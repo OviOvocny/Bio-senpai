@@ -104,7 +104,7 @@ const routes = [
     component: Zpravy,
     alias: '/kontakt',
     meta: {
-      title: 'Kontakt | Bio-senpai',
+      title: 'Zprávy | Bio-senpai',
       icon: 'message'
     }
   },
