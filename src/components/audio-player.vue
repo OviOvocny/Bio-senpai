@@ -165,7 +165,7 @@ ease-out-expo = cubic-bezier(0.190, 1.000, 0.220, 1.000)
 .metadata-title
   white-space nowrap
 
-.scrubber, .controls
+.scrubber, .controls, .range-slider
   width 100%
 
 .controls
