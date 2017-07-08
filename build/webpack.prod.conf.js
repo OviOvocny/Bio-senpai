@@ -99,6 +99,10 @@ var webpackConfig = merge(baseWebpackConfig, {
       {
         from: path.resolve(__dirname, '../_redirects'),
         to: config.build.assetsRoot
+      },
+      {
+        from: path.resolve(__dirname, '../_headers'),
+        to: config.build.assetsRoot
       }
     ]),
     // service worker caching

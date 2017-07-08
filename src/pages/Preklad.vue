@@ -173,7 +173,7 @@ export default {
   },
   methods: {
     pad (num) {
-      if (String(num).length === 1) return '0' + num
+      return (String(num).length === 1) ? '0' + num : num
     },
     relativeData () {
       let apicall = new API('anime')

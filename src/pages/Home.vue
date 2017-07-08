@@ -14,8 +14,12 @@
         <span class="top-anime__episodes">Epizoda {{home.anime.eps.done}}</span>
         <h3>Vyšlo {{releasedTimeAgo}}</h3>
         <div class="top-anime--buttons">
-          <btn variant="red" icon="download">Stáhnout video</btn>
-          <btn icon="attachment">Externí titulky</btn>
+          <a tabindex="-1" :href="home.anime.mega">
+            <btn variant="red" icon="download">Stáhnout video</btn>
+          </a>
+          <a tabindex="-1" :href="`/static/data/${home.anime.url_title}/[Bio-senpai] ${pad(home.anime.eps.done)} - ${home.anime.title}.ass`" download>
+            <btn icon="attachment">Externí titulky</btn>
+          </a>
           <router-link :to="'/stream/' + home.anime.url_title + '/' + home.anime.eps.done">
             <btn icon="play">Přehrát</btn>
           </router-link>
@@ -135,6 +139,9 @@ export default {
     }
   },
   methods: {
+    pad (num) {
+      return (String(num).length === 1) ? '0' + num : num
+    },
     fetchData () {
       this.$emit('error', false)
       const api = new API('utils/home')
