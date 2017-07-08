@@ -165,8 +165,8 @@ ease-out-expo = cubic-bezier(0.190, 1.000, 0.220, 1.000)
 .metadata-title
   white-space nowrap
 
-.scrubber, .controls
-  width 100%
+.scrubber, .controls, .range-slider
+  width 100% !important
 
 .controls
   padding 0 1em
@@ -175,13 +175,13 @@ ease-out-expo = cubic-bezier(0.190, 1.000, 0.220, 1.000)
   display flex
 
 .range-slider-fill
-  background-color accent
+  background-color accent !important
 
 .range-slider-rail
-  background-color alpha(white, 50%)
+  background-color alpha(white, 50%) !important
 
 .range-slider-knob
-  box-shadow none
+  box-shadow none !important
   transition height .3s, width .4s
   &:active
     width 15px
