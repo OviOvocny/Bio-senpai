@@ -31,7 +31,9 @@ let rt = new Router({
 
 rt.beforeEach((to, from, next) => {
   if (to.hash && from.path === '/') {
-    rt.replace('/projekty/' + to.hash.substring(1).replace('+', '-'))
+    rt.replace('/projekty/' + to.hash.substring(1)
+      .replace(/\+|%20/g, '-')
+    )
   }
   document.title = to.meta.title
   next()
