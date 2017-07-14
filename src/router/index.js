@@ -33,6 +33,7 @@ rt.beforeEach((to, from, next) => {
   if (to.hash && from.path === '/') {
     rt.replace('/projekty/' + to.hash.substring(1)
       .replace(/\+|%20/g, '-')
+      .toLowerCase()
     )
   }
   document.title = to.meta.title
