@@ -9,6 +9,8 @@
           <label for="category-bio">Bio-senpai</label>
           <input type="radio" v-model="category" value="yoi" id="category-yoi">
           <label for="category-yoi">Yoimiru</label>
+          <input type="radio" v-model="category" value="rip" id="category-rip">
+          <label for="category-rip">Bývalí členové</label>
         </fieldset>
       </div>
     </div>
