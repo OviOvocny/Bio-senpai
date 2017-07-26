@@ -5,7 +5,7 @@
     </div> -->
 
     <h1 :class="{'hero-title': true, 'long': isLong}">{{project.title}}</h1>
-    <div class="project-data-wrap">
+    <div class="project-data-wrap" v-if="ok">
       <span :class="{'project-data': true, 'episodes': true, 'complete': eps.done === eps.total}">
         {{epsVerbose}}
         <span v-if="eps.done < eps.total"> z {{eps.total}}</span>
@@ -16,6 +16,10 @@
       <router-link class="project-data" v-for="kor in project.team.kor" :to="'/tym/' + kor" :key="kor">
         <icon symbol="auto-fix"></icon> Korekce: {{kor}}
       </router-link>
+    </div>
+
+    <div class="center-text" v-if="!ok && !failed">
+      <spinner></spinner>
     </div>
 
     <transition-group name="list-vertical">
@@ -34,13 +38,13 @@
         </div>
       </div>
 
-      <div class="project-card" key="project">
+      <div class="project-card" key="project" v-if="ok">
         <div class="actions">
           <div class="actions-inner">
             <a tabindex="-1" :href="project.mega">
               <btn variant="red" icon="download">Přeložená videa</btn>
             </a>
-            <a tabindex="-1" :href="'/static/data/' + project.url_title + '/ass.zip'" download>
+            <a tabindex="-1" :href="'//data.bio-senpai.tk/data/' + project.url_title + '/ass.zip'" download>
               <btn icon="attachment">Všechny titulky</btn>
             </a>
           </div>
@@ -49,7 +53,7 @@
           <div class="episode" v-if="eps.done === 1 && !project.single_type" key="film">
             Film
             <div class="episode-actions">
-              <a tabindex="-1" :href="`/static/data/${project.url_title}/[Bio-senpai] ${project.title}.ass`" download>
+              <a tabindex="-1" :href="`//data.bio-senpai.tk/data/${project.url_title}/[Bio-senpai] ${project.title}.ass`" download>
                 <btn icon="attachment"></btn>
               </a>
               <router-link tabindex="-1" :to="`/stream/${project.url_title}`">
@@ -60,7 +64,7 @@
           <div class="episode" v-else v-for="i in eps.done" :key="i">
             Epizoda {{i}}
             <div class="episode-actions">
-              <a tabindex="-1" :href="`/static/data/${project.url_title}/[Bio-senpai] ${pad(i)} - ${project.title}.ass`" download>
+              <a tabindex="-1" :href="`//data.bio-senpai.tk/data/${project.url_title}/[Bio-senpai] ${pad(i)} - ${project.title}.ass`" download>
                 <btn icon="attachment"></btn>
               </a>
               <router-link tabindex="-1" :to="`/stream/${project.url_title}/${i}`">
@@ -100,9 +104,12 @@
 
 <script>
 import API from 'api'
+import spinner from '@/components/spinner'
 export default {
   data () {
     return {
+      ok: false,
+      failed: false,
       onlineData: false,
       entered: false,
       error: false,
@@ -209,10 +216,12 @@ export default {
         .then(res => {
           if (liveFailed && res === null) {
             this.project.title = 'Tak nic...'
+            this.failed = true
             this.$emit('error', 'Je nám líto, všechny taktiky selahly. Projekt se nedá načíst.')
           }
           if (!this.onlineData) {
             this.project = res[0]
+            this.ok = true
             document.title = `${this.project.title} | Bio-senpai`
           }
         })
@@ -224,6 +233,7 @@ export default {
         .then(res => {
           this.onlineData = true
           this.project = res[0]
+          this.ok = true
           document.title = `${this.project.title} | Bio-senpai`
           if (this.project.relatives) this.relativeData()
         })
@@ -232,6 +242,7 @@ export default {
           console.error(err)
           if (cacheFailed) {
             this.project.title = 'Tak nic...'
+            this.failed = true
             this.$emit('error', 'Je nám líto, všechny taktiky selahly. Projekt se nedá načíst.')
           }
         })
@@ -246,6 +257,9 @@ export default {
     'project' () {
       this.$emit('update:backdrop', 'cover/' + this.$route.params.anime)
     }
+  },
+  components: {
+    spinner
   }
 }
 </script>

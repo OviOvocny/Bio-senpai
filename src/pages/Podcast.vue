@@ -63,7 +63,7 @@ export default {
         })
     },
     playEpisode (ep) {
-      this.$emit('update:audio', `static/yoimiru/${ep.file}`)
+      this.$emit('update:audio', `//data.bio-senpai.tk/yoimiru/${ep.file}`)
       this.$emit('update:audio-meta', ep)
     }
   }

@@ -17,7 +17,7 @@
           <a tabindex="-1" :href="home.anime.mega">
             <btn variant="red" icon="download">Stáhnout video</btn>
           </a>
-          <a tabindex="-1" :href="`/static/data/${home.anime.url_title}/[Bio-senpai] ${pad(home.anime.eps.done)} - ${home.anime.title}.ass`" download>
+          <a tabindex="-1" :href="`//data.bio-senpai.tk/data/${home.anime.url_title}/[Bio-senpai] ${pad(home.anime.eps.done)} - ${home.anime.title}.ass`" download>
             <btn icon="attachment">Externí titulky</btn>
           </a>
           <router-link :to="'/stream/' + home.anime.url_title + '/' + home.anime.eps.done">
@@ -172,7 +172,7 @@ export default {
       if (window.pageYOffset < window.innerHeight) this.$refs.topImage.$el.style.transform = `translateY(-${(20 - percent)}%)`
     },
     playEpisode (ep) {
-      this.$emit('update:audio', `static/yoimiru/${ep.file}`)
+      this.$emit('update:audio', `//data.bio-senpai.tk/yoimiru/${ep.file}`)
       this.$emit('update:audio-meta', ep)
     },
     articleDate (timestamp) {

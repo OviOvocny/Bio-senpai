@@ -1,60 +1,44 @@
 <template>
-  <transition name="zoom">
-    <div>
-      <canvas id="canvas" width="50" height ="50"></canvas>
-    </div>
-  </transition>
+  <!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
+  <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+      <g fill="none" fill-rule="evenodd" stroke-width="2">
+          <circle cx="22" cy="22" r="1">
+              <animate attributeName="r"
+                  begin="0s" dur="1.8s"
+                  values="1; 20"
+                  calcMode="spline"
+                  keyTimes="0; 1"
+                  keySplines="0.165, 0.84, 0.44, 1"
+                  repeatCount="indefinite" />
+              <animate attributeName="stroke-opacity"
+                  begin="0s" dur="1.8s"
+                  values="1; 0"
+                  calcMode="spline"
+                  keyTimes="0; 1"
+                  keySplines="0.3, 0.61, 0.355, 1"
+                  repeatCount="indefinite" />
+          </circle>
+          <circle cx="22" cy="22" r="1">
+              <animate attributeName="r"
+                  begin="-0.9s" dur="1.8s"
+                  values="1; 20"
+                  calcMode="spline"
+                  keyTimes="0; 1"
+                  keySplines="0.165, 0.84, 0.44, 1"
+                  repeatCount="indefinite" />
+              <animate attributeName="stroke-opacity"
+                  begin="-0.9s" dur="1.8s"
+                  values="1; 0"
+                  calcMode="spline"
+                  keyTimes="0; 1"
+                  keySplines="0.3, 0.61, 0.355, 1"
+                  repeatCount="indefinite" />
+          </circle>
+      </g>
+  </svg>
 </template>
 
 <script>
 export default {
-  mounted () {
-    const canvas = this.$el.children[0]
-    const context = canvas.getContext('2d')
-
-    const radius = canvas.width / 3
-    const angleStep = Math.PI * 2 / 360
-    let theta = 0
-
-    const frequencyX = 5
-    const frequencyY = 5
-
-    window.requestAnimationFrame(draw)
-
-    function draw () {
-      context.setTransform(1, 0, 0, 1, 0, 0)
-      context.clearRect(0, 0, canvas.width, canvas.height)
-
-      context.setTransform(1, 0, 0, 1, canvas.width / 2, canvas.height / 2)
-      context.beginPath()
-
-      for (let angle = 0; angle < Math.PI * 2; angle += angleStep) {
-        const x = Math.sin(angle * frequencyX + theta) * Math.cos(angle + theta) * radius
-        const y = Math.cos(angle * frequencyY) * Math.sin(angle + theta) * radius
-        if (angle === 0) {
-          context.moveTo(x, y)
-        } else {
-          context.lineTo(x, y)
-        }
-      }
-
-      context.lineWidth = 2
-      context.strokeStyle = 'hsl(150,80%,50%)'
-      context.stroke()
-      context.miterLimit = 0.1
-      context.closePath()
-
-      theta += 0.04
-      window.requestAnimationFrame(draw)
-    }
-  }
 }
 </script>
-
-<style lang="stylus">
-canvas
-  position relative
-  left 0
-  right 0
-  margin auto
-</style>
