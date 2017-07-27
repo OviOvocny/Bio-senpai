@@ -43,7 +43,6 @@
 import API from 'api'
 import isotope from 'vueisotope'
 import anilistAnime from '@/components/anilist-anime'
-import nano from '@/scripts/nano-scroll'
 
 let suggestionCount = 0
 
@@ -163,8 +162,9 @@ export default {
     },
     handleSuggestion (e) {
       if (e.target.nodeName === 'BUTTON' || e.target.nodeName === 'A') return
+      this.results = []
+      this.hentai = false
       let target = findAncestor(e.target, 'tl')
-      nano(this.$refs.currentAnchor.offsetTop - 80)
       new API('suggestions')
         .body({
           anime_id: parseInt(target.dataset.animeid),
@@ -174,11 +174,9 @@ export default {
         })
         .call('post')
         .then(res => {
-          if (res.status === 200) {
-            this.$emit('ticker', 'Máme to, díky!', 'emoticon')
-            this.fetchData()
-            setTimeout(this.$refs.iso.layout, 500)
-          }
+          this.$emit('ticker', 'Máme to, díky!', 'emoticon')
+          this.fetchData()
+          setTimeout(this.$refs.iso.layout, 500)
         })
         .catch(err => {
           console.error(err)
