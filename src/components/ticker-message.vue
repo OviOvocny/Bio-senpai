@@ -5,6 +5,7 @@
         <icon :symbol="tickerIcon"></icon>
         {{ticker}}
       </span>
+      <btn v-for="b in buttons" :key="b.label" :icon="b.icon" @click="b.action">{{b.label}}</btn>
       <btn force-small @click="$emit('ignore')" icon="check"></btn>
     </div>
   </transition>
@@ -14,13 +15,18 @@
 export default {
   props: {
     ticker: [String, Boolean],
-    tickerIcon: String
+    tickerIcon: String,
+    buttons: Array,
+    tickerTimeout: {
+      type: Number,
+      default: 5000
+    }
   },
   updated () {
     if (this.ticker) {
       setTimeout(() => {
         this.$emit('ignore')
-      }, 5000)
+      }, this.tickerTimeout)
     }
   }
 }

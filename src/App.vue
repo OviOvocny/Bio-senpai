@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <error :error="error" @retry="reFetchView" @ignore="error = false"></error>
-    <ticker :ticker="ticker" :tickerIcon="tickerIcon" @ignore="ticker = false"></ticker>
+    <ticker :ticker="ticker" :tickerIcon="tickerIcon" :buttons="tickerButtons" @ignore="ticker = false" :tickerTimeout="tickerTimeout"></ticker>
     <bio-header @error="updateError">
       <bio-nav :items="navItems"></bio-nav>
     </bio-header>
@@ -54,7 +54,9 @@ export default {
       backdropParameters: {},
       error: false,
       ticker: false,
-      tickerIcon: ''
+      tickerIcon: '',
+      tickerButtons: [],
+      tickerTimeout: 5000
     }
   },
   computed: {
@@ -69,9 +71,11 @@ export default {
     updateError (val = false) {
       this.error = val
     },
-    updateTicker (msg = false, icon = '') {
+    updateTicker (msg = false, icon = '', timeout = 5000, buttons = []) {
       this.ticker = msg
       this.tickerIcon = icon
+      this.tickerButtons = buttons
+      this.tickerTimeout = timeout
     },
     updateBackdrop (src = '', params = {}) {
       this.backdropImage = src
@@ -103,6 +107,20 @@ export default {
   watch: {
     '$route' (to, from) {
       this.retryPending()
+      if (document.body.classList.contains('outdated-sw')) {
+        this.updateTicker(
+          'Pro dokončení aktualizace znovu načtěte stránku',
+          'update',
+          60000,
+          [
+            {
+              label: 'Aktualizovat',
+              icon: 'reload',
+              action: () => window.location.reload()
+            }
+          ]
+        )
+      }
       switch (to.name) {
         case 'Překlad':
           this.routeTransition = 'zoom'
