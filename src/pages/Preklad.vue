@@ -50,7 +50,7 @@
           </div>
         </div>
         <transition-group name="list" tag="div" class="episode-list">
-          <div class="episode" v-if="eps.done === 1 && !project.single_type" key="film">
+          <div class="episode" v-if="eps.total === 1 && !project.single_type" key="film">
             Film
             <div class="episode-actions">
               <a tabindex="-1" :href="`//data.bio-senpai.tk/data/${project.url_title}/[Bio-senpai] ${project.title}.ass`" download>
