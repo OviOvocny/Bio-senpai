@@ -56,9 +56,12 @@
           </router-link>
         </div>
         <div class="yoimiru__ep" v-for="ep in home.podcast">
-          <h3>{{ep.epName}}</h3>
-          <p v-html="ep.epDesc"></p>
-          <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
+          <cl-image :src="'podcast/icons/' + ep.file.substr(0, ep.file.length - 4)" width="80"></cl-image>
+          <div>
+            <h3>{{ep.epName}}</h3>
+            <p v-html="ep.epDesc"></p>
+            <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
+          </div>
         </div>
       </div>
       <div class="top-grid--area top-grid__tegami">
@@ -252,6 +255,18 @@ bgcolor = #1e2430
 @media (max-width: 1000px)
   .yoimiru__flex h2
     display none
+
+.yoimiru__ep
+  display flex
+  margin 1.5em 0
+  img
+    margin-right 1em
+    width 100%
+    max-height 80px
+    max-width 80px
+    border-radius 5px
+  h3
+    margin 0
 
 .social-links
   display flex
