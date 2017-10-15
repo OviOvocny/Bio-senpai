@@ -2,7 +2,7 @@
   <section>
     <error :error="error" @retry="fetchData"></error>
     <div class="searchfield-wrap">
-      <input class="searchfield" type="text" v-model="search" @input="$refs.iso.filter('text')" placeholder="Vyhledat..." autofocus>
+      <input class="searchfield" type="text" v-model="search" @input="$refs.iso.filter('text')" placeholder="Vyhledat..." >
       <div class="switches" v-show="search === ''">
         <fieldset class="radio-group">
           <input type="radio" v-model="category" value="bio" id="category-bio">
