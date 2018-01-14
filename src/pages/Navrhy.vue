@@ -41,6 +41,7 @@
 
 <script>
 import API from 'api'
+import { anilistAPISearch } from '@/scripts/anilist'
 import isotope from 'vueisotope'
 import anilistAnime from '@/components/anilist-anime'
 
@@ -125,21 +126,21 @@ export default {
       }
       // Get results from anilist
       this.$emit('error', false)
-      new API(`anilist/search?query=${this.anilistSearch}`)
-        .call()
+      anilistAPISearch(this.anilistSearch)
         .then(res => {
-          if (res.results.length > 0) {
-            let results = []
+          const data = res.data.Page
+          const pageInfo = data.pageInfo
+          const media = data.media
+          if (pageInfo.total > 0) {
             let hiddenCount = 0
-            this.hentai = res.results.filter(r => r.adult).length > 0
-            res.results.forEach(r => {
-              if (this.suggestions.map(s => s.anime_id).includes(r.id) || this.accepted.includes(r.id)) {
+            this.hentai = media.filter(anime => anime.isAdult).length > 0
+            media.forEach(anime => {
+              if (this.suggestions.map(s => s.anime_id).includes(anime.id) || this.accepted.includes(anime.id)) {
                 hiddenCount++
               } else {
-                results.push(r)
+                this.results.push(anime)
               }
             })
-            this.results = results
             if (hiddenCount > 0) {
               this.$emit('ticker', `Skryli jsme již navrhnuté nebo přijaté výsledky (${hiddenCount})`)
             }
