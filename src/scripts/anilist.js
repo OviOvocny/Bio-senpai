@@ -19,6 +19,9 @@ query ($id: Int, $page: Int, $perPage: Int = 10, $search: String) {
       format
       episodes
       isAdult
+      coverImage {
+        large
+      }
       bannerImage
     }
   }

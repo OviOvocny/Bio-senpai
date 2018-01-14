@@ -17,7 +17,7 @@
       </form>
       <p class="center-text" v-if="hentai">Ano, ty růžové jsou <span class="hentai"><icon symbol="brightness-3"></icon> hentai</span>. To je jen pro vaši informaci, nebojte se je navrhnout.</p>
       <isotope ref="searchiso" :list="results" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden}" v-show="results.length > 0">
-        <anilist-anime v-for="result in results" :key="result.id" :id="result.id" @done="resultDone" @click.native="handleSuggestion"></anilist-anime>
+        <anilist-anime v-for="result in results" :key="result.id" :anime="result" @done="resultDone" @click.native="handleSuggestion"></anilist-anime>
       </isotope>
     </div>
     <!-- Current suggestions -->
@@ -32,7 +32,7 @@
       </div>
       <isotope ref="iso" :list="suggestions" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden}" v-show="suggestions.length > 0">
         <a class="tl-link" v-for="suggestion in suggestions" :data-dbid="suggestion.id" :key="suggestion.id" :href="'https://anilist.co/anime/' + suggestion.anime_id">
-          <anilist-anime :id="suggestion.anime_id" :status="suggestion.status" @done="cardDone"></anilist-anime>
+          <anilist-anime :anime="createAnimeObject(suggestion)" :status="suggestion.status" @done="cardDone"></anilist-anime>
         </a>
       </isotope>
     </div>
@@ -99,6 +99,15 @@ export default {
     this.fetchData()
   },
   methods: {
+    createAnimeObject (s) {
+      return {
+        id: s.anime_id,
+        title: {
+          romaji: s.title
+        }
+        bannerImage: s.coverArt
+      }
+    },
     // Get current suggestions
     fetchData () {
       this.$emit('error', false)

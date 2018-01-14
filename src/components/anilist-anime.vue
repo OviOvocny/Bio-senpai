@@ -1,7 +1,7 @@
 <template>
-    <div :style='{background: bg}' class="tl" @mousemove.passive="tilt" :data-animeID="id" :data-coverArt="banner">
+    <div :style='{background: bg}' class="tl" @mousemove.passive="tilt" :data-animeID="anime.id" :data-coverArt="banner">
       <div class="title">
-        <span :class="{hentai: anilistData.adult}"><icon v-if="anilistData.adult" symbol="brightness-3"></icon> <span class="anime_title">{{anilistData.title_romaji}}</span></span>
+        <span :class="{hentai: anime.isAdult}"><icon v-if="anime.isAdult" symbol="brightness-3"></icon> <span class="anime_title">{{anime.title.romaji}}</span></span>
         <div class="how-to" v-if="status === undefined">Kliknutím navrhnete</div>
       </div>
       <div class="tl-info">
@@ -10,7 +10,7 @@
           {{currentStatus}}
         </div>
         <div v-else class="preview">
-          <a :href="'https://anilist.co/anime/' + this.id">
+          <a :href="'https://anilist.co/anime/' + anime.id">
             <btn>Detail</btn>
           </a>
         </div>
@@ -26,26 +26,24 @@ import tilt from '@/scripts/tilt'
 import API from 'api'
 export default {
   props: {
-    id: Number,
+    anime: Object,
     status: Number
   },
   data () {
-    return {
-      anilistData: {}
-    }
+    return {}
   },
   computed: {
     banner () {
-      return this.anilistData.image_url_banner ? this.anilistData.image_url_banner : this.anilistData.image_url_lge
+      return this.anime.bannerImage ? this.anime.bannerImage : this.coverImage.large
     },
     bg () {
       return `linear-gradient(45deg, rgba(30,36,48,0.8), rgba(30,36,48,0.733), rgba(30,36,48,0.6)), url(${this.banner}) center / cover`
     },
     episodes () {
-      if (this.anilistData.type === 'Movie') {
+      if (this.anime.format === 'MOVIE') {
         return 'Film'
       } else {
-        return this.anilistData.total_episodes
+        return this.anime.episodes
       }
     },
     currentStatus () {
@@ -70,23 +68,8 @@ export default {
       }
     }
   },
-  created () {
-    this.fetchData()
-  },
   methods: {
-    tilt,
-    fetchData () {
-      const id = this.id
-      new API(`anilist/show?id=${id}`)
-        .call()
-        .then(res => {
-          this.anilistData = res.anime
-          this.$emit('done')
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
+    tilt
   }
 }
 </script>
