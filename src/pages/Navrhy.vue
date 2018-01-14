@@ -16,8 +16,8 @@
         <input type="submit" value="Hledat">
       </form>
       <p class="center-text" v-if="hentai">Ano, ty růžové jsou <span class="hentai"><icon symbol="brightness-3"></icon> hentai</span>. To je jen pro vaši informaci, nebojte se je navrhnout.</p>
-      <isotope ref="searchiso" :list="results" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden}" v-show="results.length > 0">
-        <anilist-anime v-for="result in results" :key="result.id" :anime="result" @done="resultDone" @click.native="handleSuggestion"></anilist-anime>
+      <isotope ref="searchiso" :list="results" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden}" v-if="results.length > 0">
+        <anilist-anime v-for="result in results" :key="result.id" :anime="result" @done="resultDone" @suggested="handleSuggestion"></anilist-anime>
       </isotope>
     </div>
     <!-- Current suggestions -->
@@ -31,9 +31,7 @@
         <input class="searchfield" type="text" v-model="search" @input="$refs.iso.filter('text')" placeholder="Prohledat navržené...">
       </div>
       <isotope ref="iso" :list="suggestions" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden}" v-show="suggestions.length > 0">
-        <a class="tl-link" v-for="suggestion in suggestions" :data-dbid="suggestion.id" :key="suggestion.id" :href="'https://anilist.co/anime/' + suggestion.anime_id">
-          <anilist-anime :anime="createAnimeObject(suggestion)" :status="suggestion.status" @done="cardDone"></anilist-anime>
-        </a>
+          <anilist-anime v-for="suggestion in suggestions" :data-dbid="suggestion.id" :key="suggestion.id" :anime="createAnimeObject(suggestion)" :status="suggestion.status" @done="cardDone"></anilist-anime>
       </isotope>
     </div>
   </section>
@@ -46,13 +44,6 @@ import isotope from 'vueisotope'
 import anilistAnime from '@/components/anilist-anime'
 
 let suggestionCount = 0
-
-function findAncestor (el, cls) {
-  while (!el.classList.contains(cls)) {
-    el = el.parentElement
-  }
-  return el
-}
 
 export default {
   submenu: ['Projekty', 'Návrhy', 'Podcast'],
@@ -109,7 +100,8 @@ export default {
           large: s.coverArt || ''
         },
         episodes: s.eps || 0,
-        format: s.format || 'TV'
+        format: s.format || 'TV',
+        isAdult: s.isAdult
       }
     },
     // Get current suggestions
@@ -142,7 +134,6 @@ export default {
       anilistAPISearch(this.anilistSearch)
         .then(res => {
           const data = res.data.data.Page
-          console.log(data)
           const pageInfo = data.pageInfo
           const media = data.media
           if (pageInfo.total > 0) {
@@ -175,16 +166,19 @@ export default {
     resultDone () {
       this.$refs.searchiso.layout()
     },
-    handleSuggestion (e) {
-      if (e.target.nodeName === 'BUTTON' || e.target.nodeName === 'A') return
+    handleSuggestion (anime, banner) {
+      console.log(anime)
       this.results = []
       this.hentai = false
-      let target = findAncestor(e.target, 'tl')
+      this.anilistSearch = ''
       new API('suggestions')
         .body({
-          anime_id: parseInt(target.dataset.animeid),
-          coverArt: target.dataset.coverart,
-          title: target.querySelector('.anime_title').innerHTML,
+          anime_id: anime.id,
+          coverArt: banner,
+          title: anime.title.romaji,
+          eps: anime.episodes,
+          format: anime.format,
+          isAdult: anime.isAdult,
           status: 0
         })
         .call('post')

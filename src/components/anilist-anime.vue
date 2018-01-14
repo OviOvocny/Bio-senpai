@@ -1,8 +1,8 @@
 <template>
-    <div :style='{background: bg}' class="tl" @mousemove.passive="tilt" :data-anime="anime" :data-coverArt="banner">
+  <a :href="'https://anilist.co/anime/' + anime.id" class="tl-link">
+    <div :style='{background: bg}' class="tl" @mousemove.passive="tilt">
       <div class="title">
         <span :class="{hentai: anime.isAdult}"><icon v-if="anime.isAdult" symbol="brightness-3"></icon> <span class="anime_title">{{anime.title.romaji}}</span></span>
-        <div class="how-to" v-if="status === undefined">Kliknutím navrhnete</div>
       </div>
       <div class="tl-info">
         <div v-if="status !== undefined" class="status" :style="{color: statusColor}">
@@ -10,15 +10,14 @@
           {{currentStatus}}
         </div>
         <div v-else class="preview">
-          <a :href="'https://anilist.co/anime/' + anime.id">
-            <btn>Detail</btn>
-          </a>
+          <btn @click.native="suggest">Navrhnout</btn>
         </div>
         <div class="eps">
           {{episodes}}
         </div>
       </div>
     </div>
+  </a>
 </template>
 
 <script>
@@ -68,7 +67,12 @@ export default {
     }
   },
   methods: {
-    tilt
+    tilt,
+    suggest (e) {
+      e.stopPropagation()
+      e.preventDefault()
+      this.$emit('suggested', this.anime, this.banner)
+    }
   }
 }
 </script>
