@@ -29,15 +29,15 @@ query ($id: Int, $page: Int, $perPage: Int = 10, $search: String) {
 `
 
 function anilistAPISearch (search, page = 1, perPage = 10) {
-	const body = JSON.stringify({
+  const body = {
     query: SEARCH,
     variables: {
-    	search,
-    	page,
-    	perPage
+      search,
+      page,
+      perPage
     }
-  })
-	return axios.post(url, body)
+  }
+  return axios.post(url, body)
 }
 
-export { aniListSearch }
+export { anilistAPISearch }

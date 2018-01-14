@@ -104,8 +104,12 @@ export default {
         id: s.anime_id,
         title: {
           romaji: s.title
-        }
-        bannerImage: s.coverArt
+        },
+        coverImage: {
+          large: s.coverArt || ''
+        },
+        episodes: s.eps || 0,
+        format: s.format || 'TV'
       }
     },
     // Get current suggestions
@@ -127,17 +131,18 @@ export default {
         })
     },
     fetchSearchResults () {
-      // Clear anilist serach grid if empty query
+      this.results = []
+      this.hentai = false
+      // End if no query
       if (this.anilistSearch === '') {
-        this.results = []
-        this.hentai = false
         return
       }
       // Get results from anilist
       this.$emit('error', false)
       anilistAPISearch(this.anilistSearch)
         .then(res => {
-          const data = res.data.Page
+          const data = res.data.data.Page
+          console.log(data)
           const pageInfo = data.pageInfo
           const media = data.media
           if (pageInfo.total > 0) {

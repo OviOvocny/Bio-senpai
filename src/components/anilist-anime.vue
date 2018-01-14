@@ -1,5 +1,5 @@
 <template>
-    <div :style='{background: bg}' class="tl" @mousemove.passive="tilt" :data-animeID="anime.id" :data-coverArt="banner">
+    <div :style='{background: bg}' class="tl" @mousemove.passive="tilt" :data-anime="anime" :data-coverArt="banner">
       <div class="title">
         <span :class="{hentai: anime.isAdult}"><icon v-if="anime.isAdult" symbol="brightness-3"></icon> <span class="anime_title">{{anime.title.romaji}}</span></span>
         <div class="how-to" v-if="status === undefined">Kliknutím navrhnete</div>
@@ -23,7 +23,6 @@
 
 <script>
 import tilt from '@/scripts/tilt'
-import API from 'api'
 export default {
   props: {
     anime: Object,
@@ -34,7 +33,7 @@ export default {
   },
   computed: {
     banner () {
-      return this.anime.bannerImage ? this.anime.bannerImage : this.coverImage.large
+      return this.anime.bannerImage ? this.anime.bannerImage : this.anime.coverImage.large
     },
     bg () {
       return `linear-gradient(45deg, rgba(30,36,48,0.8), rgba(30,36,48,0.733), rgba(30,36,48,0.6)), url(${this.banner}) center / cover`
