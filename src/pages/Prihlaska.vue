@@ -104,7 +104,6 @@
             <input required type="text" class="textInput" name="contact" id="contact" placeholder="Skype nebo e-mail">
             <bubble speaker="Ovi">
               Ozvu se Vám nejspíš já. Pokusím se Vás v zájmu ostatních přesvědčit, abyste se přidali k nám do skupinky na Skype, i když zadáte e-mail.
-              Pokud si nedáte říct, můžete se usídlit na našem Slacku, ovšem tam není (zatím?) moc živo.
             </bubble>
             <br>
             <label for="submitBtn"><span class="num">4</span> A je to!</label>
@@ -116,7 +115,7 @@
             Zdáte se být offline. Nebojte, i tak můžete napsat přihlášku, pošleme jí, až se připojíte.
           </p>
         </show-offline>
-        <bubble speaker="Bio-senpai" v-if="sugoi">Díky, jste skvělí! Ozveme se.</bubble>
+        <bubble speaker="Bio-senpai" v-if="sugoi">Díky, jste skvělí! Ozveme se do jednoho dne. Pokud ne, tak se asi Tegami urazil. V tom případě, prosíme, napiště do zpráv.</bubble>
         <div v-if="pending.length > 0" class="pending-applications">
           <p class="center-text">
             <icon symbol="alert"></icon>
@@ -197,10 +196,8 @@ export default {
         .body(data)
         .call('post')
         .then(res => {
-          if (res.status === 200) {
-            this.sugoi = true
-            this.$emit('ticker', 'Přihláška dorazila na centrálu!', 'emoticon')
-          }
+          this.sugoi = true
+          this.$emit('ticker', 'Přihláška dorazila na centrálu!', 'emoticon')
         })
         .catch(err => {
           console.error(err)
