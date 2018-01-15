@@ -170,8 +170,9 @@ export default {
 
 bgcolor = #1e2430
 
-@import url('https://fonts.googleapis.com/css?family=Unica+One|Noto+Sans&subset=latin-ext')
-@import url('//cdn.materialdesignicons.com/1.5.54/css/materialdesignicons.min.css')
+@import 'assets/font/noto-sans.css'
+@import 'assets/font/unica-one.css'
+@import '~mdi/css/materialdesignicons.min.css'
 
 green(l)
   hsl(150, 80%, l)
