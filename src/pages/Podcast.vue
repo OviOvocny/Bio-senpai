@@ -71,7 +71,6 @@ export default {
   },
   created () {
     this.fetchData()
-    this.$emit('update:backdrop', 'podcast/backdrop', {opacity: 15})
   },
   beforeRouteLeave (to, from, next) {
     this.$emit('update:backdrop', '')
