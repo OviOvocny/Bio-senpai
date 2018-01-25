@@ -53,7 +53,7 @@
           <div class="episode" v-if="eps.total === 1 && !project.single_type" key="film">
             Film
             <div class="episode-actions">
-              <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${project.url_title}/[Bio-senpai] ${project.title}.ass`" download>
+              <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${project.url_title}/%5BBio-senpai%5D%20${urlencode(project.title)}.ass`" download>
                 <btn icon="attachment"></btn>
               </a>
               <router-link tabindex="-1" :to="`/stream/${project.url_title}`">
@@ -64,7 +64,7 @@
           <div class="episode" v-else v-for="i in eps.done" :key="i">
             Epizoda {{i}}
             <div class="episode-actions">
-              <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${project.url_title}/[Bio-senpai] ${pad(i)} - ${project.title}.ass`" download>
+              <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${project.url_title}/%5BBio-senpai%5D%20${pad(i)}%20-%20${urlencode(project.title)}.ass`" download>
                 <btn icon="attachment"></btn>
               </a>
               <router-link tabindex="-1" :to="`/stream/${project.url_title}/${i}`">
@@ -105,6 +105,7 @@
 <script>
 import API from 'api'
 import spinner from '@/components/spinner'
+import urlencode from 'urlencode'
 export default {
   data () {
     return {
@@ -179,6 +180,7 @@ export default {
     }
   },
   methods: {
+    urlencode,
     pad (num) {
       return (String(num).length === 1) ? '0' + num : num
     },
