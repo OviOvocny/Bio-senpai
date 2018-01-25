@@ -31,7 +31,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env,
-      'API_BASE': JSON.stringify('api.bio-senpai.tk/api')
+      'API_BASE': JSON.stringify('api.bio-senpai.ovi.moe/api')
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
