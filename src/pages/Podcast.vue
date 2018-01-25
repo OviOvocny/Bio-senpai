@@ -95,7 +95,7 @@ export default {
         })
     },
     playEpisode (ep) {
-      this.$emit('update:audio', `//data.bio-senpai.tk/yoimiru/${ep.file}`)
+      this.$emit('update:audio', `//data.bio-senpai.ovi.moe/yoimiru/${ep.file}`)
       this.$emit('update:audio-meta', ep)
     },
     icon (file) {

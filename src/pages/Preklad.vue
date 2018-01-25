@@ -44,7 +44,7 @@
             <a tabindex="-1" :href="project.mega">
               <btn variant="red" icon="download">Přeložená videa</btn>
             </a>
-            <a tabindex="-1" :href="'//data.bio-senpai.tk/data/' + project.url_title + '/ass.zip'" download>
+            <a tabindex="-1" :href="'//data.bio-senpai.ovi.moe/data/' + project.url_title + '/ass.zip'" download>
               <btn icon="attachment">Všechny titulky</btn>
             </a>
           </div>
@@ -53,7 +53,7 @@
           <div class="episode" v-if="eps.total === 1 && !project.single_type" key="film">
             Film
             <div class="episode-actions">
-              <a tabindex="-1" :href="`//data.bio-senpai.tk/data/${project.url_title}/[Bio-senpai] ${project.title}.ass`" download>
+              <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${project.url_title}/[Bio-senpai] ${project.title}.ass`" download>
                 <btn icon="attachment"></btn>
               </a>
               <router-link tabindex="-1" :to="`/stream/${project.url_title}`">
@@ -64,7 +64,7 @@
           <div class="episode" v-else v-for="i in eps.done" :key="i">
             Epizoda {{i}}
             <div class="episode-actions">
-              <a tabindex="-1" :href="`//data.bio-senpai.tk/data/${project.url_title}/[Bio-senpai] ${pad(i)} - ${project.title}.ass`" download>
+              <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${project.url_title}/[Bio-senpai] ${pad(i)} - ${project.title}.ass`" download>
                 <btn icon="attachment"></btn>
               </a>
               <router-link tabindex="-1" :to="`/stream/${project.url_title}/${i}`">
