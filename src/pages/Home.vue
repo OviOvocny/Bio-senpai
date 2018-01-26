@@ -43,6 +43,10 @@
             <icon symbol="twitter"></icon>
             <span class="social-links__label">Twitter</span>
           </a>
+          <a href="//discord.gg/dcJ3E3y" class="social-links__discord">
+            <icon symbol="discord"></icon>
+            <span class="social-links__label">Discord</span>
+          </a>
         </div>
       </div>
       <div class="top-grid--area top-grid__yoimiru">
@@ -300,6 +304,10 @@ bgcolor = #1e2430
 .social-links__twitter
   color white
   background-color #1da1f2
+  border 2px solid darken(@background-color, 50%)
+.social-links__discord
+  color white
+  background-color #7289da
   border 2px solid darken(@background-color, 50%)
 
 .top-grid__tegami
