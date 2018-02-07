@@ -75,6 +75,10 @@
         </transition-group>
         <div class="project-desc">
           <div v-html="project.desc"></div>
+          <div class="release-info" v-if="project.release">
+            <icon symbol="help-circle"></icon>
+            Externí titulky pro vydání {{project.release}}
+          </div>
           <div class="relatives" v-if="project.relatives">
             <div class="prequels" v-if="project.relatives.prequels">
               <h3>Předcházející:</h3>
@@ -277,6 +281,11 @@ bgcolor = #1e2430
   padding 1em
   grid-area desc
   -ms-grid-column 2
+
+.release-info
+  //font-size .9em
+  color #4e5460
+  margin-top 1em
 
 .episode-list
   padding 1em
