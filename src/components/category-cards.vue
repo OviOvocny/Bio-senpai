@@ -40,10 +40,14 @@ export default {
     background-color hsl(150, 80%, 40%)
 
 .card-category__icon
+  display inline-block
   background-color #1e2430
   color white
-  padding .4em
   font-size 2em
+  vertical-align top
+  width @font-size
+  height @width
+  padding-top (@height / 8)
   border-radius @font-size
   margin-bottom .35em
   transition background-color .3s, color.2s
