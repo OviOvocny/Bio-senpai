@@ -27,9 +27,33 @@
       </div>
     </div>
 
-    <div class="top-grid">
-      <div class="top-grid--area top-grid__social">
+    <div class="top-modules">
+      <div class="top-modules--area top-modules__yoimiru">
+        <div class="yoimiru__flex">
+          <div class="yoimiru__flex">
+            <svg class="yoimiru__logo" xmlns="http://www.w3.org/2000/svg" width="40" viewBox="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink"><desc>Yoimiru logo</desc><g fill="#1e2430" transform="translate(30 30)"><clipPath id="a" clip-rule="evenodd"><path d="M-30-30h60v60h-60v-60z"/></clipPath><g clip-path="url(#a)"><use xlink:href="#b" transform="translate(-22 -21)"/><use xlink:href="#c" transform="translate(.5 -19.5)"/><use xlink:href="#d" transform="translate(7.5 -18)"/></g></g><defs><path id="b" d="M4 39L0 0l7 .5L21 29c-2.4 4.6-4.2 7-8.5 10H4z"/><path id="c" d="M7 .5L0 0l5.5 13.5L7 .5z"/><path id="d" d="M11.5 39l3-39h-2C6.5 23.6 3.8 31.8 0 38l11.5 1z"/></defs></svg>
+            <h2>Nejnovější epizody podcastu</h2>
+          </div>
+          <router-link to="/podcast">
+            <btn icon="radio">Podcast</btn>
+          </router-link>
+        </div>
+        <div class="yoimiru__episodes">
+          <div class="yoimiru__ep" v-for="ep in home.podcast">
+            <div class="yoimiru__ep-flex">
+              <cl-image :src="'podcast/icons/' + ep.file.substr(0, ep.file.length - 4)" width="160"></cl-image>
+              <div class="yoimiru__ep-header">
+                <h3>{{ep.epName}}</h3>
+                <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
+              </div>
+            </div>
+            <p v-html="ep.epDesc"></p>
+          </div>
+        </div>
+      </div>
+      <div class="top-modules--area top-modules__social">
         <h2>Pojďte prohodit pár slov</h2>
+        <p></p>
         <div class="social-links">
           <router-link to="/kontakt" class="social-links__native">
             <icon symbol="message"></icon>
@@ -48,51 +72,9 @@
             <span class="social-links__label">Discord</span>
           </a>
         </div>
-      </div>
-      <div class="top-grid--area top-grid__yoimiru">
-        <div class="yoimiru__flex">
-          <div class="yoimiru__flex">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" viewBox="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink"><desc>Yoimiru logo</desc><g fill="#1e2430" transform="translate(30 30)"><clipPath id="a" clip-rule="evenodd"><path d="M-30-30h60v60h-60v-60z"/></clipPath><g clip-path="url(#a)"><use xlink:href="#b" transform="translate(-22 -21)"/><use xlink:href="#c" transform="translate(.5 -19.5)"/><use xlink:href="#d" transform="translate(7.5 -18)"/></g></g><defs><path id="b" d="M4 39L0 0l7 .5L21 29c-2.4 4.6-4.2 7-8.5 10H4z"/><path id="c" d="M7 .5L0 0l5.5 13.5L7 .5z"/><path id="d" d="M11.5 39l3-39h-2C6.5 23.6 3.8 31.8 0 38l11.5 1z"/></defs></svg>
-            <h2>Nejnovější epizody</h2>
-          </div>
-          <router-link to="/podcast">
-            <btn icon="radio">Podcast</btn>
-          </router-link>
+        <div class="tegami-link">
+          <router-link to="/tegami"><icon symbol="robot"></icon> Sháníte našeho retardovaného chat bota?</router-link>
         </div>
-        <div class="yoimiru__ep" v-for="ep in home.podcast">
-          <cl-image :src="'podcast/icons/' + ep.file.substr(0, ep.file.length - 4)" width="80"></cl-image>
-          <div>
-            <h3>{{ep.epName}}</h3>
-            <p v-html="ep.epDesc"></p>
-            <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
-          </div>
-        </div>
-      </div>
-      <div class="top-grid--area top-grid__tegami">
-        <h2>Tegami – umělá demence</h2>
-        <p>
-          Náš chat bot Tegami se za umělou inteligenci označit nedá, ale i tak jej máme rádi.
-          Bez něj bychom si ani nevšimli, že nám píšete zprávy nebo navrhujete anime k překladu.
-          <b>Pokud byste od něj také chtěli dostávat oznámení, můžete si ho přidat do kontaktů tlačítky dole.</b>
-        </p>
-        <div>
-          <a href="https://join.skype.com/bot/283f634c-6815-4bcb-a3c9-4b711cb35665">
-            <btn icon="skype">
-              <span class="bot-btn-long-label">Přidat kontakt na Skype</span>
-              <span class="bot-btn-short-label">Skype</span>
-            </btn>
-          </a>
-        </div>
-        <div>
-          <a href="https://www.messenger.com/t/1642204556087603">
-            <btn icon="facebook-messenger">
-              <span class="bot-btn-long-label">Kontaktovat na Messengeru</span>
-              <span class="bot-btn-short-label">Messenger</span>
-            </btn>
-          </a>
-        </div>
-        <router-link class="tegami__details" to="/tegami">Podrobnosti o botu</router-link>
-        <cl-image src="mascot/bot" :params="{width: 150, angle: 'hflip'}" class="tegami__mascot"></cl-image>
       </div>
     </div>
 
@@ -199,78 +181,65 @@ export default {
 <style lang="stylus">
 bgcolor = #1e2430
 
-.top-grid
-  display grid
-  margin-bottom 2em
-  // grid-gap 1em
-  // grid-template-areas "yoimiru social" "yoimiru tegami"
-
-// @media (max-width: 850px)
-//   .top-grid
-//     grid-template-areas "social" "yoimiru" "tegami"
-
-.top-grid--area
-  position relative
-  background-color white
-  border-radius 15px
+.top-modules--area
+  background-color #efefef
   color bgcolor
   padding 1em
-
-.top-grid__yoimiru
-  // grid-area yoimiru
-  grid-column 1
-  grid-row-start 1
-  grid-row span 2
-  -ms-grid-row-span 2
-  margin-right 1em
-  svg
-    margin-right .5em
-.top-grid__social
-  // grid-area social
-  grid-column 2
-  grid-row-start 1
+  border-radius 15px
   margin-bottom 1em
-.top-grid__tegami
-  // grid-area tegami
-  grid-column 2
-  grid-row-start 2
 
-@media (max-width: 850px)
-  .top-grid__yoimiru
-    grid-column 1
-    grid-row-start 2
-    grid-row span 1
-    -ms-grid-row-span 1
-    margin-right 0
-    margin-bottom 1em
-  .top-grid__social
-    grid-column 1
-    grid-row-start 1
-  .top-grid__tegami
-    grid-column 1
-    grid-row-start 3
-
+.yoimiru__logo
+  margin-right 1em
 
 .yoimiru__flex
   display flex
   justify-content space-between
   align-items center
 
-@media (max-width: 1000px)
+@media (max-width: 600px)
   .yoimiru__flex h2
     display none
+    
+.yoimiru__episodes
+  display flex
+  justify-content space-between
+  flex-wrap wrap
 
 .yoimiru__ep
-  display flex
-  margin 1.5em 0
+  margin 1.5em
+  flex 1 1 20em
   img
     margin-right 1em
     width 100%
-    max-height 80px
-    max-width 80px
+    max-width 160px
+    max-height @max-width
     border-radius 5px
+    
+.yoimiru__ep-flex
+  display flex
+  
+.yoimiru__ep-header
+  position relative
+  width 100%
   h3
+    max-width 10em
+    font-size 1.7em
     margin 0
+  button
+    position absolute
+    bottom .2em
+    margin 0
+    margin-top .5em
+    
+@media (max-width: 500px)
+  .yoimiru__ep img
+    max-width 80px
+    max-height @max-width
+  .yoimiru__ep-header
+    h3
+      font-size 1.2em
+    button
+      position relative
 
 .social-links
   display flex
@@ -287,7 +256,7 @@ bgcolor = #1e2430
       color white
     &:hover
       border-color white
-@media (max-width: 410px)
+@media (max-width: 500px)
   .social-links__label
     display none
   .social-links > *
@@ -310,42 +279,12 @@ bgcolor = #1e2430
   background-color #7289da
   border 2px solid darken(@background-color, 50%)
 
-.top-grid__tegami
-  padding-bottom 30px
-  overflow hidden
-
-.tegami__mascot
-  position absolute
-  right 0
-  bottom -10%
-  transform-origin bottom
-  animation tegami 7s ease-in infinite
-@media (prefers-reduced-motion)
-  .tegami__mascot
-    animation none
-@keyframes tegami
-  50%, 78%
-    transform rotateZ(0) rotateY(0)
-  53%, 58%, 63%, 68%, 75%
-    transform rotateZ(0) rotateY(180deg)
-  55%, 60%, 65%
-    transform rotateZ(20deg) rotateY(180deg)
-
-.bot-btn-short-label
-  display none
-
-@media (max-width: 500px)
-  .tegami__mascot
-    display none
-  .bot-btn-short-label
-    display initial
-  .bot-btn-long-label
-    display none
-
-.tegami__details
-  padding 1em
-  padding-bottom 0
-  color hsl(150, 80%, 20%)
+.tegami-link
+  text-align right
+  padding .7em
+  a
+    text-decoration none
+  
 
 .top-news__grid
   article

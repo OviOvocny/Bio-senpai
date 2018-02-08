@@ -315,7 +315,7 @@ input[type=text], input[type=search], input[type=number]
 
 .checkboxIcons
   position absolute
-  top 0
+  top -.15em
   left 0
   transition transform 0.3s
   .mdi

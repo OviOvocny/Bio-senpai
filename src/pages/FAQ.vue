@@ -7,8 +7,9 @@
       A teď, když jsou tady, tak se na ně nejspíš ani nikdo nezeptá.
     </p>
     <p>
-      Pokud máte nějaký jiný dotaz nebo jen chcete něco říct, můžete využít stránku
-      <router-link to="/kontakt">kontakt</router-link>, napsat nám na
+      Pokud máte nějaký jiný dotaz nebo jen chcete něco říct, můžete využít
+      <router-link to="/zpravy">zprávy</router-link>, přijít si popovídat na
+      <a href="//discord.gg/dcJ3E3y">Discord</a>, případně nám napsat na
       <a href="//facebook.com/bio-senpai">Facebooku</a> nebo na nás
       <a href="//twitter.com/bio_senpai">tweetnout</a>.
     </p>
