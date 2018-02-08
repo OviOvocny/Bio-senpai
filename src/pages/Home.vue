@@ -53,6 +53,7 @@
       </div>
       <div class="top-modules--area top-modules__social">
         <h2>Pojďte prohodit pár slov</h2>
+        <p></p>
         <div class="social-links">
           <router-link to="/kontakt" class="social-links__native">
             <icon symbol="message"></icon>
@@ -70,6 +71,9 @@
             <icon symbol="discord"></icon>
             <span class="social-links__label">Discord</span>
           </a>
+        </div>
+        <div class="tegami-link">
+          <router-link to="/tegami"><icon symbol="robot"></icon> Sháníte našeho retardovaného chat bota?</router-link>
         </div>
       </div>
     </div>
@@ -275,42 +279,12 @@ bgcolor = #1e2430
   background-color #7289da
   border 2px solid darken(@background-color, 50%)
 
-.top-modules__tegami
-  padding-bottom 30px
-  overflow hidden
-
-.tegami__mascot
-  position absolute
-  right 0
-  bottom -10%
-  transform-origin bottom
-  animation tegami 7s ease-in infinite
-@media (prefers-reduced-motion)
-  .tegami__mascot
-    animation none
-@keyframes tegami
-  50%, 78%
-    transform rotateZ(0) rotateY(0)
-  53%, 58%, 63%, 68%, 75%
-    transform rotateZ(0) rotateY(180deg)
-  55%, 60%, 65%
-    transform rotateZ(20deg) rotateY(180deg)
-
-.bot-btn-short-label
-  display none
-
-@media (max-width: 500px)
-  .tegami__mascot
-    display none
-  .bot-btn-short-label
-    display initial
-  .bot-btn-long-label
-    display none
-
-.tegami__details
-  padding 1em
-  padding-bottom 0
-  color hsl(150, 80%, 20%)
+.tegami-link
+  text-align right
+  padding .7em
+  a
+    text-decoration none
+  
 
 .top-news__grid
   article
