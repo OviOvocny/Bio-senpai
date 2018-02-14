@@ -46,7 +46,7 @@ export default {
     },
     currentStatus () {
       switch (this.status) {
-        case -1: return 'Zámítá se'
+        case -1: return 'Nejpíš ne'
         case 0: return 'Rozmýšlíme to'
         case 1: return 'Přeložíme to'
       }
@@ -62,7 +62,7 @@ export default {
       switch (this.status) {
         case -1: return 'hsl(350, 80%, 50%)'
         case 0: return false
-        case 1: return 'hsl(150, 80%, 50%)'
+        case 1: return 'hsl(150, 70%, 60%)'
       }
     }
   },
