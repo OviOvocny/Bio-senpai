@@ -45,6 +45,7 @@ export default {
   color white
   font-size 2em
   vertical-align top
+  text-align center
   width @font-size
   height @width
   padding-top (@height / 8)
