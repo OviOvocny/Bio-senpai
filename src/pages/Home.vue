@@ -17,7 +17,7 @@
           <a tabindex="-1" :href="home.anime.mega">
             <btn variant="red" icon="download">Stáhnout video</btn>
           </a>
-          <a tabindex="-1" :href="`//data.bio-senpai.tk/data/${home.anime.url_title}/[Bio-senpai] ${pad(home.anime.eps.done)} - ${home.anime.title}.ass`" download>
+          <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${home.anime.url_title}/[Bio-senpai] ${pad(home.anime.eps.done)} - ${home.anime.title}.ass`" download>
             <btn icon="attachment">Externí titulky</btn>
           </a>
           <router-link :to="'/stream/' + home.anime.url_title + '/' + home.anime.eps.done">
@@ -161,7 +161,7 @@ export default {
       if (window.pageYOffset < window.innerHeight) this.$refs.topImage.$el.style.transform = `translateY(-${(20 - percent)}%)`
     },
     playEpisode (ep) {
-      this.$emit('update:audio', `//data.bio-senpai.tk/yoimiru/${ep.file}`)
+      this.$emit('update:audio', `//data.bio-senpai.ovi.moe/yoimiru/${ep.file}`)
       this.$emit('update:audio-meta', ep)
     },
     articleDate (timestamp) {
@@ -199,7 +199,7 @@ bgcolor = #1e2430
 @media (max-width: 600px)
   .yoimiru__flex h2
     display none
-    
+
 .yoimiru__episodes
   display flex
   justify-content space-between
@@ -214,10 +214,10 @@ bgcolor = #1e2430
     max-width 160px
     max-height @max-width
     border-radius 5px
-    
+
 .yoimiru__ep-flex
   display flex
-  
+
 .yoimiru__ep-header
   position relative
   width 100%
@@ -230,7 +230,7 @@ bgcolor = #1e2430
     bottom .2em
     margin 0
     margin-top .5em
-    
+
 @media (max-width: 500px)
   .yoimiru__ep img
     max-width 80px
@@ -284,7 +284,7 @@ bgcolor = #1e2430
   padding .7em
   a
     text-decoration none
-  
+
 
 .top-news__grid
   article
