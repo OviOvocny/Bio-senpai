@@ -1,6 +1,7 @@
 <template>
   <section>
     <cl-image 
+      v-show="entered"
       class="lolec" 
       :src="sendHover ? 'mascot/melt' : 'mascot/message'" 
       width="100" 
@@ -172,6 +173,7 @@ export default {
   submenu: ['Tým', 'Přidat se'],
   data () {
     return {
+      entered: false,
       category: 'preklad',
       sugoi: false,
       pending: [],
