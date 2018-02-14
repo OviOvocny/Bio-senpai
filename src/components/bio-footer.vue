@@ -3,7 +3,7 @@
       <div>
           <router-link to="/about" style="text-decoration:none">
             <div class="footer-title">Bio-senpai</div>
-            <div class="version">{{fHana}} | {{fVersion}}</div>
+            <div class="version" v-if="fHana">{{fHana}} | {{fVersion}}</div>
           </router-link>
       </div>
       <div style="text-align:right">
