@@ -1,9 +1,16 @@
 <template>
   <section>
+    <cl-image 
+      class="lolec" 
+      :src="sendHover ? 'mascot/melt' : 'mascot/message'" 
+      width="100" 
+      :params="{angle: 180}"
+      :style="{animation: mascotAnim}"
+    ></cl-image>
     <h2>Ahoj!</h2>
     <p>
       Máte zájem pomoci našemu skromnému týmu? Pokud ano, stačí si přečíst něco málo o rolích v týmu, které můžete zaujmout. <br>
-      Pokud už máte jasno o tom, co byste spolu s námi chtěli dělat, můžete rovnou vyplnit naší <a @click.prevent="scrollToForm" href="#formular">jednoduchou přihlášku</a> dole. Opravdu, jednodušší přihlášku nikde jinde nenajdete.
+      Pokud už máte jasno o tom, co byste spolu s námi chtěli dělat, můžete rovnou vyplnit naší <a @click.prevent="scrollToForm" href="#formular">super extra jednoduchou přihlášku</a> dole nebo se <a href="//discord.gg/dcJ3E3y">připojit k nám na Discord</a> a napsat nám tam.
     </p>
 
     <bubble speaker="Ovi">Jeden z mnoha benefitů: {{benefit.pitch}}</bubble>
@@ -72,6 +79,8 @@
 
         <h2>Přihláška</h2>
 
+        <p>Ještě jednou, pokud jste to přehlédli. Pokud nechcete vyplňovat ani takový malinkatý formulář, můžete se jednoduše <a href="//discord.gg/dcJ3E3y">připojit k nám na Discord</a> a napsat nám tam, co byste u nás chtěli dělat. Případně nedělat.</p>
+
         <form @submit.prevent="handleApplication">
             <label for="name"><span class="num">1</span> Jak Vám máme říkat?</label>
             <input required type="text" class="textInput" name="name" id="name" ref="name" placeholder="Jméno nebo přezdívka...">
@@ -103,11 +112,16 @@
             <label for="contact"><span class="num">3</span> Kontakt na Vás</label>
             <input required type="text" class="textInput" name="contact" id="contact" placeholder="Skype nebo e-mail">
             <bubble speaker="Ovi">
-              Ozvu se Vám nejspíš já. Pokusím se Vás v zájmu ostatních přesvědčit, abyste se přidali k nám do skupinky na Skype, i když zadáte e-mail.
+              Ozvu se Vám nejspíš já. Pokusím se Vás v zájmu ostatních přesvědčit, abyste se přidali k nám do skupinky na Skype nebo na Discord, i když zadáte e-mail.
             </bubble>
             <br>
             <label for="submitBtn"><span class="num">4</span> A je to!</label>
-            <input type="submit" id="submitBtn" value="Poslat">
+            <input 
+              type="submit" 
+              id="submitBtn" 
+              value="Poslat" 
+              @mouseenter="sendHover = true" 
+              @mouseleave="sendHover = false">
         </form>
         <show-offline>
           <p>
@@ -115,7 +129,7 @@
             Zdáte se být offline. Nebojte, i tak můžete napsat přihlášku, pošleme jí, až se připojíte.
           </p>
         </show-offline>
-        <bubble speaker="Bio-senpai" v-if="sugoi">Díky, jste skvělí! Ozveme se do jednoho dne. Pokud ne, tak se asi Tegami urazil. V tom případě, prosíme, napiště do zpráv.</bubble>
+        <bubble speaker="Bio-senpai" v-if="sugoi">Díky, jste skvělí! Ozveme se do jednoho dne. Pokud ne, tak se asi Tegami urazil. V tom případě, prosíme, napiště do zpráv nebo na Discord.</bubble>
         <div v-if="pending.length > 0" class="pending-applications">
           <p class="center-text">
             <icon symbol="alert"></icon>
@@ -140,7 +154,7 @@
 let benefits = [
   {pitch: 'Pět týdnů volna!', response: 'Taxi kok?'},
   {pitch: 'Neplacená nedovolená!', response: 'Taxi kok?'},
-  {pitch: 'Motivace zdarma!', response: 'Tak, tak.'},
+  {pitch: 'Motivace zdarma!', response: 'Asi jasný.'},
   {pitch: 'Seznam benefitů!', response: 'To je ale blbost, co?'},
   {pitch: 'Značka pro lenochy!', response: 'No výborně!'}
 ]
@@ -160,7 +174,8 @@ export default {
     return {
       category: 'preklad',
       sugoi: false,
-      pending: []
+      pending: [],
+      sendHover: false
     }
   },
   computed: {
@@ -169,6 +184,13 @@ export default {
     },
     nameSuggestion () {
       return suggestions[Math.floor(Math.random() * suggestions.length)]
+    },
+    mascotAnim () {
+      if (this.sendHover) {
+        return 'vibrate .2s infinite'
+      } else {
+        return 'dance 1s alternate infinite'
+      }
     }
   },
   methods: {
@@ -235,6 +257,32 @@ export default {
 </script>
 
 <style lang="stylus">
+.lolec
+  position fixed
+  right 1vw
+  top 25px
+
+@media (orientation: portrait)
+  .lolec
+    display none
+
+@keyframes dance {
+  from, 49% { transform-origin: -50% 20%; }
+  50%, 75%, to { transform-origin: 150% 20%; }
+  25% { transform: rotate(10deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-10deg); }
+}
+
+vibrate-amount = 2px
+offset-vert = 15px
+@keyframes vibrate {
+  20% { transform: translate(vibrate-amount, 0 + offset-vert) }
+  40% { transform: translate(-(vibrate-amount), vibrate-amount + offset-vert) }
+  60% { transform: translate(0, -(vibrate-amount) + offset-vert) }
+  80% { transform: translate(-(vibrate-amount) * 2, 0 + offset-vert) }
+}
+
 .pending-application
   border 2px solid lighten(#1e2430, 20%)
   border-radius 15px
