@@ -24,7 +24,10 @@
       <transition-group-spring :stagger="60" from="top">
         <comment-thread v-for="(comment, index) in comments" :message="comment" :key="comment.id" :data-idx="index % 10" @reply="handleReply" @replyOpen="scrollToThread"></comment-thread>
       </transition-group-spring>
-      <infinite :on-infinite="fetchData" ref="infiniteLoading" spinner="waveDots">
+      <infinite :on-infinite="fetchData" ref="infiniteLoading">
+        <span slot="spinner">
+          <spinner></spinner>
+        </span>
         <span slot="no-more">
           <div style="color:white">Jste na konci. Nebo spíš na začátku.</div>
           <btn icon="arrow-up-bold" @click="elevator">Zpátky nahoru</btn>
@@ -40,6 +43,7 @@ import API from 'api'
 import comment from '@/components/comment'
 import commentThread from '@/components/comment-thread'
 import commentForm from '@/components/comment-form'
+import spinner from '@/components/spinner'
 import Infinite from 'vue-infinite-loading'
 import showOffline from '@/components/show-offline'
 import nano from '@/scripts/nano-scroll'
@@ -166,6 +170,7 @@ export default {
     comment,
     commentThread,
     commentForm,
+    spinner,
     Infinite,
     showOffline
   }
