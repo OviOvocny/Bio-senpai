@@ -7,8 +7,8 @@
           </router-link>
       </div>
       <div style="text-align:right">
-          <div><router-link to="/about">O webu / licence</router-link></div>
-          <div><a href="//codepen.io/Ovoce">Ovi</a> {{year}}</div>
+          <div><router-link to="/about">O webu a licence</router-link></div>
+          <div><a href="//www.ovi.moe">Ovi</a> {{year}}</div>
       </div>
   </footer>
 </template>
