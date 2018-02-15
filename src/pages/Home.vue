@@ -43,7 +43,7 @@
             <div class="yoimiru__ep-flex">
               <cl-image :src="'podcast/icons/' + ep.file.substr(0, ep.file.length - 4)" width="160"></cl-image>
               <div class="yoimiru__ep-header">
-                <h3>{{ep.epName}}</h3>
+                <h3 :class="{'long': isLong(ep.epName)}">{{ep.epName}}</h3>
                 <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
               </div>
             </div>
@@ -130,6 +130,9 @@ export default {
   methods: {
     pad (num) {
       return (String(num).length === 1) ? '0' + num : num
+    },
+    isLong (str) {
+      return str.length > 35
     },
     fetchData () {
       this.$emit('error', false)
@@ -223,8 +226,10 @@ bgcolor = #1e2430
   width 100%
   h3
     max-width 10em
-    font-size 1.7em
+    font-size 1.6em
     margin 0
+    &.long
+      font-size 1.3em
   button
     position absolute
     bottom .2em
