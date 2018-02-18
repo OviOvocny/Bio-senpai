@@ -26,7 +26,11 @@
       <img :src="icon(ep.file)" :alt="'Obal ' + ep.epName" @click="playEpisode(ep)">
       <div>
         <h3 class="ep-title">{{ep.epName}}</h3>
-        <p v-html="ep.epDesc"></p>
+        <p v-html="ep.epDesc">
+          <div v-if="ep.chapters">
+            <icon symbol="format-list-checks"></icon> Můžete přeskakovat na kapitoly
+          </div>
+        </p>
         <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
         Vydáno <b>{{date(ep.id)}}</b>
       </div>

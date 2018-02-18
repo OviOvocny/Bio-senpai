@@ -1,8 +1,24 @@
 <template>
   <div :class="['audio', {active}]">
     <audio :src="source" ref="audio" @loadedmetadata="updateMeta" @loadeddata="start" @timeupdate="updateTime"></audio>
+    <div :class="['audio-chapter-list', {'chlist-open': chapterList && active && metadata.chapters}]">
+      <ul class="chlist">
+        <li v-for="m in metadata.chapters" :class="{chcurrent: activeChapter === m}" @click="seek(m.time)">
+          <span class="chname">{{m.name}}</span>
+          <span class="chtime">
+            {{toHuman(m.time)}}
+            <span class="chend" v-if="m.duration > 0"> – {{toHuman(m.time + m.duration)}}</span>
+          </span>
+        </li>
+      </ul>
+    </div>
     <div class="audio-panel">
-      <div class="meta-title">{{metadata.epName}}</div>
+      <div class="meta-title">
+        <span>{{metadata.epName}}</span>
+        <button class="audio-button chapter-button" title="Kapitoly" @click="chapterList = !chapterList" v-if="metadata.chapters">
+          <icon symbol="format-list-checks"></icon> <span class="active-chapter" v-if="activeChapter">{{activeChapter.name}}</span>
+        </button>
+      </div>
       <div class="audio-controls">
         <span class="audio-timestamp">
           {{humanTime}}
@@ -26,6 +42,9 @@
       </div>
     </div>
     <div class="audio-time">
+      <div class="audio-markers" v-if="metadata.chapters && duration !== 0">
+        <div class="marker" v-for="m in metadata.chapters" :style="{left: mPercent(m.time) + '%'}" :title="m.name"></div>
+      </div>
       <input class="audio-scrubber" type="range" :min="0" :max="duration" :value="time" @input="seek" />
     </div>
     <div class="audio-cover">
@@ -51,6 +70,23 @@ function toHuman (time) {
   return `${min}:${sec}`
 }
 
+function index (arr, compare) {
+  let l = 0
+  let r = arr.length - 1
+  while (l <= r) {
+    let m = l + ((r - l) >> 1)
+    let comp = compare(arr[m])
+    if (comp < 0) {
+      l = m + 1
+    } else if (comp > 0) {
+      r = m - 1
+    } else {
+      return m
+    }
+  }
+  return l - 1
+}
+
 export default {
   props: {
     source: String,
@@ -61,7 +97,8 @@ export default {
       default () {
         return {
           epName: 'Žádné audio',
-          file: ''
+          file: '',
+          chapters: undefined
         }
       }
     }
@@ -70,7 +107,8 @@ export default {
     return {
       playing: false,
       time: 0,
-      duration: 0
+      duration: 0,
+      chapterList: false
     }
   },
   computed: {
@@ -82,6 +120,21 @@ export default {
     },
     humanDuration () {
       return toHuman(this.duration)
+    },
+    activeChapter () {
+      const ch = this.metadata.chapters
+      const i = index(ch, n => n.time - this.time)
+      const active = ch[i]
+      if (i >= 0 && this.time < active.time + active.duration) {
+        return active
+      } else {
+        const prev = ch.filter(c => c.time < this.time && c.time + c.duration > this.time)
+        if (prev.length > 0) {
+          return prev[prev.length - 1]
+        } else {
+          return false
+        }
+      }
     }
   },
   methods: {
@@ -97,7 +150,8 @@ export default {
       this.playing = !this.playing
     },
     seek (e) {
-      this.$refs.audio.currentTime = e.target.value
+      e = e.target ? e.target.value : e
+      this.$refs.audio.currentTime = e
     },
     updateTime (e) {
       this.time = e.target.currentTime
@@ -109,19 +163,32 @@ export default {
       this.duration = e.target.duration
     },
     handleKeyboard (e) {
+      const ch = this.metadata.chapters
       switch (e.keyCode) {
-        case 32:
+        case 32: // space
           e.preventDefault()
           this.playPause()
           break
-        case 37:
-          this.$refs.audio.currentTime = this.$refs.audio.currentTime - 5
+        case 37: // left
+          this.seek(this.time - 5)
           break
-        case 39:
-          this.$refs.audio.currentTime = this.$refs.audio.currentTime + 5
+        case 39: // right
+          this.seek(this.time + 5)
+          break
+        case 38: // up
+          const i = index(ch, n => n.time - this.time) - 1
+          if (i >= 0) this.seek(ch[i].time)
+          break
+        case 40: // down
+          const j = index(ch, n => n.time - this.time) + 1
+          if (j < ch.length) this.seek(ch[j].time)
           break
       }
-    }
+    },
+    mPercent (sec) {
+      return (100 / this.duration) * sec
+    },
+    toHuman
   },
   watch: {
     playing () {
@@ -252,6 +319,64 @@ eoe = cubic-bezier(0.190, 1.000, 0.220, 1.000)
   height 1em
   background-color pcolor
 
+.audio-markers
+  position absolute
+  left 1em
+  bottom 0
+  width 100%
+  width calc(100% - 2em)
+  height .3em
+  pointer-events none
+  z-index 0
+  .marker
+    position absolute
+    width 2px
+    height 100%
+    background-color alpha(white, 30%)
+
+.chapter-button
+  margin-left .25em
+  .active-chapter
+    font-family Noto Sans
+
+.audio-chapter-list
+  position fixed
+  bottom 0
+  left 0
+  width 100%
+  width calc(100% - 7em)
+  max-width 800px
+  padding 1em
+  padding-bottom 3em
+  margin-bottom 1em
+  margin-left 6em
+  border-radius 10px 10px 0 0
+  background-color alpha(pcolor, 95%)
+  transform translateY(100%)
+  transition transform .1s ease-in
+  &.chlist-open
+    transform translateY(0)
+    transition transform .5s eoe
+
+.chlist
+  list-style none
+  padding 0
+  margin 0
+  font-size .9em
+  li
+    display flex
+    justify-content space-between
+    margin-bottom .3em
+    cursor pointer
+    .chname
+      margin-right 1em
+    &:hover
+      color lighten(paccent, 30%)
+    &.chcurrent
+      color hsl(150, 80%, 60%)
+      .chname
+        font-weight bold
+
 thumb-style =
   width 2em
   height 1em
@@ -273,6 +398,7 @@ track-style =
   color transparent
 
 .audio-scrubber
+  position relative
   width 100%
   height 1em
   -webkit-appearance none

@@ -44,6 +44,9 @@
               <cl-image :src="'podcast/icons/' + ep.file.substr(0, ep.file.length - 4)" width="160"></cl-image>
               <div class="yoimiru__ep-header">
                 <h3 :class="{'long': isLong(ep.epName)}">{{ep.epName}}</h3>
+                <div v-if="ep.chapters" style="margin-top: .5em">
+                  <icon symbol="format-list-checks"></icon> Obsahuje kapitoly
+                </div>
                 <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
               </div>
             </div>
