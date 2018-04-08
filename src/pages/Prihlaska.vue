@@ -1,11 +1,10 @@
 <template>
   <section>
-    <cl-image 
+    <cl-image
       v-show="entered"
-      class="lolec" 
-      :src="sendHover ? 'mascot/melt' : 'mascot/message'" 
-      width="100" 
-      :params="{angle: 180}"
+      class="lolec"
+      :src="sendHover ? 'mascot/melt' : 'mascot/message'"
+      width="100"
       :style="{animation: mascotAnim}"
     ></cl-image>
     <h2>Ahoj!</h2>
@@ -117,11 +116,11 @@
             </bubble>
             <br>
             <label for="submitBtn"><span class="num">4</span> A je to!</label>
-            <input 
-              type="submit" 
-              id="submitBtn" 
-              value="Poslat" 
-              @mouseenter="sendHover = true" 
+            <input
+              type="submit"
+              id="submitBtn"
+              value="Poslat"
+              @mouseenter="sendHover = true"
               @mouseleave="sendHover = false">
         </form>
         <show-offline>
@@ -261,23 +260,24 @@ export default {
 <style lang="stylus">
 .lolec
   position fixed
-  right 1vw
-  top 25px
+  z-index 1
+  left 1vw
+  bottom -30px
 
 @media (orientation: portrait)
   .lolec
     display none
 
 @keyframes dance {
-  from, 49% { transform-origin: -50% 20%; }
-  50%, 75%, to { transform-origin: 150% 20%; }
+  from, 49% { transform-origin: 150% 100%; }
+  50%, 75%, to { transform-origin: -50% 100%; }
   25% { transform: rotate(10deg); }
   50% { transform: rotate(0deg); }
   75% { transform: rotate(-10deg); }
 }
 
 vibrate-amount = 2px
-offset-vert = 15px
+offset-vert = 0px
 @keyframes vibrate {
   20% { transform: translate(vibrate-amount, 0 + offset-vert) }
   40% { transform: translate(-(vibrate-amount), vibrate-amount + offset-vert) }

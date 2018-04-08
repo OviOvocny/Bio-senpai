@@ -73,6 +73,7 @@ export default {
     outline none
     transition-property border-color
     transition-duration: 0.5s
+    user-select none
     &:focus
       &:not(:hover)
         border-color currentColor

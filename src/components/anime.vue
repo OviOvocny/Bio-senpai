@@ -1,6 +1,6 @@
 <template>
     <div :style='{background: bg}' class="tl" @mousemove.passive="tilt">
-      <div class="title">{{data.title}}</div>
+      <div class="tl-title">{{data.title}}</div>
       <div class="tl-info">
         <div class="people">
           <div class="person" v-for="tl in data.team.tl">
@@ -76,7 +76,7 @@ export default {
     & > *
       transition none
       transform perspective(700px) translateY(calc(var(--parallax-y) * -1px)) translateX(calc(var(--parallax-x) * 1px))
-    .title
+    .tl-title
       text-shadow 0 0 1em // calc(var(--parallax-x) * -1px) calc(var(--parallax-y) * 1px) 1em
       transition box-shadow 0.2s
       transform perspective(700px) translateY(calc(var(--parallax-y) * -2px)) translateX(calc(var(--parallax-x) * 2px))
@@ -85,7 +85,7 @@ export default {
   .tl
     width 250px
 
-.title
+.tl-title
   position relative
   top 0
   padding 0.5em

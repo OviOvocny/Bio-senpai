@@ -2,12 +2,17 @@
   <div id="app">
     <error :error="error" @retry="reFetchView" @ignore="error = false"></error>
     <ticker :ticker="ticker" :tickerIcon="tickerIcon" :buttons="tickerButtons" @ignore="ticker = false" :tickerTimeout="tickerTimeout"></ticker>
-    <bio-header @error="updateError">
-      <bio-nav :items="navItems"></bio-nav>
-    </bio-header>
+    <bio-nav
+      :items="navItems"
+      :show="show"
+      :audioSource="audioSource"
+      :audioMetadata="audioMeta"
+      :podcast="audioActive"
+      @close="updateAudio"
+      autosave></bio-nav>
     <backdrop :src="backdropImage" :params="backdropParameters"></backdrop>
     <main>
-      <submenu :items="subnav"></submenu>
+      <bio-header @error="updateError"></bio-header>
       <transition-spring :distance="2" :stiffness="150" mode="out-in" @after-enter="$refs.view.entered = true">
         <router-view
           ref="view"
@@ -27,7 +32,7 @@
         </div>
       </transition-spring>
     </show-offline>
-    <audio-player :source="audioSource" :metadata="audioMeta" :active="audioActive" @close="updateAudio" autosave></audio-player>
+    <!--<audio-player></audio-player>-->
     <bio-footer></bio-footer>
   </div>
 </template>
@@ -38,7 +43,6 @@ import bioHeader from './components/bio-header'
 import bioNav from './components/bio-nav'
 import backdrop from './components/backdrop'
 import bioFooter from './components/bio-footer'
-import audioPlayer from './components/audio-player'
 import showOffline from './components/show-offline'
 import {navItems} from './router/routes'
 
@@ -47,7 +51,7 @@ export default {
   data: function () {
     return {
       navItems,
-      subnav: [],
+      show: undefined,
       audioSource: '',
       audioMeta: {},
       backdropImage: '',
@@ -65,6 +69,28 @@ export default {
     }
   },
   methods: {
+    fetchData () {
+      const api = new API('anime/random')
+      api.offline()
+        .then(res => {
+          if (res === null) return
+          this.show = res.anime
+        })
+        .catch(err => {
+          console.error(err)
+          this.show = {
+            title: 'Hanayamata',
+            author: 'hanayamata'
+          }
+        })
+      api.call()
+        .then(res => {
+          this.show = res.anime
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
     updateAudio (val = '') {
       this.audioSource = val
     },
@@ -101,7 +127,6 @@ export default {
     bioNav,
     backdrop,
     bioFooter,
-    audioPlayer,
     showOffline
   },
   watch: {
@@ -133,11 +158,14 @@ export default {
   },
   created () {
     window.addEventListener('online', () => this.retryPending())
+    this.fetchData()
   }
 }
 </script>
 
 <style lang="stylus">
+ease-out-expo = cubic-bezier(0.19, 1, 0.22, 1)
+
 .list-enter-active, .list-leave-active, .list-move
   transition all .3s
 .list-enter, .list-leave-to
@@ -147,6 +175,11 @@ export default {
 #app
   min-height 100vh
   padding-bottom 5em
+  transition padding-left .7s ease-out-expo
+
+@media (min-width: 700px) and (min-height: 28em)
+  #app
+    padding-left 220px
 
 *
   outline-color hsl(150, 80%, 50%)
@@ -176,8 +209,6 @@ bgcolor = #1e2430
 
 green(l)
   hsl(150, 80%, l)
-
-ease-out-expo = cubic-bezier(0.190, 1.000, 0.220, 1.000)
 
 *, *::before, *::after
   box-sizing border-box
@@ -226,7 +257,7 @@ a:visited
   border-radius 2em
 
 main
-  padding 1em
+  padding 1em 2em
   width 100%
   max-width 1100px
   margin auto

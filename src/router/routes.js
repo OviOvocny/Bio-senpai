@@ -24,12 +24,12 @@ const Tegami = r => require.ensure([], () => r(require('@/pages/Tegami.vue')))
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'Přehled',
     component: Home,
     alias: '/novinky',
     meta: {
       title: 'Bio-senpai',
-      navHidden: true
+      icon: 'home'
     }
   },
   {
@@ -65,8 +65,8 @@ const routes = [
     component: Navrhy,
     meta: {
       title: 'Návrhy | Bio-senpai',
-      icon: 'star',
-      navHidden: true
+      icon: 'star'
+      // navHidden: true
     }
   },
   {
@@ -75,8 +75,8 @@ const routes = [
     component: Podcast,
     meta: {
       title: 'Yoimiru | Bio-senpai',
-      icon: 'radio',
-      navHidden: true
+      icon: 'radio'
+      // navHidden: true
     }
   },
   {
@@ -124,7 +124,7 @@ const routes = [
     component: About,
     meta: {
       title: 'O aplikaci Bio-senpai',
-      icon: 'hexagon'
+      icon: 'details'
     }
   },
   {

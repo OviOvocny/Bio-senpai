@@ -44,7 +44,7 @@
               <cl-image :src="'podcast/icons/' + ep.file.substr(0, ep.file.length - 4)" width="160"></cl-image>
               <div class="yoimiru__ep-header">
                 <h3 :class="{'long': isLong(ep.epName)}">{{ep.epName}}</h3>
-                <div v-if="ep.chapters" style="margin-top: .5em">
+                <div v-if="ep.chapters" style="margin-top: .5em; user-select: none">
                   <icon symbol="format-list-checks"></icon> Obsahuje kapitoly
                 </div>
                 <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
@@ -76,7 +76,7 @@
           </a>
         </div>
         <div class="tegami-link">
-          <router-link to="/tegami"><icon symbol="robot"></icon> Sháníte našeho retardovaného chat bota?</router-link>
+          <icon symbol="robot"></icon> Sháníte našeho retardovaného chat bota? Je s námi teď <a href="//discord.gg/dcJ3E3y">na Discordu</a>.
         </div>
       </div>
     </div>
@@ -331,7 +331,7 @@ bgcolor = #1e2430
   left -5%
   transition top .5s, left .5s
 
-@media (max-width: 1200px)
+@media (max-width: 1400px)
   .top-anime__mascot
     left 3%
     top 10em

@@ -62,7 +62,7 @@ bgcolor = #1e2430
 .backdrop-wrap
   position absolute
   z-index -1
-  top 200px
+  top 0
   left 0
   width 100%
   //filter blur(0.3vw)

@@ -1,7 +1,7 @@
 <template>
   <a :href="'https://anilist.co/anime/' + anime.id" class="tl-link">
     <div :style='{background: bg}' class="tl" @mousemove.passive="tilt">
-      <div class="title">
+      <div class="tl-title">
         <span :class="{hentai: anime.isAdult}"><icon v-if="anime.isAdult" symbol="brightness-3"></icon> <span class="anime_title">{{anime.title.romaji}}</span></span>
       </div>
       <div class="tl-info">
@@ -100,7 +100,7 @@ export default {
     & > *
       transition none
       transform perspective(700px) translateY(calc(var(--parallax-y) * -1px)) translateX(calc(var(--parallax-x) * 1px))
-    .title
+    .tl-title
       text-shadow 0 0 1em // calc(var(--parallax-x) * -1px) calc(var(--parallax-y) * 1px) 1em
       transition box-shadow 0.2s
       transform perspective(700px) translateY(calc(var(--parallax-y) * -2px)) translateX(calc(var(--parallax-x) * 2px))
@@ -109,7 +109,7 @@ export default {
   .tl
     width 250px
 
-.title
+.tl-title
   position relative
   top 0
   padding 0.5em

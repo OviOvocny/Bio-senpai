@@ -141,10 +141,10 @@ export default {
   fill none
   stroke-linecap round
 
-@supports (background-blend-mode: normal)
-  #bio path:not(.blush)
-    stroke-dasharray 300
-    animation draw 3s
+//@supports (background-blend-mode: normal)
+#bio path:not(.blush)
+  stroke-dasharray 300
+  animation draw 3s
 
 #bio .blush
   transition 1s
@@ -166,14 +166,14 @@ export default {
 
 @supports (tab-size 4)
   #ahoge
-    transform-origin 95% 100%
+    transform-origin 50% 15%
     animation wind 2s alternate infinite
   #bang
     transform rotate(-8deg)
-    transform-origin 60% -5%
+    transform-origin 52% 17%
     animation breeze 2s alternate infinite
   #eyes
-    transform-origin 0 70%
+    transform-origin 0 55%
     animation blink 5s infinite
 
 @-webkit-keyframes draw
