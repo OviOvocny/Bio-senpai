@@ -1,7 +1,7 @@
 <template>
   <section class="relative">
     <transition-spring :distance="3">
-      <cl-image v-if="entered" class="top-anime__mascot" :src="'mascot/' + randomMascot" width="250"></cl-image>
+      <cl-image v-if="entered" class="top-anime__mascot" :src="'mascot-ng/' + randomMascot" width="250"></cl-image>
     </transition-spring>
     <div class="top-anime">
       <div class="top-anime__cover">
@@ -14,24 +14,41 @@
         <span class="top-anime__episodes">Epizoda {{home.anime.eps.done}}</span>
         <h3>Vyšlo {{releasedTimeAgo}}</h3>
         <div class="top-anime--buttons">
+          <!-- Hello CETA
           <a tabindex="-1" :href="home.anime.mega">
             <btn variant="red" icon="download">Stáhnout video</btn>
           </a>
+          -->
+          <router-link to="/survival-guide" class="wtf">
+            <icon symbol="help-circle"></icon> Kam zmizel stream a softsuby?
+          </router-link>
           <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${home.anime.url_title}/[Bio-senpai] ${pad(home.anime.eps.done)} - ${home.anime.title}.ass`" download>
-            <btn icon="attachment">Externí titulky</btn>
+            <btn icon="attachment">Titulky k epizoidě</btn>
           </a>
+          <!-- Hello CETA
           <router-link :to="'/stream/' + home.anime.url_title + '/' + home.anime.eps.done">
             <btn icon="play">Přehrát</btn>
           </router-link>
+          -->
         </div>
       </div>
     </div>
 
     <div class="top-modules">
+      <div class="top-modules--area">
+        <h2><icon symbol="radioactive"></icon> Survival guide</h2>
+        <p>
+          Jak přežít apokalypsu* bez softsubů a streamingu? Odkud se bere všechen ten chlorid sodný?
+          Co se vlastně děje?
+        </p>
+        <router-link to="/survival-guide">
+          <btn icon="pot-mix">Osolit se</btn>
+        </router-link>
+      </div>
       <div class="top-modules--area top-modules__yoimiru">
         <div class="yoimiru__flex">
           <div class="yoimiru__flex">
-            <svg class="yoimiru__logo" xmlns="http://www.w3.org/2000/svg" width="40" viewBox="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink"><desc>Yoimiru logo</desc><g fill="#1e2430" transform="translate(30 30)"><clipPath id="a" clip-rule="evenodd"><path d="M-30-30h60v60h-60v-60z"/></clipPath><g clip-path="url(#a)"><use xlink:href="#b" transform="translate(-22 -21)"/><use xlink:href="#c" transform="translate(.5 -19.5)"/><use xlink:href="#d" transform="translate(7.5 -18)"/></g></g><defs><path id="b" d="M4 39L0 0l7 .5L21 29c-2.4 4.6-4.2 7-8.5 10H4z"/><path id="c" d="M7 .5L0 0l5.5 13.5L7 .5z"/><path id="d" d="M11.5 39l3-39h-2C6.5 23.6 3.8 31.8 0 38l11.5 1z"/></defs></svg>
+            <svg class="yoimiru__logo" xmlns="http://www.w3.org/2000/svg" width="30" viewBox="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink"><desc>Yoimiru logo</desc><g fill="#2f384b" transform="translate(30 30)"><clipPath id="a" clip-rule="evenodd"><path d="M-30-30h60v60h-60v-60z"/></clipPath><g clip-path="url(#a)"><use xlink:href="#b" transform="translate(-22 -21)"/><use xlink:href="#c" transform="translate(.5 -19.5)"/><use xlink:href="#d" transform="translate(7.5 -18)"/></g></g><defs><path id="b" d="M4 39L0 0l7 .5L21 29c-2.4 4.6-4.2 7-8.5 10H4z"/><path id="c" d="M7 .5L0 0l5.5 13.5L7 .5z"/><path id="d" d="M11.5 39l3-39h-2C6.5 23.6 3.8 31.8 0 38l11.5 1z"/></defs></svg>
             <h2>Nejnovější epizody podcastu</h2>
           </div>
           <router-link to="/podcast">
@@ -55,7 +72,7 @@
         </div>
       </div>
       <div class="top-modules--area top-modules__social">
-        <h2>Pojďte prohodit pár slov</h2>
+        <h2><icon symbol="message"></icon> Pojďte prohodit pár slov</h2>
         <p></p>
         <div class="social-links">
           <router-link to="/kontakt" class="social-links__native">
@@ -76,7 +93,7 @@
           </a>
         </div>
         <div class="tegami-link">
-          <icon symbol="robot"></icon> Sháníte našeho retardovaného chat bota? Je s námi teď <a href="//discord.gg/dcJ3E3y">na Discordu</a>.
+          <icon symbol="robot"></icon> Sháníte našeho retardovaného chat bota? Je s námi teď na Discordu.
         </div>
       </div>
     </div>
@@ -104,7 +121,8 @@
 
 <script>
 const randomMascotArray = [
-  'melt', 'message', 'assfiles'
+  // 'melt', 'message', 'assfiles'
+  'wow'
 ]
 
 import API from 'api'
@@ -193,9 +211,11 @@ bgcolor = #1e2430
   padding 1em
   border-radius 15px
   margin-bottom 1em
+  h2
+    color lighten(bgcolor, 10%)
 
 .yoimiru__logo
-  margin-right 1em
+  margin-right .3em
 
 .yoimiru__flex
   display flex
@@ -228,6 +248,7 @@ bgcolor = #1e2430
   position relative
   width 100%
   h3
+    color lighten(bgcolor, 10%)
     max-width 10em
     font-size 1.6em
     margin 0
@@ -327,13 +348,13 @@ bgcolor = #1e2430
 
 .top-anime__mascot
   position absolute
-  top -.5rem
+  top -2rem
   left -5%
   transition top .5s, left .5s
 
 @media (max-width: 1400px)
   .top-anime__mascot
-    left 3%
+    left 0
     top 10em
     transform translateY(-50%)
     width 20vw
@@ -392,4 +413,9 @@ bgcolor = #1e2430
 
 .top-anime--buttons
   padding 1rem 0
+  a.wtf
+    color alpha(white, 80%)
+    text-decoration none
+    &:hover
+      color white
 </style>

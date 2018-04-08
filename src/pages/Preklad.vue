@@ -23,6 +23,7 @@
     </div>
 
     <transition-group name="list-vertical">
+      <!-- Hello CETA
       <div class="project-stream" v-if="$route.name === 'Stream'" key="stream">
         <div class="stream-controls" v-if="$route.params.episode">
           <router-link :to="`/stream/${$route.params.anime}/${parseInt($route.params.episode) - 1}`">
@@ -37,16 +38,26 @@
           <iframe id="plr" :src="'https://drive.google.com/file/d/' + file + '/preview'" frameborder="0" allowfullscreen></iframe>
         </div>
       </div>
+      -->
 
       <div class="project-card" key="project" v-if="ok">
         <div class="actions">
           <div class="actions-inner">
+            <!-- Hello CETA
             <a tabindex="-1" :href="project.mega">
               <btn variant="red" icon="download">Přeložená videa</btn>
             </a>
+            -->
             <a tabindex="-1" :href="'//data.bio-senpai.ovi.moe/data/' + project.url_title + '/ass.zip'" download>
               <btn icon="attachment">Všechny titulky</btn>
             </a>
+            <div class="release-info">
+              <icon symbol="help-circle"></icon>
+              <div>
+                Externí titulky pro <span v-if="!project.release">neznámé vydání</span>
+                <div class="release-name" v-else>{{project.release}}</div>
+              </div>
+            </div>
           </div>
         </div>
         <transition-group name="list" tag="div" class="episode-list">
@@ -56,9 +67,11 @@
               <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${project.url_title}/%5BBio-senpai%5D%20${ue(project.title)}.ass`" download>
                 <btn icon="attachment"></btn>
               </a>
+              <!-- Hello CETA
               <router-link tabindex="-1" :to="`/stream/${project.url_title}`">
                 <btn icon="play"></btn>
               </router-link>
+              -->
             </div>
           </div>
           <div class="episode" v-else v-for="i in eps.done" :key="i">
@@ -67,18 +80,16 @@
               <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${project.url_title}/%5BBio-senpai%5D%20${pad(i)}%20-%20${ue(project.title)}.ass`" download>
                 <btn icon="attachment"></btn>
               </a>
+              <!-- Hello CETA
               <router-link tabindex="-1" :to="`/stream/${project.url_title}/${i}`">
                 <btn icon="play"></btn>
               </router-link>
+              -->
             </div>
           </div>
         </transition-group>
         <div class="project-desc">
           <div v-html="project.desc"></div>
-          <div class="release-info" v-if="project.release">
-            <icon symbol="help-circle"></icon>
-            Externí titulky pro vydání {{project.release}}
-          </div>
           <div class="relatives" v-if="project.relatives">
             <div class="prequels" v-if="project.relatives.prequels">
               <h3>Předcházející:</h3>
@@ -284,8 +295,13 @@ bgcolor = #1e2430
 
 .release-info
   //font-size .9em
+  display flex
   color #4e5460
   margin-top 1em
+  i
+    margin-right .5em
+.release-name
+  font-size 1.3em
 
 .episode-list
   padding 1em
@@ -298,6 +314,7 @@ bgcolor = #1e2430
   align-items center
   padding 1em
   border-right 2px solid bgcolor
+  max-width 25ch
   grid-area actions
   -ms-grid-row 1
 
