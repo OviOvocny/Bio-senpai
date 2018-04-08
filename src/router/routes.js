@@ -19,7 +19,7 @@ const Prihlaska = r => require.ensure([], () => r(require('@/pages/Prihlaska.vue
 const Zpravy = r => require.ensure([], () => r(require('@/pages/Zpravy.vue')))
 const FAQ = r => require.ensure([], () => r(require('@/pages/FAQ.vue')))
 const About = r => require.ensure([], () => r(require('@/pages/About.vue')))
-const Tegami = r => require.ensure([], () => r(require('@/pages/Tegami.vue')))
+// const Tegami = r => require.ensure([], () => r(require('@/pages/Tegami.vue')))
 
 const routes = [
   {
@@ -126,18 +126,18 @@ const routes = [
       title: 'O aplikaci Bio-senpai',
       icon: 'details'
     }
-  },
-  {
-    path: '/tegami/:category?',
-    name: 'Tegami',
-    component: Tegami,
-    meta: {
-      title: 'Tegami – Chat bot Bio-senpai',
-      icon: 'emoticon',
-      navHidden: true,
-      categorized: true
-    }
   }
+  // {
+  //   path: '/tegami/:category?',
+  //   name: 'Tegami',
+  //   component: Tegami,
+  //   meta: {
+  //     title: 'Tegami – Chat bot Bio-senpai',
+  //     icon: 'emoticon',
+  //     navHidden: true,
+  //     categorized: true
+  //   }
+  // }
 ]
 
 const navItems = routes
