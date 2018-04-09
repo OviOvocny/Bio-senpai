@@ -80,7 +80,7 @@ export default {
           console.error(err)
           this.show = {
             title: 'Hanayamata',
-            author: 'hanayamata'
+            url_title: 'hanayamata'
           }
         })
       api.call()
@@ -89,6 +89,10 @@ export default {
         })
         .catch(err => {
           console.error(err)
+          this.show = {
+            title: 'Hanayamata',
+            url_title: 'hanayamata'
+          }
         })
     },
     updateAudio (val = '') {
