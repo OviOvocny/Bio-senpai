@@ -89,10 +89,6 @@ footer
   ::selection
     color white
 
-@media (orientation: portrait)
-  footer
-    bottom 70px
-
 .footer-title
   font 1.3em Unica One
 </style>
