@@ -35,15 +35,49 @@
     </div>
 
     <div class="top-modules">
-      <div class="top-modules--area">
-        <h2><icon symbol="radioactive"></icon> Survival guide</h2>
-        <p>
-          Jak přežít apokalypsu* bez softsubů a streamingu? Odkud se bere všechen ten chlorid sodný?
-          Co se vlastně děje?
-        </p>
-        <router-link to="/survival-guide">
-          <btn icon="pot-mix">Osolit se</btn>
-        </router-link>
+      <div class="top-modules--flex">
+        <div class="top-modules--area">
+          <h2>
+            <icon symbol="radioactive"></icon>
+            Survival guide
+          </h2>
+          <p>
+            Jak přežít apokalypsu* bez softsubů a streamingu? Odkud se bere všechen ten chlorid sodný?
+            Co se vlastně děje?
+          </p>
+          <router-link to="/survival-guide">
+            <btn icon="pot-mix">Osolit se</btn>
+          </router-link>
+        </div>
+        <div class="top-modules--area top-modules__social">
+          <h2>
+            <icon symbol="message"></icon>
+            Pojďte prohodit pár slov
+          </h2>
+          <p></p>
+          <div class="social-links">
+            <router-link to="/kontakt" class="social-links__native">
+              <icon symbol="message"></icon>
+              <span class="social-links__label">Zprávy</span>
+            </router-link>
+            <a href="//facebook.com/bio-senpai" class="social-links__facebook">
+              <icon symbol="facebook"></icon>
+              <span class="social-links__label">Facebook</span>
+            </a>
+            <a href="//twitter.com/bio_senpai" class="social-links__twitter">
+              <icon symbol="twitter"></icon>
+              <span class="social-links__label">Twitter</span>
+            </a>
+            <a href="//discord.gg/dcJ3E3y" class="social-links__discord">
+              <icon symbol="discord"></icon>
+              <span class="social-links__label">Discord</span>
+            </a>
+          </div>
+          <div class="tegami-link">
+            <icon symbol="robot"></icon>
+            Sháníte našeho retardovaného chat bota? Je s námi teď na Discordu.
+          </div>
+        </div>
       </div>
       <div class="top-modules--area top-modules__yoimiru">
         <div class="yoimiru__flex">
@@ -69,31 +103,6 @@
             </div>
             <p v-html="ep.epDesc"></p>
           </div>
-        </div>
-      </div>
-      <div class="top-modules--area top-modules__social">
-        <h2><icon symbol="message"></icon> Pojďte prohodit pár slov</h2>
-        <p></p>
-        <div class="social-links">
-          <router-link to="/kontakt" class="social-links__native">
-            <icon symbol="message"></icon>
-            <span class="social-links__label">Zprávy</span>
-          </router-link>
-          <a href="//facebook.com/bio-senpai" class="social-links__facebook">
-            <icon symbol="facebook"></icon>
-            <span class="social-links__label">Facebook</span>
-          </a>
-          <a href="//twitter.com/bio_senpai" class="social-links__twitter">
-            <icon symbol="twitter"></icon>
-            <span class="social-links__label">Twitter</span>
-          </a>
-          <a href="//discord.gg/dcJ3E3y" class="social-links__discord">
-            <icon symbol="discord"></icon>
-            <span class="social-links__label">Discord</span>
-          </a>
-        </div>
-        <div class="tegami-link">
-          <icon symbol="robot"></icon> Sháníte našeho retardovaného chat bota? Je s námi teď na Discordu.
         </div>
       </div>
     </div>
@@ -204,6 +213,9 @@ export default {
 
 <style lang="stylus">
 bgcolor = #1e2430
+
+.top-modules--flex
+  display flex
 
 .top-modules--area
   background-color #efefef
