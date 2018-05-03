@@ -266,6 +266,9 @@ main
   max-width 1100px
   margin auto
 
+.reading-size-adjust
+  font-size .9rem
+
 input[type=text], input[type=search], input[type=number]
   border-radius 1em
   padding .3em .7em

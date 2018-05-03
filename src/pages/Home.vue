@@ -101,7 +101,7 @@
     <div class="top-news">
       <h2><icon symbol="newspaper"></icon> Co je nového</h2>
       <div class="top-news__grid">
-        <article v-for="article in home.news">
+        <article class="reading-size-adjust" v-for="article in home.news">
           <div class="article__meta">
             <div class="article__author">
               <cl-image :src="'team/' + article.author"></cl-image>

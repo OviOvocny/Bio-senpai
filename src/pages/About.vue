@@ -51,7 +51,7 @@
       </div>
     </section>
 
-    <section class="log" v-for="log in logs">
+    <section class="log reading-size-adjust" v-for="log in logs">
         <h2>Verze {{log.version}} — {{log.hana}}</h2>
         <p>
             {{log.desc}}
