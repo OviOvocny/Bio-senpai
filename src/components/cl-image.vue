@@ -20,6 +20,7 @@ export default {
       const c = cl.Cloudinary.new({cloud_name: 'bio-senpai'})
       let parameters = {
         fetch_format: 'auto',
+        quality: 'auto',
         crop: 'scale',
         ...this.params
       }

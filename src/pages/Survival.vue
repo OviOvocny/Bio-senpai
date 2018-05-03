@@ -1,31 +1,24 @@
 <template>
-  <section>
-    <h2>Survival guide</h2>
-    <h3>pro animepokalypsu</h3>
-    <category-cards page="survival-guide" :categories="categories"></category-cards>
-    <div :class="categories[0].slug" v-if="$route.params.category === categories[0].slug">
-      
+  <section class="reading-size-adjust">
+    <h1>Survival guide</h1>
+    <div class="toc highlight-block">
+      <h2 class="block-title">Obsah</h2>
+      <ul>
+        <li>Bla</li>
+        <li>Bla</li>
+        <li> Bla
+          <ul>
+            <li>Bla</li>
+            <li>Bla</li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </section>
 </template>
 
 <script>
-import categoryCards from '@/components/category-cards'
 export default {
-  data () {
-    return {
-      categories: [
-        {
-          category: 'Manuál',
-          slug: 'manual',
-          icon: 'book'
-        }
-      ]
-    }
-  },
-  components: {
-    categoryCards
-  }
 }
 </script>
 
@@ -34,8 +27,10 @@ export default {
 //   margin-top 1.5em
 //   color hsl(150,80%,50%)
 
-.note
-  border 2px solid hsl(150,80%,30%)
-  padding .5em
-  border-radius 10px
+.highlight-block
+  border-left 2px solid hsl(150,80%,50%)
+  padding .5em 1em
+  
+.block-title
+  color hsl(150,80%,40%)
 </style>
