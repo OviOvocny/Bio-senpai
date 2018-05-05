@@ -5,7 +5,14 @@ export default function nanoScroll (targetY, alpha, callback) {
   alpha = alpha || 0.2
   var raf
   var posY = pageYOffset
+  if (targetY < 0) {
+    targetY = 0
+  }
+  if (targetY > document.body.scrollHeight) {
+    targetY = document.body.scrollHeight
+  }
   function loop () {
+    console.log(pageYOffset, targetY)
     if (Math.floor(pageYOffset) >= targetY - 1 && Math.floor(pageYOffset) <= targetY + 1) {
       cancelAnimationFrame(raf)
       window.scrollTo(pageXOffset, targetY)
