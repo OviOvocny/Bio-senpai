@@ -38,7 +38,7 @@
       <div class="top-modules--flex">
         <div class="top-modules--area top-modules__guide">
           <h2>
-            <icon symbol="compass"></icon>
+            <icon symbol="compass" class="spinny-spinny"></icon>
             Survival guide
           </h2>
           <p>
@@ -380,10 +380,8 @@ bgcolor = #1e2430
 
 @media (max-width: 1400px)
   .top-anime__mascot
-    left 0
-    top 10em
-    transform translateY(-50%)
-    width 20vw
+    left -1vw
+    width 17vw
     @media (max-width: 600px), (orientation: portrait)
       .top-anime__mascot
         display none
@@ -444,4 +442,14 @@ bgcolor = #1e2430
     text-decoration none
     &:hover
       color white
+
+.spinny-spinny::before
+  animation spinny 1s
+@keyframes spinny
+  0%
+    transform rotate(-80deg)
+  30%
+    transform rotate(40deg)
+  70%
+    transform rotate(-20deg)
 </style>
