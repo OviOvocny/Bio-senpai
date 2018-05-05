@@ -46,6 +46,9 @@ Vue.component('transition-spring', transitionSpring)
 import transitionGroupSpring from './animations/transition-group-spring'
 Vue.component('transition-group-spring', transitionGroupSpring)
 
+import transitionZoom from './animations/transition-zoom'
+Vue.component('transition-zoom', transitionZoom)
+
 Vue.config.productionTip = false
 
 import Promise from 'promise-polyfill'

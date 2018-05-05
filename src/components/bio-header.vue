@@ -8,9 +8,10 @@
         </div>
       </transition>
     </div>
-    <div class="hlava" v-if="quote.author !== 'Tegami'">
-      <cl-image width="60" :src="'team/' + quote.author"></cl-image>
-    </div>
+    <transition name="fade" mode="out-in">
+      <div class="hlava" v-if="quote.author !== 'Tegami'" :key="quote.author">
+       <cl-image width="60" :src="'team/' + quote.author"></cl-image>
+      </div></transition>
   </header>
 </template>
 
@@ -118,7 +119,11 @@ header
 @media (max-width: 900px)
   .kec
     font-size 1.5em
+  .hlava img
+    width 60px
 @media (max-width: 500px)
   .kec
     font-size 1.1em
+  .hlava img
+    width 40px
 </style>

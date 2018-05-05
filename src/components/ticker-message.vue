@@ -39,17 +39,16 @@ export default {
   flex-wrap wrap
   position fixed
   z-index 15
-  top 0
+  top 1em
   left 0
   right 0
   width max-content
   max-width 80%
   margin auto
   padding .2em 1em
-  border-radius 0 0 15px 15px
+  border-radius 2em
   color hsl(150, 100%, 70%)
   border 2px solid hsl(150, 80%, 50%)
-  border-top 0
   background-color #1e2430
   animation pulse 2s infinite
 

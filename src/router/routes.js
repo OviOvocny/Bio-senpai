@@ -124,7 +124,7 @@ const routes = [
     component: Survival,
     meta: {
       title: 'Survival guide | Bio-senpai',
-      icon: 'radioactive',
+      icon: 'compass',
       navHidden: false,
       categorized: true
     }

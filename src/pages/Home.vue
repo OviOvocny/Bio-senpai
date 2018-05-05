@@ -1,8 +1,8 @@
 <template>
   <section class="relative">
-    <transition-spring :distance="3">
+    <transition-zoom :distance="0.3" :twist="-20">
       <cl-image v-if="entered" class="top-anime__mascot" :src="'mascot-ng/' + randomMascot" width="250"></cl-image>
-    </transition-spring>
+    </transition-zoom>
     <div class="top-anime">
       <div class="top-anime__cover">
         <cl-image ref="topImage" v-if="ready" :src="'cover/' + home.anime.url_title"></cl-image>
@@ -36,30 +36,35 @@
 
     <div class="top-modules">
       <div class="top-modules--flex">
-        <div class="top-modules--area">
+        <div class="top-modules--area top-modules__guide">
           <h2>
-            <icon symbol="radioactive"></icon>
+            <icon symbol="compass"></icon>
             Survival guide
           </h2>
           <p>
-            Jak přežít apokalypsu* bez softsubů a streamingu? Odkud se bere všechen ten chlorid sodný?
-            Co se vlastně děje?
+            Zjistěte, co dělat, když celá česká anime komunita zešílí a smaže všechna přeložená videa ze všech koutů internetů.
           </p>
           <router-link to="/survival-guide">
-            <btn icon="pot-mix">Osolit se</btn>
+            <btn icon="hand-pointing-right">Tudy</btn>
           </router-link>
         </div>
         <div class="top-modules--area top-modules__social">
-          <h2>
-            <icon symbol="message"></icon>
-            Pojďte prohodit pár slov
-          </h2>
-          <p></p>
+          <div>
+            <h2>
+              <icon symbol="message"></icon>
+              Pojďte prohodit pár slov
+            </h2>
+            <p>Pokud vás neodradili naše citáty v hlavičce, tak si určitě budeme rozumět.</p>
+          </div>
           <div class="social-links">
             <router-link to="/kontakt" class="social-links__native">
               <icon symbol="message"></icon>
               <span class="social-links__label">Zprávy</span>
             </router-link>
+            <a href="//discord.gg/dcJ3E3y" class="social-links__discord">
+              <icon symbol="discord"></icon>
+              <span class="social-links__label">Discord</span>
+            </a>
             <a href="//facebook.com/bio-senpai" class="social-links__facebook">
               <icon symbol="facebook"></icon>
               <span class="social-links__label">Facebook</span>
@@ -68,14 +73,6 @@
               <icon symbol="twitter"></icon>
               <span class="social-links__label">Twitter</span>
             </a>
-            <a href="//discord.gg/dcJ3E3y" class="social-links__discord">
-              <icon symbol="discord"></icon>
-              <span class="social-links__label">Discord</span>
-            </a>
-          </div>
-          <div class="tegami-link">
-            <icon symbol="robot"></icon>
-            Sháníte našeho retardovaného chat bota? Je s námi teď na Discordu.
           </div>
         </div>
       </div>
@@ -214,25 +211,36 @@ export default {
 <style lang="stylus">
 bgcolor = #1e2430
 
+.top-modules
+  margin -.5em
+  margin-bottom 1em
+
 .top-modules--flex
   display flex
+  flex-wrap wrap
+  .top-modules--area
+    flex 1 2 auto
+  .top-modules__guide
+    flex-basis 300px
 
 .top-modules--area
   background-color #efefef
   color bgcolor
   padding 1em
   border-radius 15px
-  margin-bottom 1em
+  margin .5em
   h2
     color lighten(bgcolor, 10%)
+    margin-top .25em
 
 .yoimiru__logo
   margin-right .3em
+  margin-top .5em
 
 .yoimiru__flex
   display flex
   justify-content space-between
-  align-items center
+  align-items flex-start
 
 @media (max-width: 600px)
   .yoimiru__flex h2
@@ -242,9 +250,10 @@ bgcolor = #1e2430
   display flex
   justify-content space-between
   flex-wrap wrap
+  margin-bottom -1em
 
 .yoimiru__ep
-  margin 1.5em
+  margin 1em
   flex 1 1 20em
   img
     margin-right 1em
@@ -282,26 +291,37 @@ bgcolor = #1e2430
     button
       position relative
 
+.top-modules__social
+  display flex
+  flex-direction column
+  justify-content space-between
+
 .social-links
   display flex
   justify-content space-around
   & > *
     text-align center
     text-decoration none
-    border-radius 10px
-    padding 1em
-    margin .5em
-    transition border-color .2s
     flex-grow 1
+    padding 0.3em 1em
+    margin 0.3em
+    border-radius 2em
+    border-width 2px
+    border-style solid
+    outline none
+    user-select none
+    cursor default
+    transition border-color .5s
     &:visited
       color white
     &:hover
+      transition-duration .15s
       border-color white
-@media (max-width: 500px)
+@media (max-width: 850px)
   .social-links__label
     display none
   .social-links > *
-    padding .5em
+    padding .35em
 
 .social-links__native
   color white
@@ -319,12 +339,6 @@ bgcolor = #1e2430
   color white
   background-color #7289da
   border 2px solid darken(@background-color, 50%)
-
-.tegami-link
-  text-align right
-  padding .7em
-  a
-    text-decoration none
 
 
 .top-news__grid
