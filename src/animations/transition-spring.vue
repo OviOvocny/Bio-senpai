@@ -29,6 +29,18 @@ export default {
     stiffness: {
       type: Number,
       default: 220
+    },
+    friction: {
+      type: Number,
+      default: 170
+    },
+    duration: {
+      type: Number,
+      default: 700
+    },
+    stretch: {
+      type: Number,
+      default: 1
     }
   },
   computed: {
@@ -39,7 +51,9 @@ export default {
   methods: {
     beforeEnter (el) {
       dynamics.css(el, {
+        transformOrigin: this.stretch !== 1 ? 'top' : 'center',
         opacity: 0,
+        scaleY: this.stretch,
         ...this.translations.beforeEnter
       })
     },
@@ -51,8 +65,8 @@ export default {
       }, {
         type: dynamics.spring,
         frequency: this.stiffness,
-        friction: 170,
-        duration: 700,
+        friction: this.friction,
+        duration: this.duration,
         complete: next
       })
     },
@@ -62,12 +76,14 @@ export default {
     },
     leave (el, next) {
       dynamics.animate(el, {
+        transformOrigin: this.stretch !== 1 ? 'top' : 'center',
         opacity: 0,
+        scaleY: this.stretch,
         ...this.translations.leave
       }, {
         type: dynamics.easeIn,
-        friction: 200,
-        duration: 100,
+        friction: 20,
+        duration: 70,
         complete: next
       })
     }

@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="comment-threads">
-      <transition-group-spring :stagger="60" from="top">
+      <transition-group-spring :stagger="100" :stiffness="0" :friction="170" :duration="250" :stretch="1.1">
         <comment-thread v-for="(comment, index) in comments" :message="comment" :key="comment.id" :data-idx="index % 10" @reply="handleReply" @replyOpen="scrollToThread"></comment-thread>
       </transition-group-spring>
       <infinite :on-infinite="fetchData" ref="infiniteLoading">

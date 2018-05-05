@@ -33,7 +33,7 @@ export default {
         wrapper.children[0].classList.add('hiding')
         setTimeout(() => {
           wrapper.removeChild(wrapper.children[0])
-        }, 1000)
+        }, 500)
         return
       }
       const source = getUrl(this.src, this.params)
@@ -43,7 +43,7 @@ export default {
         wrapper.appendChild(next)
         setTimeout(() => {
           if (wrapper.children.length > 1) wrapper.removeChild(wrapper.children[0])
-        }, 1000)
+        }, 500)
       })
       next.src = source
     }
@@ -55,7 +55,7 @@ export default {
 bgcolor = #1e2430
 
 .backdrop-fade-enter-active, .backdrop-fade-leave-active
-  transition opacity 1s
+  transition opacity .5s
 .backdrop-fade-enter, .backdrop-fade-leave-to
   opacity 0
 
@@ -73,7 +73,7 @@ bgcolor = #1e2430
   top 0
   left 0
   width 100%
-  animation backdropFadeIn 1s
+  animation backdropFadeIn .5s
   &.hiding
     transition opacity .6s
     opacity 0
@@ -81,7 +81,7 @@ bgcolor = #1e2430
 @keyframes backdropFadeIn
   from
     opacity 0
-    transform scale(1.1)
+    transform scale(1.05)
 
 @media (orientation: portrait)
   .backdrop-wrap

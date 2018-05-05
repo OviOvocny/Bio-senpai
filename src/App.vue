@@ -13,7 +13,7 @@
     <backdrop :src="backdropImage" :params="backdropParameters"></backdrop>
     <main>
       <bio-header @error="updateError"></bio-header>
-      <transition-spring :distance="2" :stiffness="150" mode="out-in" @after-enter="$refs.view.entered = true">
+      <transition-spring :distance="1.5" :stiffness="0" :friction="170" :duration="250" :stretch="1.1" mode="out-in" @after-enter="$refs.view.entered = true">
         <router-view
           ref="view"
           @update:subnav="val => subnav = val"
@@ -151,9 +151,6 @@ export default {
         )
       }
       switch (to.name) {
-        case 'Překlad':
-          this.routeTransition = 'zoom'
-          break
         default:
           this.routeTransition = 'shift'
           break
@@ -174,7 +171,7 @@ ease-out-expo = cubic-bezier(0.19, 1, 0.22, 1)
   transition all .3s
 .list-enter, .list-leave-to
   opacity 0
-  transform scale(.5)
+  transform scaleY(.5)
 
 #app
   min-height 100vh

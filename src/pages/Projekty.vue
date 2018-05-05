@@ -39,7 +39,7 @@ export default {
         },
         stagger: 20,
         hiddenStyle: {
-          transform: 'scale(.5)',
+          transform: 'translateY(10%) scaleY(1.05)',
           opacity: 0
         }
       }
@@ -99,11 +99,12 @@ export default {
 
 .hidden
   opacity 0
-  transform translateY(-1em)
+  transform translateY(-10%)
   transition .1s ease-in
 
 .zooming
-  transform scale(0.8)
+  transform-origin bottom
+  transform translateY(-10%) scaleY(1.15)
 
 .tl-link
   text-decoration none

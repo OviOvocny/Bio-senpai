@@ -55,7 +55,7 @@ export default {
         sortAscending: true,
         stagger: 20,
         hiddenStyle: {
-          transform: 'scale(.5)',
+          transform: 'translateY(10%) scaleY(1.05)',
           opacity: 0
         }
       }

@@ -4,7 +4,7 @@ const translationMap = (distance, back) => ({
       translateY: `${distance}em`
     },
     leave: {
-      translateY: back ? `${distance}em` : `${-distance}em`
+      translateY: back ? `${distance / 2}em` : `${-distance / 2}em`
     }
   },
   top: {
@@ -12,7 +12,7 @@ const translationMap = (distance, back) => ({
       translateY: `${-distance}em`
     },
     leave: {
-      translateY: back ? `${-distance}em` : `${distance}em`
+      translateY: back ? `${-distance / 2}em` : `${distance / 2}em`
     }
   },
   left: {
@@ -20,7 +20,7 @@ const translationMap = (distance, back) => ({
       translateX: `${-distance}em`
     },
     leave: {
-      translateX: back ? `${-distance}em` : `${distance}em`
+      translateX: back ? `${-distance / 2}em` : `${distance / 2}em`
     }
   },
   right: {
@@ -28,7 +28,7 @@ const translationMap = (distance, back) => ({
       translateX: `${distance}em`
     },
     leave: {
-      translateX: back ? `${distance}em` : `${-distance}em`
+      translateX: back ? `${distance / 2}em` : `${-distance / 2}em`
     }
   }
 })

@@ -60,7 +60,7 @@
             </div>
           </div>
         </div>
-        <transition-group name="list" tag="div" class="episode-list">
+        <transition-group-spring :stiffness="0" :friction="170" :duration="250" :stretch="1.1" tag="div" class="episode-list">
           <div class="episode" v-if="eps.total === 1 && !project.single_type" key="film">
             Film
             <div class="episode-actions">
@@ -87,7 +87,7 @@
               -->
             </div>
           </div>
-        </transition-group>
+        </transition-group-spring>
         <div class="project-desc">
           <div v-html="project.desc"></div>
           <div class="relatives" v-if="project.relatives">
@@ -467,8 +467,9 @@ bgcolor = #1e2430
     height 100%
 
 .list-vertical-enter-active, .list-vertical-leave-active, .list-vertical-move
+  trannsform-origin top
   transition all .3s
 .list-vertical-enter, .list-vertical-leave-to
   opacity 0
-  transform scaleY(0) translateY(-75%)
+  transform scaleY(1.1) translateY(10%)
 </style>
