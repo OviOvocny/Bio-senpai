@@ -13,7 +13,7 @@
     <backdrop :src="backdropImage" :params="backdropParameters"></backdrop>
     <main>
       <bio-header @error="updateError"></bio-header>
-      <transition-spring :distance="1.5" :stiffness="0" :friction="170" :duration="250" :stretch="1.1" mode="out-in" @after-enter="$refs.view.entered = true">
+      <transition name="warp" mode="out-in" @after-enter="$refs.view.entered = true">
         <router-view
           ref="view"
           @update:subnav="val => subnav = val"
@@ -23,7 +23,7 @@
           @error="updateError"
           @ticker="updateTicker"
         ></router-view>
-      </transition-spring>
+      </transition>
     </main>
     <show-offline>
       <transition-spring from="left">
@@ -134,7 +134,7 @@ export default {
     showOffline
   },
   watch: {
-    '$route' (to, from) {
+    '$route' (to) {
       this.retryPending()
       if (document.body.classList.contains('outdated-sw')) {
         this.updateTicker(
@@ -149,11 +149,6 @@ export default {
             }
           ]
         )
-      }
-      switch (to.name) {
-        default:
-          this.routeTransition = 'shift'
-          break
       }
     }
   },
@@ -172,6 +167,22 @@ ease-out-expo = cubic-bezier(0.19, 1, 0.22, 1)
 .list-enter, .list-leave-to
   opacity 0
   transform scaleY(.5)
+
+wdist = 5em
+.warp-enter-active
+  transform-origin top
+  transition transform 350ms, opacity 250ms
+  transition-timing-function ease-out-expo
+.warp-leave-active
+  transform-origin top
+  transition transform 70ms, opacity 40ms
+  transition-timing-function ease-in
+.warp-enter
+  opacity 0
+  transform scaleY(1.1) translateY(wdist)
+.warp-leave-to
+  opacity 0
+  transform scaleY(1.1) translateY(-(wdist))
 
 #app
   min-height 100vh
