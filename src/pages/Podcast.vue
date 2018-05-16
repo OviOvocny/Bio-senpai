@@ -22,19 +22,31 @@
     </div>
 
 
-    <div class="podcast-episode" v-for="ep in podcasts">
-      <img :src="icon(ep.file)" :alt="'Obal ' + ep.epName" @click="playEpisode(ep)">
-      <div>
-        <h3 class="ep-title">{{ep.epName}}</h3>
-        <p v-html="ep.epDesc">
+    <transition-group-spring
+      :stagger="100"
+      :stiffness="0"
+      :friction="170"
+      :duration="250"
+      :stretch="1.1"
+      >
+      <div
+        :data-idx="index % 10"
+        class="podcast-episode"
+        v-for="(ep, index) in podcasts"
+        :key="ep.id">
+        <img :src="icon(ep.file)" :alt="'Obal ' + ep.epName" @click="playEpisode(ep)">
+        <div>
+          <h3 class="ep-title">{{ep.epName}}</h3>
+          <p v-html="ep.epDesc">
           <div v-if="ep.chapters">
             <icon symbol="format-list-checks"></icon> Můžete přeskakovat na kapitoly
           </div>
-        </p>
-        <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
-        Vydáno <b>{{date(ep.id)}}</b>
+          </p>
+          <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
+          Vydáno <b>{{date(ep.id)}}</b>
+        </div>
       </div>
-    </div>
+    </transition-group-spring>
 
     <div style="text-align:center">
       <div style="color:white">Jste na konci. Nebo spíš na začátku.</div>
