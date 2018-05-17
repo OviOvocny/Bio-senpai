@@ -10,7 +10,7 @@
       </router-link>
     </div>
     <p class="center-text">
-      Můžete také web projít sami a zksuit najít, co jste hledali.
+      Můžete také web projít sami a zkusit najít, co jste hledali.
     </p>
   </section>
 </template>
