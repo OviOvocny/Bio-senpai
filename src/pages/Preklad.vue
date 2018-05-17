@@ -114,6 +114,11 @@
       </div>
     </transition-group>
 
+    <router-link to="/survival-guide" class="help">
+      <icon symbol="bowl"></icon>
+      {{whatsNext}}
+    </router-link>
+
   </section>
 </template>
 
@@ -121,6 +126,17 @@
 import API from 'api'
 import spinner from '@/components/spinner'
 import urlencode from 'urlencode'
+
+let nexts = [
+  'Máte titulky, ale ještě tomu něco chybí? Podívejte se, kde sehnat ingredience.',
+  'Takže jste sehnali titulky. Teď se podívejte, kde najdete ten zbytek.',
+  'Titulky už máte, teď ještě pojďte najít to ostatní, ať to můžete dát dohromady.',
+  'Titulky by byly, ale chtělo by to i ten zbytek. Pojďte se podívat, jak na to.',
+  'Bingo! Máte titulky. Bohužel to ale nestačí, pojďte se podívat, co dělat dál.',
+  'Ještě pro vás máme pár tipů, pokud nechcete jen číst titulky v texťáku.',
+  'Psst, co takhle k tomu přihodit ještě video? Prý je to tak mnohem lepší.'
+]
+
 export default {
   data () {
     return {
@@ -158,6 +174,9 @@ export default {
     }
   },
   computed: {
+    whatsNext () {
+      return nexts[Math.floor(Math.random() * nexts.length)]
+    },
     eps () {
       return {
         done: parseInt(this.project.eps.done),
@@ -472,4 +491,12 @@ bgcolor = #1e2430
 .list-vertical-enter, .list-vertical-leave-to
   opacity 0
   transform scaleY(1.1) translateY(10%)
+
+a.help
+  display block
+  text-align center
+  color alpha(white, 80%)
+  text-decoration none
+  &:hover
+    color white
 </style>
