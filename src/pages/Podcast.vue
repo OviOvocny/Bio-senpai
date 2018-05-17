@@ -27,8 +27,7 @@
       :stiffness="0"
       :friction="170"
       :duration="250"
-      :stretch="1.1"
-      >
+      :stretch="1.1">
       <div
         :data-idx="index % 10"
         class="podcast-episode"
@@ -38,9 +37,9 @@
         <div>
           <h3 class="ep-title">{{ep.epName}}</h3>
           <p v-html="ep.epDesc">
-          <div v-if="ep.chapters">
-            <icon symbol="format-list-checks"></icon> Můžete přeskakovat na kapitoly
-          </div>
+            <div v-if="ep.chapters">
+              <icon symbol="format-list-checks"></icon> Můžete přeskakovat na kapitoly
+            </div>
           </p>
           <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
           Vydáno <b>{{date(ep.id)}}</b>

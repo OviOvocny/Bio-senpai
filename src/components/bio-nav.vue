@@ -312,8 +312,14 @@ export default {
           height @width
           line-height @height
           padding 0
-        .title .chapter
-          display none
+        .title
+          & > div
+            width 150px
+            white-space nowrap
+            overflow hidden
+            text-overflow ellipsis
+          .chapter
+            display none
         .pod-time
           display none
     .pod-controls button
