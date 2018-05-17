@@ -1,6 +1,6 @@
 <template>
   <section>
-    <cl-image src="mascot/banana" alt="Slupka od banánu" width="300"></cl-image>
+    <cl-image src="404nani" alt="NANI" width="500"></cl-image>
     <h2>Tady nic není...</h2>
     <h3>{{what}}</h3>
     <p class="center-text">
