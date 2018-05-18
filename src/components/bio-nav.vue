@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="sidebar-toggle" @click="sideHidden = !sideHidden"><icon :symbol="navToggle"></icon></button>
+    <button class="sidebar-toggle" @click="toggleNav"><icon :symbol="navToggle"></icon></button>
     <div :class="['sidebar', {sideHidden}]">
       <div :class="['sidebar-cta', {podcast}]" :style="{backgroundImage}">
         <router-link class="logo" to="/">
@@ -111,7 +111,11 @@ export default {
   },
   methods: {
     shy,
-    trim
+    trim,
+    toggleNav () {
+      this.sideHidden = !this.sideHidden
+      window.navigator.vibrate(40)
+    }
   },
   components: {
     audioPlayer
