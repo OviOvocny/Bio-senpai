@@ -83,7 +83,7 @@ export default {
   data: function () {
     return {
       sideHidden: true,
-      highPerf: localStorage.getItem('high-perf')
+      highPerf: localStorage.getItem('high-perf') === 'true'
     }
   },
   props: {
@@ -115,14 +115,16 @@ export default {
     shy,
     trim,
     toggleNav () {
-      const end = collectFPS()
+      if (!localStorage.getItem('high-perf')) {
+        const end = collectFPS()
+        setTimeout(() => {
+          const fps = end()
+          this.highPerf = fps > 40
+          localStorage.setItem('high-perf', this.highPerf)
+        }, 500)
+      }
       this.sideHidden = !this.sideHidden
       window.navigator.vibrate(40)
-      setTimeout(() => {
-        const fps = end()
-        this.highPerf = fps > 40.0
-        localStorage.setItem('high-perf', this.highPerf)
-      }, 500)
     }
   },
   components: {
