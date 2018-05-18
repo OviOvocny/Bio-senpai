@@ -24,7 +24,7 @@
           autosave>
         </audio-player>
       </div>
-      <div class="sidebar-main">
+      <div :class="['sidebar-main', {'sidebar-blur': highPerf}]">
         <nav>
           <ul>
             <li v-for="item in items" :key="item.label" >
@@ -48,6 +48,7 @@
 <script>
 import audioPlayer from './audio-player'
 import cl from 'cloudinary-core'
+import collectFPS from 'collect-fps'
 
 function shy (str) {
   const dict = [
@@ -81,7 +82,8 @@ export default {
   name: 'bio-nav',
   data: function () {
     return {
-      sideHidden: true
+      sideHidden: true,
+      highPerf: localStorage.getItem('high-perf')
     }
   },
   props: {
@@ -113,8 +115,14 @@ export default {
     shy,
     trim,
     toggleNav () {
+      const end = collectFPS()
       this.sideHidden = !this.sideHidden
       window.navigator.vibrate(40)
+      setTimeout(() => {
+        const fps = end()
+        this.highPerf = fps > 40.0
+        localStorage.setItem('high-perf', this.highPerf)
+      }, 500)
     }
   },
   components: {
@@ -258,7 +266,7 @@ export default {
     padding 1.5em
 
   @supports (backdrop-filter: blur(10px))
-    .sidebar-main
+    .sidebar-blur
       background-color alpha(#374258, 60%)
       backdrop-filter blur(10px)
 
