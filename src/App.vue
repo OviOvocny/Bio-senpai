@@ -13,7 +13,7 @@
     <backdrop :src="backdropImage" :params="backdropParameters"></backdrop>
     <main>
       <bio-header @error="updateError"></bio-header>
-      <transition name="warp" mode="out-in" @after-enter="$refs.view.entered = true">
+      <transition :name="highPerfTrans ? 'warp' : 'none'" mode="out-in" @after-enter="$refs.view.entered = true">
         <router-view
           ref="view"
           @update:subnav="val => subnav = val"
@@ -45,6 +45,7 @@ import backdrop from './components/backdrop'
 import bioFooter from './components/bio-footer'
 import showOffline from './components/show-offline'
 import {navItems} from './router/routes'
+import collectFPS from 'collect-fps'
 
 export default {
   name: 'app',
@@ -60,7 +61,8 @@ export default {
       ticker: false,
       tickerIcon: '',
       tickerButtons: [],
-      tickerTimeout: 5000
+      tickerTimeout: 5000,
+      highPerfTrans: localStorage.getItem('high-perf-transition') === 'true' || !localStorage.getItem('high-perf-trans')
     }
   },
   computed: {
@@ -135,6 +137,14 @@ export default {
   },
   watch: {
     '$route' (to) {
+      if (!localStorage.getItem('high-perf-transition')) {
+        const end = collectFPS()
+        setTimeout(() => {
+          const fps = end()
+          this.highPerfTrans = fps > 40
+          localStorage.setItem('high-perf-transition', this.highPerfTrans)
+        }, 100)
+      }
       this.retryPending()
       if (document.body.classList.contains('outdated-sw')) {
         this.updateTicker(

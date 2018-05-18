@@ -1,17 +1,18 @@
 <template>
   <header>
     <div class="kec">
-      <transition name="fade" mode="out-in">
+      <transition :name="highPerf ? 'fade' : 'none'" mode="out-in">
         <div class="kec-inner" :key="quote.quote">
           <q>{{quote.quote}}</q>
           <div class="author"><router-link :to="'/tym/' + quote.author">{{quote.author}}</router-link></div>
         </div>
       </transition>
     </div>
-    <transition name="fade" mode="out-in">
+    <transition :name="highPerf ? 'fade' : 'none'" mode="out-in">
       <div class="hlava" v-if="quote.author !== 'Tegami'" :key="quote.author">
        <cl-image width="60" :src="'team/' + quote.author"></cl-image>
-      </div></transition>
+      </div>
+    </transition>
   </header>
 </template>
 
@@ -25,7 +26,8 @@ export default {
         quote: 'To je ale blbost, co?',
         author: 'Tegami'
       },
-      quoteVisible: true
+      quoteVisible: true,
+      highPerf: localStorage.getItem('high-perf') === 'true' || !localStorage.getItem('high-perf')
     }
   },
   created () {

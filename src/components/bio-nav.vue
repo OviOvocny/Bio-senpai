@@ -83,7 +83,7 @@ export default {
   data: function () {
     return {
       sideHidden: true,
-      highPerf: localStorage.getItem('high-perf') === 'true'
+      highPerf: localStorage.getItem('high-perf') === 'true' || !localStorage.getItem('high-perf')
     }
   },
   props: {

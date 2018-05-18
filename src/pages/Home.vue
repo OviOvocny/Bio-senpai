@@ -1,7 +1,7 @@
 <template>
   <section class="relative">
-    <transition-zoom :distance="0.3" :twist="-20">
-      <cl-image v-if="entered" class="top-anime__mascot" :src="'mascot-ng/' + randomMascot" width="250"></cl-image>
+    <transition-zoom :distance="0.3" :twist="-20" :enabled="highPerf">
+      <cl-image v-if="entered || !highPerf" class="top-anime__mascot" :src="'mascot-ng/' + randomMascot" width="250"></cl-image>
     </transition-zoom>
     <div class="top-anime">
       <div class="top-anime__cover">
@@ -143,7 +143,8 @@ export default {
         anime: {
           eps: {}
         }
-      }
+      },
+      highPerf: localStorage.getItem('high-perf') === 'true' || !localStorage.getItem('high-perf')
     }
   },
   computed: {
@@ -186,7 +187,7 @@ export default {
         })
     },
     handleScroll () {
-      if (window.matchMedia('(prefers-reduced-motion)').matches) return
+      if (window.matchMedia('(prefers-reduced-motion)').matches || localStorage.getItem('high-perf') === 'false') return
       let percent = (20 / window.innerHeight) * window.pageYOffset * 2
       if (window.pageYOffset < window.innerHeight) this.$refs.topImage.$el.style.transform = `translateY(-${(20 - percent)}%)`
     },

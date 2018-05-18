@@ -15,6 +15,10 @@
 import dynamics from 'dynamics.js'
 export default {
   props: {
+    enabled: {
+      type: Boolean,
+      default: true
+    },
     mode: String,
     from: {
       type: String,
@@ -40,6 +44,7 @@ export default {
   },
   methods: {
     beforeEnter (el) {
+      if (!this.enabled) return
       dynamics.css(el, {
         opacity: 0,
         scale: this.scaleOut,
@@ -47,6 +52,7 @@ export default {
       })
     },
     enter (el, next) {
+      if (!this.enabled) return
       dynamics.animate(el, {
         opacity: 1,
         scale: 1,
@@ -60,10 +66,12 @@ export default {
       })
     },
     afterEnter (el) {
+      if (!this.enabled) return
       el.style = null
       this.$emit('after-enter')
     },
     leave (el, next) {
+      if (!this.enabled) return
       dynamics.animate(el, {
         opacity: 0,
         scale: this.scaleOut
