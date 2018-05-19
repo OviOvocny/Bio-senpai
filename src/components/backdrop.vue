@@ -83,10 +83,6 @@ bgcolor = #1e2430
     opacity 0
     transform scale(1.05)
 
-@media (orientation: portrait)
-  .backdrop-wrap
-    top 0
-
 .backdrop-overlay
   position absolute
   width 100%

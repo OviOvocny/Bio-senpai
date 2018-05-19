@@ -5,8 +5,8 @@ import App from './App'
 import router from './router'
 
 // Plugins
-import submenuPlugin from './scripts/submenu-plugin'
-Vue.use(submenuPlugin)
+// import submenuPlugin from './scripts/submenu-plugin'
+// Vue.use(submenuPlugin)
 
 import clearErrorPlugin from './scripts/clear-error-plugin'
 Vue.use(clearErrorPlugin)

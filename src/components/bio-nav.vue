@@ -24,7 +24,7 @@
           autosave>
         </audio-player>
       </div>
-      <div :class="['sidebar-main', {'sidebar-blur': highPerf}]">
+      <div :class="['sidebar-main', {'sidebar-blur': hp}]">
         <nav>
           <ul>
             <li v-for="item in items" :key="item.label" >
@@ -82,11 +82,11 @@ export default {
   name: 'bio-nav',
   data: function () {
     return {
-      sideHidden: true,
-      highPerf: localStorage.getItem('high-perf') === 'true' || !localStorage.getItem('high-perf')
+      sideHidden: true
     }
   },
   props: {
+    hp: Boolean,
     items: Array,
     show: Object,
     podcast: Boolean,
@@ -119,8 +119,7 @@ export default {
         const end = collectFPS()
         setTimeout(() => {
           const fps = end()
-          this.highPerf = fps > 40
-          localStorage.setItem('high-perf', this.highPerf)
+          localStorage.setItem('high-perf', fps > 40)
         }, 500)
       }
       this.sideHidden = !this.sideHidden

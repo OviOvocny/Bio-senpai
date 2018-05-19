@@ -51,6 +51,38 @@
       </div>
     </section>
 
+    <section class="options">
+      <h3>Zaškrtávátka</h3>
+      <p>
+        Podle toho, jak si vaše zařízení vedlo při animování některých částí webu, jsme možná vypuli některé náročnější efekty, protože nechceme, abyste nás soudili, že se vám ze zasekaných animací udělalo nevolno a zničili jste si klávesnici.
+      </p>
+      <p>
+        Tady to můžete změnit, ale je to na vás. Muhahaha.
+      </p>
+      <div class="checkboxContainer">
+        <input type="checkbox" name="high-perf-transition" id="option:transitions" class="checkbox-hidden"
+        @change="options" :checked="highPerfTransition" />
+        <label for="option:transitions" class="checkbox">
+          <div class="checkboxIcons"><i class="mdi mdi-close"></i><i class="mdi mdi-check"></i></div>
+        </label>
+        <label for="option:transitions" class="checkboxLabel"><i class="mdi mdi-animation"></i> Animované přechody</label>
+      </div>
+      <p class="reading-size-adjust indent-250">
+        Buďte jako kapitán Kirk a warpujte mezi jednotlivými sekcemi stylově.
+      </p>
+      <div class="checkboxContainer">
+        <input type="checkbox" name="high-perf" id="option:effects" class="checkbox-hidden"
+        @change="options" :checked="highPerf" />
+        <label for="option:effects" class="checkbox">
+          <div class="checkboxIcons"><i class="mdi mdi-close"></i><i class="mdi mdi-check"></i></div>
+        </label>
+        <label for="option:effects" class="checkboxLabel"><i class="mdi mdi-rice"></i> Pokročilé efekty</label>
+      </div>
+      <p class="reading-size-adjust indent-250">
+        Nudí se vaše grafická jednotka? I na to jsme pomysleli.
+      </p>
+    </section>
+
     <section class="log reading-size-adjust" v-for="log in logs">
         <h2>Verze {{log.version}} — {{log.hana}}</h2>
         <p>
@@ -73,7 +105,9 @@ export default {
       onlineData: false,
       error: false,
       logs: [],
-      latest: {}
+      latest: {},
+      highPerfTransition: localStorage.getItem('high-perf-transition') === 'true' || !localStorage.getItem('high-perf-transition'),
+      highPerf: localStorage.getItem('high-perf') === 'true' || !localStorage.getItem('high-perf')
     }
   },
   created () {
@@ -85,6 +119,12 @@ export default {
     next()
   },
   methods: {
+    options (e) {
+      const camel = e.target.name.replace(/-([a-z])/g, g => g[1].toUpperCase())
+      this[camel] = e.target.checked
+      localStorage.setItem(e.target.name, this[camel])
+      this.$emit(`option:${e.target.checked ? 'set' : 'unset'}`, camel)
+    },
     fetchData () {
       this.$emit('error', false)
       const api = new API('changelogs')

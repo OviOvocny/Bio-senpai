@@ -5,6 +5,7 @@
     <bio-nav
       :items="navItems"
       :show="show"
+      :hp="highPerf"
       :audioSource="audioSource"
       :audioMetadata="audioMeta"
       :podcast="audioActive"
@@ -12,14 +13,16 @@
       autosave></bio-nav>
     <backdrop :src="backdropImage" :params="backdropParameters"></backdrop>
     <main>
-      <bio-header @error="updateError"></bio-header>
-      <transition :name="highPerfTrans ? 'warp' : 'none'" mode="out-in" @after-enter="$refs.view.entered = true">
+      <bio-header @error="updateError" :hp="highPerf"></bio-header>
+      <transition :name="highPerfTransition? 'warp' : 'quick'" mode="out-in" @after-enter="$refs.view.entered = true">
         <router-view
           ref="view"
           @update:subnav="val => subnav = val"
           @update:audio="updateAudio"
           @update:audio-meta="val => audioMeta = val"
           @update:backdrop="updateBackdrop"
+          @option:set="setOption"
+          @option:unset="unsetOption"
           @error="updateError"
           @ticker="updateTicker"
         ></router-view>
@@ -62,7 +65,8 @@ export default {
       tickerIcon: '',
       tickerButtons: [],
       tickerTimeout: 5000,
-      highPerfTrans: localStorage.getItem('high-perf-transition') === 'true' || !localStorage.getItem('high-perf-trans')
+      highPerfTransition: localStorage.getItem('high-perf-transition') === 'true' || !localStorage.getItem('high-perf-transition'),
+      highPerf: localStorage.getItem('high-perf') === 'true' || !localStorage.getItem('high-perf')
     }
   },
   computed: {
@@ -71,6 +75,12 @@ export default {
     }
   },
   methods: {
+    setOption (val) {
+      this[val] = true
+    },
+    unsetOption (val) {
+      this[val] = false
+    },
     fetchData () {
       const api = new API('anime/random')
       api.offline()
@@ -141,7 +151,7 @@ export default {
         const end = collectFPS()
         setTimeout(() => {
           const fps = end()
-          this.highPerfTrans = fps > 40
+          this.highPerfTransition = fps > 40
           localStorage.setItem('high-perf-transition', this.highPerfTrans)
         }, 100)
       }
@@ -194,6 +204,28 @@ wstr = 1.1
 .warp-leave-to
   opacity 0
   transform scaleY(wstr) translateY(-(wdist))
+
+.fade-enter-active
+  transition .6s cubic-bezier(0.190, 1.000, 0.220, 1.000)
+.fade-leave-active
+  transition .1s ease-in
+
+.fade-leave-to
+  opacity 0
+  transform translateX(-.2em)
+.fade-enter
+  opacity 0
+  transform translateX(.5em)
+  
+.quick-enter-active
+  transition .2s cubic-bezier(0.190, 1.000, 0.220, 1.000)
+.quick-leave-active
+  transition .1s ease-in
+
+.quick-leave-to
+  opacity 0
+.quick-enter
+  opacity 0
 
 #app
   min-height 100vh
@@ -287,6 +319,8 @@ main
 
 .reading-size-adjust
   font-size .9rem
+.indent-250
+  padding-left 2.5em
 
 input[type=text], input[type=search], input[type=number]
   border-radius 1em

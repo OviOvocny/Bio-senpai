@@ -1,14 +1,14 @@
 <template>
   <header>
     <div class="kec">
-      <transition :name="highPerf ? 'fade' : 'none'" mode="out-in">
+      <transition :name="hp ? 'fade' : 'none'" mode="out-in">
         <div class="kec-inner" :key="quote.quote">
           <q>{{quote.quote}}</q>
           <div class="author"><router-link :to="'/tym/' + quote.author">{{quote.author}}</router-link></div>
         </div>
       </transition>
     </div>
-    <transition :name="highPerf ? 'fade' : 'none'" mode="out-in">
+    <transition :name="hp ? 'fade' : 'none'" mode="out-in">
       <div class="hlava" v-if="quote.author !== 'Tegami'" :key="quote.author">
        <cl-image width="60" :src="'team/' + quote.author"></cl-image>
       </div>
@@ -26,9 +26,11 @@ export default {
         quote: 'To je ale blbost, co?',
         author: 'Tegami'
       },
-      quoteVisible: true,
-      highPerf: localStorage.getItem('high-perf') === 'true' || !localStorage.getItem('high-perf')
+      quoteVisible: true
     }
+  },
+  props: {
+    hp: Boolean
   },
   created () {
     this.fetchData()
@@ -70,18 +72,6 @@ export default {
 </script>
 
 <style lang="stylus">
-.fade-enter-active
-  transition .6s cubic-bezier(0.190, 1.000, 0.220, 1.000)
-.fade-leave-active
-  transition .1s ease-in
-
-.fade-leave-to
-  opacity 0
-  transform translateX(-.2em)
-.fade-enter
-  opacity 0
-  transform translateX(.5em)
-
 header
   position relative
   margin 2em 0 4em 0
