@@ -296,7 +296,7 @@ body
   line-height normal
 .super-ultra-party-mode
   animation supm 5s infinite
-  background-image linear-gradient(rgba(206,106,255,.2) 0%,rgba(201,97,252,.2) 0%,rgba(95,255,255,.2) 34%,rgba(102,249,98,.2) 65%,rgba(255,96,96,.2) 100%,rgba(255,105,106,.2) 100%)
+  // background-image linear-gradient(rgba(206,106,255,.2) 0%,rgba(201,97,252,.2) 0%,rgba(95,255,255,.2) 34%,rgba(102,249,98,.2) 65%,rgba(255,96,96,.2) 100%,rgba(255,105,106,.2) 100%)
 
 @keyframes supm
   to
@@ -332,6 +332,8 @@ main
 
 .reading-size-adjust
   font-size .9rem
+.reading-line-adjust
+  line-height 1.2em
 .indent-250
   padding-left 2.5em
 

@@ -123,7 +123,7 @@ export default {
         }, 500)
       }
       this.sideHidden = !this.sideHidden
-      window.navigator.vibrate(40)
+      window.navigator.vibrate(20)
     }
   },
   components: {

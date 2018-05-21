@@ -97,7 +97,7 @@
     </section>
 
     <p>
-      Pokud je něco špatně nebo jste tajný agent, můžete smazat vaše místní data, jako uložené jméno, rozepsanou nebo <strong>zatím neodeslanou</strong> zprávu, pozici v podcastech a nastavení zobrazení. Bude to, jako byste k nám přišli poprvně.
+      Pokud je něco špatně nebo jste tajný agent, můžete smazat vaše místní data, jako uložené jméno, rozepsanou nebo <strong>zatím neodeslanou</strong> zprávu, pozici v podcastech a nastavení zobrazení. Bude to, jako byste k nám přišli poprvně. Můžete to udělat i offline, Bio-senpai zůstane nainstalovaná.
     </p>
     <btn class="reset" @click="burnMe" icon="delete" variant="red">Smazat data</btn>
     <span>Tohle bez mikrovlnky nelze vrátit!</span>
