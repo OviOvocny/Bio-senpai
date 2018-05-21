@@ -30,7 +30,7 @@ let rt = new Router({
 })
 
 rt.beforeEach((to, from, next) => {
-  if (to.hash && from.path === '/') {
+  if (to.hash && to.path === '/') {
     rt.replace('/projekty/' + to.hash.substring(1)
       .replace(/\+|%20/g, '-')
       .toLowerCase()
