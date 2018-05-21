@@ -1,14 +1,14 @@
 <template>
   <header>
     <div class="kec">
-      <transition :name="hp ? 'fade' : 'none'" mode="out-in">
+      <transition :name="hp ? 'fade' : 'quick'" mode="out-in">
         <div class="kec-inner" :key="quote.quote">
           <q>{{quote.quote}}</q>
           <div class="author"><router-link :to="'/tym/' + quote.author">{{quote.author}}</router-link></div>
         </div>
       </transition>
     </div>
-    <transition :name="hp ? 'fade' : 'none'" mode="out-in">
+    <transition :name="hp ? 'fade' : 'quick'" mode="out-in">
       <div class="hlava" v-if="quote.author !== 'Tegami'" :key="quote.author">
        <cl-image width="60" :src="'team/' + quote.author"></cl-image>
       </div>

@@ -12,7 +12,7 @@ let rt = new Router({
       path: '*',
       component: ErrorPage,
       meta: {
-        title: 'Něco je špatně...'
+        title: 'Nani!?'
       }
     },
     ...routes

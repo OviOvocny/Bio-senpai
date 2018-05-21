@@ -81,6 +81,22 @@ export default {
     unsetOption (val) {
       this[val] = false
     },
+    checkSW () {
+      if (document.body.classList.contains('outdated-sw')) {
+        this.updateTicker(
+          'Pro dokončení aktualizace znovu načtěte stránku',
+          'update',
+          60000,
+          [
+            {
+              label: 'Aktualizovat',
+              icon: 'reload',
+              action: () => window.location.reload()
+            }
+          ]
+        )
+      }
+    },
     fetchData () {
       const api = new API('anime/random')
       api.offline()
@@ -146,35 +162,32 @@ export default {
     showOffline
   },
   watch: {
-    '$route' (to) {
-      if (!localStorage.getItem('high-perf-transition')) {
+    '$route' (to, from) {
+      if (from.name && !localStorage.getItem('high-perf-transition')) {
         const end = collectFPS()
         setTimeout(() => {
           const fps = end()
           this.highPerfTransition = fps > 40
-          localStorage.setItem('high-perf-transition', this.highPerfTrans)
+          localStorage.setItem('high-perf-transition', this.highPerfTransition)
         }, 100)
       }
       this.retryPending()
-      if (document.body.classList.contains('outdated-sw')) {
-        this.updateTicker(
-          'Pro dokončení aktualizace znovu načtěte stránku',
-          'update',
-          60000,
-          [
-            {
-              label: 'Aktualizovat',
-              icon: 'reload',
-              action: () => window.location.reload()
-            }
-          ]
-        )
-      }
+      this.checkSW()
     }
   },
   created () {
     window.addEventListener('online', () => this.retryPending())
     this.fetchData()
+  },
+  mounted () {
+    this.checkSW()
+    if (sessionStorage.getItem('deleted')) {
+      sessionStorage.removeItem('deleted')
+      this.updateTicker(
+          'Všechno jsme smazali... A vy jste kdo?',
+          'delete-empty'
+        )
+    }
   }
 }
 </script>
