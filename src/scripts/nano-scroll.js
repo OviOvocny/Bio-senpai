@@ -8,8 +8,9 @@ export default function nanoScroll (targetY, alpha, callback) {
   if (targetY < 0) {
     targetY = 0
   }
-  if (targetY > document.body.scrollHeight) {
-    targetY = document.body.scrollHeight
+  var max = document.body.scrollHeight - window.innerHeight
+  if (targetY > max) {
+    targetY = max
   }
   function loop () {
     if (Math.floor(pageYOffset) >= targetY - 1 && Math.floor(pageYOffset) <= targetY + 1) {
