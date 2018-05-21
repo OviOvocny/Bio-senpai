@@ -1,12 +1,5 @@
 <template>
   <section>
-    <cl-image
-      v-show="entered"
-      class="lolec"
-      :src="sendHover ? 'mascot/melt' : 'mascot/message'"
-      width="100"
-      :style="{animation: mascotAnim}"
-    ></cl-image>
     <h2>Ahoj!</h2>
     <p>
       Máte zájem pomoci našemu skromnému týmu? Pokud ano, stačí si přečíst něco málo o rolích v týmu, které můžete zaujmout. <br>
@@ -119,9 +112,7 @@
             <input
               type="submit"
               id="submitBtn"
-              value="Poslat"
-              @mouseenter="sendHover = true"
-              @mouseleave="sendHover = false">
+              value="Poslat">
         </form>
         <show-offline>
           <p>
@@ -175,8 +166,7 @@ export default {
       entered: false,
       category: 'preklad',
       sugoi: false,
-      pending: [],
-      sendHover: false
+      pending: []
     }
   },
   computed: {
@@ -185,13 +175,6 @@ export default {
     },
     nameSuggestion () {
       return suggestions[Math.floor(Math.random() * suggestions.length)]
-    },
-    mascotAnim () {
-      if (this.sendHover) {
-        return 'vibrate .2s infinite'
-      } else {
-        return 'dance 1s alternate infinite'
-      }
     }
   },
   methods: {
@@ -258,33 +241,6 @@ export default {
 </script>
 
 <style lang="stylus">
-.lolec
-  position fixed
-  z-index 1
-  left 1vw
-  bottom -30px
-
-@media (orientation: portrait)
-  .lolec
-    display none
-
-@keyframes dance {
-  from, 49% { transform-origin: 150% 100%; }
-  50%, 75%, to { transform-origin: -50% 100%; }
-  25% { transform: rotate(10deg); }
-  50% { transform: rotate(0deg); }
-  75% { transform: rotate(-10deg); }
-}
-
-vibrate-amount = 2px
-offset-vert = 0px
-@keyframes vibrate {
-  20% { transform: translate(vibrate-amount, 0 + offset-vert) }
-  40% { transform: translate(-(vibrate-amount), vibrate-amount + offset-vert) }
-  60% { transform: translate(0, -(vibrate-amount) + offset-vert) }
-  80% { transform: translate(-(vibrate-amount) * 2, 0 + offset-vert) }
-}
-
 .pending-application
   border 2px solid lighten(#1e2430, 20%)
   border-radius 15px
