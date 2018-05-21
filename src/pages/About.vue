@@ -51,13 +51,14 @@
       </div>
     </section>
 
+    <!-- Unsure...
     <section class="options">
       <h3>Zaškrtávátka</h3>
       <p>
         Podle toho, jak si vaše zařízení vedlo při animování některých částí webu, jsme možná vypuli některé náročnější efekty, protože nechceme, abyste nás soudili, že se vám ze zasekaných animací udělalo nevolno a zničili jste si klávesnici.
       </p>
       <p>
-        Tady to můžete změnit, ale je to na vás. Muhahaha.
+        Tady to můžete změnit, ale pak je to na vás. Muhahaha.
       </p>
       <div class="checkboxContainer">
         <input type="checkbox" name="high-perf-transition" id="option:transitions" class="checkbox-hidden"
@@ -82,6 +83,7 @@
         Nudí se vaše grafická jednotka? I na to jsme pomysleli.
       </p>
     </section>
+    -->
 
     <section class="log reading-size-adjust" v-for="log in logs">
         <h2>Verze {{log.version}} — {{log.hana}}</h2>
@@ -93,6 +95,12 @@
             <li v-for="change in log.changelog">{{change}}</li>
         </ul>
     </section>
+
+    <p>
+      Pokud je něco špatně nebo jste tajný agent, můžete smazat vaše místní data, jako uložené jméno, rozepsanou nebo <strong>zatím neodeslanou</strong> zprávu, pozici v podcastech a nastavení zobrazení. Bude to, jako byste k nám přišli poprvně.
+    </p>
+    <btn class="reset" @click="burnMe" icon="delete" variant="red">Smazat data</btn>
+    <span>Tohle bez mikrovlnky nelze vrátit!</span>
   </div>
 </template>
 
@@ -105,9 +113,11 @@ export default {
       onlineData: false,
       error: false,
       logs: [],
-      latest: {},
+      latest: {}
+      /*
       highPerfTransition: localStorage.getItem('high-perf-transition') === 'true' || !localStorage.getItem('high-perf-transition'),
       highPerf: localStorage.getItem('high-perf') === 'true' || !localStorage.getItem('high-perf')
+      */
     }
   },
   created () {
@@ -119,11 +129,21 @@ export default {
     next()
   },
   methods: {
+    /*
     options (e) {
       const camel = e.target.name.replace(/-([a-z])/g, g => g[1].toUpperCase())
       this[camel] = e.target.checked
       localStorage.setItem(e.target.name, this[camel])
       this.$emit(`option:${e.target.checked ? 'set' : 'unset'}`, camel)
+    },
+    */
+    burnMe () {
+      const l = localStorage.length - 1
+      for (let i = l; i >= 0; i--) {
+        localStorage.removeItem(localStorage.key(i))
+      }
+      sessionStorage.setItem('deleted', Date.now())
+      location.reload()
     },
     fetchData () {
       this.$emit('error', false)
@@ -173,7 +193,7 @@ export default {
   cursor default
   margin-bottom 1em
 
-.log
+.log, .options
   margin-bottom 6em
 
 #bio path
