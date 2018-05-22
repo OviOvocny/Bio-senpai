@@ -1,8 +1,19 @@
 <template>
   <div class="msg-container" :id="id">
     <comment :sender="sender" :time="time" :team="team" :text="msg"></comment>
-    <transition-group-spring back from="top" :distance="2">
-      <comment reply v-for="reply in shownReplies" :key="reply.msg" :sender="reply.sender" :time="reply.time" :team="reply.team" :text="reply.msg"></comment>
+    <transition-group-spring back from="top" 
+      :distance="2" 
+      :stiffness="0"
+      :friction="170"
+      :duration="250"
+      :stagger="60">
+      <comment reply v-for="(reply, index) in shownReplies" 
+        :key="reply.msg"
+        :data-idx="index % 10 - maxCompactReplies"
+        :sender="reply.sender" 
+        :time="reply.time" 
+        :team="reply.team" 
+        :text="reply.msg"></comment>
     </transition-group-spring>
     <div class="hidden-hint"
          v-if="replies.length > maxCompactReplies && !showingAllReplies && !replying"
@@ -11,7 +22,12 @@
       Kliknutím zobrazíte zbytek odpovědí (celkem {{remainingReplies}})
     </div>
 
-    <transition-spring back from="top" :distance="2">
+    <transition-spring back from="top" 
+      :distance="4" 
+      :stiffness="0"
+      :friction="170"
+      :duration="250"
+      :stretch="1.1">
       <div class="reply-box" v-if="replying" ref="replyBoxRef">
         <comment-form reply
                       @send="handleReply"
