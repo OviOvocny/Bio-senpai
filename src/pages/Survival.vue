@@ -12,7 +12,7 @@
     <div class="toc highlight-block">
       <ol class="hlist">
         <li><a @click.prevent="scrollTo('co-se-deje')" href="#co-se-deje">Co se děje</a></li>
-        <li><a @click.prevent="scrollTo('nas-stav')" href="#nas-stav">Nás stav</a></li>
+        <li><a @click.prevent="scrollTo('nas-stav')" href="#nas-stav">Náš stav</a></li>
         <li><a @click.prevent="scrollTo('co-delat')" href="#co-delat">Co dělat</a>
           <ol>
             <li><a @click.prevent="scrollTo('video')" href="#video">Jak sehnat video</a></li>
@@ -21,6 +21,7 @@
         </li>
         <li><a @click.prevent="scrollTo('pokrocile-taktiky')" href="#pokrocile-taktiky">Pokročilé taktiky</a>
           <ol>
+            <li><a @click.prevent="scrollTo('nouzove-video')" href="#nouzove-video">Nouzové video</a></li>
             <li><a @click.prevent="scrollTo('prelepovani')" href="#prelepovani">Přelepování</a></li>
           </ol>
         </li>
@@ -28,6 +29,14 @@
     </div>
 
     <h2 class="chap" id="co-se-deje" ref="co-se-deje">Co se děje</h2>
+    <cl-image 
+      src="mascot-ng/notes" 
+      width="200" 
+      :params=" {transformation: [
+                  {angle: 'hflip'},
+                  {angle: 3}
+                ]}"
+      class="deco"></cl-image>
     <p>
       Pokud čtete tuhle příručku, asi jste si už všimli, že z českého internetu postupně vymizela asi všechna videa přeložených anime, o streamování ani nemluvě. Původcem celého toho šílenství se zdají být, jak už to tak bývá, nesčetná upozornění na porušování autorských práv namířených na naší skromnou komunitu. Ty nejsou nic nového, ale tentokrát podle všeho přituhuje dost na to, aby se celá Akihabara, kterou možná znáte jakožto jeden z těch větších otaku portálů, zbláznila a začala mazat veškeré důkazy.<a href="https://forum.akihabara.cz/index.php?topic=5356.0" class="ref">A</a> Samozřejmě můžete namítnout, že takových věcí ohledně pirátství už tu byla spousta, ale nikomu se nechce platit nereálně vysoké pokuty nebo si jít posedět na pár let se zaručeně příjemnými spolubydlícími. A to i kdyby šance, že k tomu dojde, byla jakkoliv malá.
     </p>
@@ -35,13 +44,13 @@
       Co se změnilo oproti dřívějšku? Možná že nic. Tak do hloubky tu nebudeme zacházet, ale určitě najdete vhodné zdroje, kde se dozvíte mnohem více. Každopádně ano, zmíněné věci zmizeli i z Bio-senpai. Můžete s tím souhlasit nebo nemusíte, ale je to tak. Pokud se situace časem uklidní (pokud je vůbec co uklidňovat), mohou se videa a streamy opět objevit, ale určitě to říci nelze.
     </p>
     <p class="highlight-block">
-      Chtěli bychom teď narychlo odbočit. Asi vám neuniknul humbuk okolo <strong>GDPR</strong>. Pro ujasnění, GDPR se týká odobních údajů uživatelů. S vyhlazením anime titulkářů tedy nesouvisí a nemusíte kvůli tomu na něj nadávat. Kvůli všemu čeho se ale dotýká, prosíme, nadávejte dál, pokud nadáváte.
+      Chtěli bychom teď narychlo odbočit. Asi vám neuniknul humbuk okolo <strong>GDPR</strong>. Pro ujasnění, GDPR se týká osobních údajů uživatelů. S vyhlazením anime titulkářů tedy nesouvisí a nemusíte kvůli tomu na něj nadávat. Kvůli všemu čeho se ale dotýká, prosíme, nadávejte dál, pokud nadáváte.
     </p>
     <p>
       Věděli jste, že normální člověk doma nekrájí hrozen? Ne proto, že to tu je napsáno, ale protože na to nemá v životě čas. A už vůbec nemá čas ze sebe dělat amatérského právníka. Zkoumat, co je a co není v EU trestný čin v tomto ohledu a jaký zákon se kde vyrojil, to je jako krájet hrozen. Pokud se chcete ponořit přímo do zdroje vší paniky, můžete si pročíst některá vlákna na Aki.<a href="https://forum.akihabara.cz/index.php?topic=5344.0" class="ref">B</a> Komu budete věřit je na vás.
     </p>
 
-    <h2 class="chap" id="nas-stav" ref="nas-stav">Nás stav</h2>
+    <h2 class="chap" id="nas-stav" ref="nas-stav">Náš stav</h2>
     <p>
       U nás jsme se nakonec dohodli přistoupit na hru Akihabary a zpřístupňovat jen externí titulky. Z části proto, abychom u nich mohli i nadále propagovat naše nezaměnitelně pomalé překlady. Z části proto, že (kromě Cerxe) nehodláme být rebelové a věčně myslet na možnost dovolené v jistém zařízení, ať už je pravděpodobnost jakkoliv malá. O tom už jsme psali výše. 
     </p>
@@ -59,7 +68,7 @@
       U našich překladů uvádíme, odkud se původně vzaly a tedy na které vydání (release, chete-li) sedí časování titulků. Vaše mise, pokud se ji rozhodnete přijmout, bude vyhledat web skupiny, která vydala námi přeložený materiál a u nich pak pokračovat k žádaným souborům. Budete muset konfrontovat cizojazyčné weby, ale to určitě zvládnete. Není to věda.
     </p>
     <p>
-      Alternativní plán bude vyhledat jejich vydání na některém z torrent trackerů, pokud možno zaměřených přímo na anime. Pokud ani jeden z plánů nebyl úspěšný, vizte pokročilé taktikty pro shánění videa.
+      Alternativní plán bude vyhledat jejich vydání na některém z torrent trackerů, pokud možno zaměřených přímo na anime. Pokud ani jeden z těchto plánů nebyl úspěšný, vizte pokročilé taktikty pro shánění videa.
     </p>
 
     <h3 class="sub" id="prehrani" ref="prehrani">Jak přidat titulky</h3>
@@ -75,12 +84,20 @@
       Následující už bude vyžadovat trochu víc práce, ale nevzdávejte to. Musíte to přece vidět.
     </p>
 
-    <h3 class="sub" id="prelepovani" ref="prelepovani">Přelepování</h3>
+    <h3 class="sub" id="nouzove-video" ref="nouzove-video">Nouzové video</h3>
     <p>
-      Zoufalá taktika, ale ne tak nepříjemná na oči, jak by se mohla zdát. Pokud jediné, co jste našli, byl nějaký španělský hardsub, bude se vám tohle hodit. Jelikož v hardsubu se titulků nezbavíte, budete je muset &bdquo;přelepit&ldquo; tím, že jim místo jen obrysu dáte barevné celé pozadí. Nebude to nejpěknější, ale přečtete je.
+      Někdy se může stát, že vydání, které potřebujete, prostě nikde není k sehnání. Nejméně bolestivou alternativou je sehnat video od jiné skupiny nebo raw, tedy originální video úplně bez titulků. Problémem může být nesedící časování. Samozřejmě, že obsah bude stejný, ale mezi vydáními mohou být rozdíly. Někde chybí sponzoři po úvodních titulcích, někde ne. Vteřinka sem, vteřinka tam, ale to bohatě stačí na zešílení z &bdquo;křivých&ldquo; titulků. V takovém případě budete časování muset posunout ve vašem přehrávači, jak se říká &bdquo;od oka.&ldquo;
     </p>
     <p>
-      Přehrávače tuto možnost někdy nabízejí, ale pokročilejší titulky (ass) si to většinou nedají líbit. Pro zaručeně úspěšné lepení doporučujeme použít editor titulků, jako náš oblíbený a odzkoušení Aegisub.<a href="http://www.aegisub.org" class="ref">D</a> Titulky v ssa nebo ass formátu obsahují styly, které udávají, jak vypadá celá skupina řádků. V Aegisubu můžete upravit styl a povolit u něj pozadí. Titulky pak uložíte a otevřete spolu s hardsubovaným videem jako obvykle.
+      Pokud k některé sérii nebo filmu seženete jen cizojazyčný hardsub, tedy video s vypálenými titulky do obrazu, může to vypadat jako úplný konec. Ale pořád je naděje. Čtěte dál.
+    </p>
+
+    <h3 class="sub" id="prelepovani" ref="prelepovani">Přelepování</h3>
+    <p>
+      Zoufalá taktika, ale ne tak nepříjemná na oči, jak by se mohla zdát. Pokud jediné, co jste našli, byl nějaký španělský hardsub, bude se vám tohle hodit. Jelikož v hardsubu se titulků nezbavíte, budete je muset &bdquo;přelepit&ldquo; tím, že těm vašim místo pouze obrysu dáte barevné celé pozadí. Nebude to nejpěknější, ale přečtete je.
+    </p>
+    <p>
+      Přehrávače tuto možnost někdy nabízejí, ale pokročilejší titulky (ass) si to většinou nedají líbit. Pro zaručeně úspěšné lepení doporučujeme použít editor titulků, jako náš oblíbený a odzkoušený Aegisub.<a href="http://www.aegisub.org" class="ref">D</a> Titulky v ssa nebo ass formátu obsahují styly, které udávají, jak vypadá celá skupina řádků. V Aegisubu můžete upravit styl a povolit u něj pozadí. Titulky pak uložíte a otevřete spolu s hardsubovaným videem jako obvykle.
     </p>
 
     <h3 class="block-title">Reference</h3>
@@ -151,4 +168,11 @@ h2.chap::before, h3.sub::before
   
 .hlist
   padding-left 1em
+  
+.deco
+  float right
+  width 220px
+  height 283px
+  shape-outside polygon(32% 0%, 29% 11%, 12% 20%, 5% 41%, 11% 63%, 22% 73%, 28% 98%, 47% 100%, 100% 100%, 100% 0%)
+  padding-left 20px
 </style>
