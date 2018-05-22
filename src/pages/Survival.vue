@@ -172,7 +172,6 @@ h2.chap::before, h3.sub::before
 .deco
   float right
   width 220px
-  height 283px
   shape-outside polygon(32% 0%, 29% 11%, 12% 20%, 5% 41%, 11% 63%, 22% 73%, 28% 98%, 47% 100%, 100% 100%, 100% 0%)
   padding-left 20px
 </style>
