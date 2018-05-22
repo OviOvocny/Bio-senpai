@@ -127,8 +127,7 @@
 
 <script>
 const randomMascotArray = [
-  // 'melt', 'message', 'assfiles'
-  'wow'
+  'wow', 'cat', 'devious', 'lewd', 'nani', 'shady', 'supersmile'
 ]
 
 import API from 'api'
