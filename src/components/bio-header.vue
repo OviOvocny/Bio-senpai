@@ -78,6 +78,7 @@ header
   display flex
   align-items center
   justify-content flex-end
+  height 6em
 
 .hlava
   img

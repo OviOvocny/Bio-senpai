@@ -22,7 +22,10 @@
       <button title="Napřed o 30s" @click="$refs.audio.currentTime += 30"><icon symbol="redo"></icon></button>
     </div>
     <!-- Floating pane -->
-    <div :class="['pod-chapter-list', {'chlist-open': chapterList && active && metadata.chapters}]">
+    <div :class="[
+      'pod-chapter-list', 
+      {'chlist-open': chapterList && active && metadata.chapters,
+       'pod-chapter-list-blur': hp}]">
       <div class="chlist-head">
         <h4>Seznam kapitol</h4>
         <icon symbol="close" @click.native="chapterList = false"></icon>
@@ -73,6 +76,7 @@ function index (arr, compare) {
 
 export default {
   props: {
+    hp: Boolean,
     source: String,
     active: Boolean,
     autosave: Boolean,
@@ -218,7 +222,7 @@ ease-out-expo = cubic-bezier(0.190, 1.000, 0.220, 1.000)
     pointer-events auto
 
 @supports (backdrop-filter: blur(10px))
-  .pod-chapter-list
+  .pod-chapter-list-blur
     background-color alpha(#374258, 70%)
     backdrop-filter blur(10px)
 

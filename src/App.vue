@@ -13,7 +13,7 @@
       autosave></bio-nav>
     <backdrop :src="backdropImage" :params="backdropParameters"></backdrop>
     <main>
-      <bio-header @error="updateError" :hp="highPerf"></bio-header>
+      <bio-header @error="updateError" :hp="highPerf" ref="header"></bio-header>
       <transition :name="highPerfTransition? 'warp' : 'quick'" mode="out-in" @after-enter="$refs.view.entered = true">
         <router-view
           ref="view"
@@ -80,6 +80,9 @@ export default {
     },
     unsetOption (val) {
       this[val] = false
+    },
+    toggleOption (val) {
+      this[val] = !this[val]
     },
     checkSW () {
       if (document.body.classList.contains('outdated-sw')) {
@@ -177,6 +180,21 @@ export default {
   },
   created () {
     window.addEventListener('online', () => this.retryPending())
+    window.addEventListener('keydown', e => {
+      if (e.ctrlKey && e.shiftKey) {
+        switch (e.code) {
+          case 'KeyT':
+            this.toggleOption('highPerfTransition')
+            break
+          case 'KeyP':
+            this.toggleOption('highPerf')
+            break
+          case 'KeyQ':
+            this.$refs.header.fetchData()
+            break
+        }
+      }
+    })
     this.fetchData()
   },
   mounted () {

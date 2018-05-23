@@ -16,6 +16,7 @@
           <router-link class="title" :to="'/projekty/' + show.url_title">{{shy(trim(show.title))}}</router-link>
         </div>
         <audio-player
+          :hp="hp"
           class="player"
           :source="audioSource"
           :metadata="audioMetadata"
