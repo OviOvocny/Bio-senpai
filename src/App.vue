@@ -184,12 +184,15 @@ export default {
       if (e.ctrlKey && e.shiftKey) {
         switch (e.code) {
           case 'KeyT':
+            e.preventDefault()
             this.toggleOption('highPerfTransition')
             break
           case 'KeyP':
+            e.preventDefault()
             this.toggleOption('highPerf')
             break
           case 'KeyQ':
+            e.preventDefault()
             this.$refs.header.fetchData()
             break
         }
