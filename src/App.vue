@@ -191,7 +191,7 @@ export default {
             e.preventDefault()
             this.toggleOption('highPerf')
             break
-          case 'KeyQ':
+          case 'KeyK':
             e.preventDefault()
             this.$refs.header.fetchData()
             break
