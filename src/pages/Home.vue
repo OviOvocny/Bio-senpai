@@ -143,7 +143,7 @@ export default {
           eps: {}
         }
       },
-      highPerf: localStorage.getItem('high-perf') === 'true' || !localStorage.getItem('high-perf')
+      highPerf: localStorage.getItem('highPerf') === 'true' || !localStorage.getItem('highPerf')
     }
   },
   computed: {
@@ -186,7 +186,7 @@ export default {
         })
     },
     handleScroll () {
-      if (window.matchMedia('(prefers-reduced-motion)').matches || localStorage.getItem('high-perf') === 'false') return
+      if (window.matchMedia('(prefers-reduced-motion)').matches || localStorage.getItem('highPerf') === 'false') return
       let percent = (20 / window.innerHeight) * window.pageYOffset * 2
       if (window.pageYOffset < window.innerHeight) this.$refs.topImage.$el.style.transform = `translateY(-${(20 - percent)}%)`
     },

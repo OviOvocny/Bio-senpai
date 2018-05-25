@@ -116,11 +116,11 @@ export default {
     shy,
     trim,
     toggleNav () {
-      if (!localStorage.getItem('high-perf')) {
+      if (!localStorage.getItem('highPerf')) {
         const end = collectFPS()
         setTimeout(() => {
           const fps = end()
-          localStorage.setItem('high-perf', fps > 40)
+          localStorage.setItem('highPerf', fps > 40)
         }, 500)
       }
       this.sideHidden = !this.sideHidden

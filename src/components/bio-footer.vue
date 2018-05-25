@@ -1,15 +1,11 @@
 <template>
   <footer>
-      <div>
-          <router-link to="/about" style="text-decoration:none">
-            <div class="footer-title">Bio-senpai</div>
-            <div class="version" v-if="fHana">{{fHana}} | {{fVersion}}</div>
-          </router-link>
-      </div>
-      <div style="text-align:right">
-          <div><router-link to="/about">O webu a licence</router-link></div>
-          <div><a href="//www.ovi.moe">Ovi</a> {{year}}</div>
-      </div>
+    <div>
+      <router-link to="/about">
+        <div class="footer-title">Bio-senpai</div>
+        <div class="version" v-if="fHana">v{{fVersion}} {{fHana}}</div>
+      </router-link>
+    </div>
   </footer>
 </template>
 
@@ -76,11 +72,13 @@ footer
   color f-color
   font-size .9em
   display flex
-  justify-content space-between
+  justify-content flex-end
   align-items center
 
   a
     color f-color
+    text-decoration none
+    text-align right
   a:visited
     color f-color
   a:hover
@@ -91,4 +89,7 @@ footer
 
 .footer-title
   font 1.3em Unica One
+  
+.version
+  font-size .8em
 </style>

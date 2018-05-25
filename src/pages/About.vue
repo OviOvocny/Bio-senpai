@@ -40,7 +40,7 @@
               </g>
           </svg>
           <div class="top-title">Bio-senpai</div>
-          <div class="top-version">{{latest.hana}} | {{latest.version}}</div>
+          <div class="top-version">v{{latest.version}} {{latest.hana}}</div>
 
           <div class="licence">
             Bio-senpai je progresivní webová aplikace postavená na <a href="https://vuejs.org">Vue 2</a>,
@@ -61,7 +61,7 @@
         Tady to můžete změnit, ale pak je to na vás. Muhahaha.
       </p>
       <div class="checkboxContainer">
-        <input type="checkbox" name="high-perf-transition" id="option:transitions" class="checkbox-hidden"
+        <input type="checkbox" name="highPerfTransition" id="option:transitions" class="checkbox-hidden"
         @change="options" :checked="highPerfTransition" />
         <label for="option:transitions" class="checkbox">
           <div class="checkboxIcons"><i class="mdi mdi-close"></i><i class="mdi mdi-check"></i></div>
@@ -72,7 +72,7 @@
         Buďte jako kapitán Kirk a warpujte mezi jednotlivými sekcemi stylově.
       </p>
       <div class="checkboxContainer">
-        <input type="checkbox" name="high-perf" id="option:effects" class="checkbox-hidden"
+        <input type="checkbox" name="highPerf" id="option:effects" class="checkbox-hidden"
         @change="options" :checked="highPerf" />
         <label for="option:effects" class="checkbox">
           <div class="checkboxIcons"><i class="mdi mdi-close"></i><i class="mdi mdi-check"></i></div>
@@ -115,8 +115,8 @@ export default {
       logs: [],
       latest: {}
       /*
-      highPerfTransition: localStorage.getItem('high-perf-transition') === 'true' || !localStorage.getItem('high-perf-transition'),
-      highPerf: localStorage.getItem('high-perf') === 'true' || !localStorage.getItem('high-perf')
+      highPerfTransition: localStorage.getItem('highPerfTransition') === 'true' || !localStorage.getItem('highPerfTransition'),
+      highPerf: localStorage.getItem('highPerf') === 'true' || !localStorage.getItem('highPerf')
       */
     }
   },

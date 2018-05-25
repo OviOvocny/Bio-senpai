@@ -65,8 +65,8 @@ export default {
       tickerIcon: '',
       tickerButtons: [],
       tickerTimeout: 5000,
-      highPerfTransition: localStorage.getItem('high-perf-transition') === 'true' || !localStorage.getItem('high-perf-transition'),
-      highPerf: localStorage.getItem('high-perf') === 'true' || !localStorage.getItem('high-perf')
+      highPerfTransition: localStorage.getItem('highPerfTransition') === 'true' || !localStorage.getItem('highPerfTransition'),
+      highPerf: localStorage.getItem('highPerf') === 'true' || !localStorage.getItem('highPerf')
     }
   },
   computed: {
@@ -77,12 +77,15 @@ export default {
   methods: {
     setOption (val) {
       this[val] = true
+      localStorage.setItem(val, this[val])
     },
     unsetOption (val) {
       this[val] = false
+      localStorage.setItem(val, this[val])
     },
     toggleOption (val) {
       this[val] = !this[val]
+      localStorage.setItem(val, this[val])
     },
     checkSW () {
       if (document.body.classList.contains('outdated-sw')) {
@@ -166,12 +169,12 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      if (from.name && !localStorage.getItem('high-perf-transition')) {
+      if (from.name && !localStorage.getItem('highPerfTransition')) {
         const end = collectFPS()
         setTimeout(() => {
           const fps = end()
           this.highPerfTransition = fps > 40
-          localStorage.setItem('high-perf-transition', this.highPerfTransition)
+          localStorage.setItem('highPerfTransition', this.highPerfTransition)
         }, 100)
       }
       this.retryPending()
