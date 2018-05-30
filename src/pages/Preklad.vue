@@ -115,7 +115,7 @@
     </transition-group>
 
     <router-link to="/survival-guide" class="help">
-      <icon symbol="compass"></icon>
+      <icon symbol="help-circle"></icon>
       {{whatsNext}}
     </router-link>
 
