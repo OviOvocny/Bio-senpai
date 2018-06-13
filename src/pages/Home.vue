@@ -79,7 +79,11 @@
       <div class="top-modules--area top-modules__yoimiru">
         <div class="yoimiru__flex">
           <div class="yoimiru__flex">
-            <svg class="yoimiru__logo" xmlns="http://www.w3.org/2000/svg" width="30" viewBox="0 0 60 60" xmlns:xlink="http://www.w3.org/1999/xlink"><desc>Yoimiru logo</desc><g fill="#2f384b" transform="translate(30 30)"><clipPath id="a" clip-rule="evenodd"><path d="M-30-30h60v60h-60v-60z"/></clipPath><g clip-path="url(#a)"><use xlink:href="#b" transform="translate(-22 -21)"/><use xlink:href="#c" transform="translate(.5 -19.5)"/><use xlink:href="#d" transform="translate(7.5 -18)"/></g></g><defs><path id="b" d="M4 39L0 0l7 .5L21 29c-2.4 4.6-4.2 7-8.5 10H4z"/><path id="c" d="M7 .5L0 0l5.5 13.5L7 .5z"/><path id="d" d="M11.5 39l3-39h-2C6.5 23.6 3.8 31.8 0 38l11.5 1z"/></defs></svg>
+            <svg class="yoimiru__logo" viewBox="0 0 284 259" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M161.695 119.311C171.36 102.571 192.766 96.835 209.506 106.5C226.246 116.165 231.982 137.571 222.317 154.311L172.317 240.913C162.652 257.654 141.246 263.389 124.506 253.724C107.766 244.059 102.03 222.654 111.695 205.913L161.695 119.311Z"/>
+              <path d="M113.195 35C113.195 15.67 128.865 0 148.195 0H248.195C267.525 0 283.195 15.67 283.195 35C283.195 54.33 267.525 70 248.195 70H148.195C128.865 70 113.195 54.33 113.195 35Z"/>
+              <path d="M102.506 153.724C85.7656 163.389 64.3599 157.654 54.695 140.913L4.69496 54.3109C-4.97003 37.5706 0.765602 16.165 17.5058 6.49999C34.2461 -3.16499 55.6518 2.57064 65.3167 19.3109L115.317 105.913C124.982 122.654 119.246 144.059 102.506 153.724Z"/>
+            </svg>
             <h2>Nejnovější epizody podcastu</h2>
           </div>
           <router-link to="/podcast">
@@ -234,8 +238,10 @@ bgcolor = #1e2430
     margin-top .25em
 
 .yoimiru__logo
+  height 18px
   margin-right .3em
-  margin-top .5em
+  margin-top .9em
+  fill currentColor
 
 .yoimiru__flex
   display flex
