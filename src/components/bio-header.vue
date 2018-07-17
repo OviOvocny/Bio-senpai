@@ -9,7 +9,7 @@
       </transition>
     </div>
     <transition :name="hp ? 'fade' : 'quick'" mode="out-in">
-      <div class="hlava" v-if="quote.author !== 'Tegami'" :key="quote.author">
+      <div class="hlava" :key="quote.author">
        <cl-image width="60" :src="'team/' + quote.author"></cl-image>
       </div>
     </transition>
