@@ -23,7 +23,7 @@
             <icon symbol="help-circle"></icon> Kam zmizel stream a softsuby?
           </router-link>
           <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${home.anime.url_title}/[Bio-senpai] ${pad(home.anime.eps.done)} - ${home.anime.title}.ass`" download>
-            <btn icon="attachment">Titulky k epizoidě</btn>
+            <btn icon="attachment">Titulky k epizodě</btn>
           </a>
           <!-- Hello CETA
           <router-link :to="'/stream/' + home.anime.url_title + '/' + home.anime.eps.done">
