@@ -217,6 +217,7 @@ export default {
 </script>
 
 <style lang="stylus">
+@import "stylus/unified-color"
 ease-out-expo = cubic-bezier(0.19, 1, 0.22, 1)
 
 .list-enter-active, .list-leave-active, .list-move
@@ -293,8 +294,6 @@ wstr = 1.1
   100%
     box-shadow 0 0 0 .7em transparent
 
-bgcolor = #1e2430
-
 @import 'assets/font/noto-sans.css'
 @import 'assets/font/unica-one.css'
 @import '~mdi/css/materialdesignicons.min.css'
@@ -344,8 +343,8 @@ a:visited
   width 2.5em
   height @width
   line-height @height - 0.2
-  background-color hsl(350, 80%, 50%)
-  border 2px solid darken(@background-color, 40%)
+  background-color: bg(palette.red)
+  border: 2px solid ln(palette.red)
   border-radius 2em
 
 main
@@ -385,8 +384,8 @@ input[type=text], input[type=search], input[type=number]
     cursor pointer
     margin .5em -3px
     padding 0.3em 1em
-    border 2px solid #0a5c33
-    background-color #14b866
+    border: 2px solid ln(palette.green)
+    background-color: bg(palette.green)
     transition .2s
     &:nth-child(2)
       border-radius 2em 0 0 2em
@@ -395,7 +394,7 @@ input[type=text], input[type=search], input[type=number]
   input[type=radio]
     display none
     &:checked + label
-      background-color lighten(#14b866, 50%)
+      background-color: ln(palette.green)
       color #1e2430
 
 .checkboxContainer
@@ -411,9 +410,8 @@ input[type=text], input[type=search], input[type=number]
   width 0
   &:checked
     & + .checkbox
-      background #19e680
-      border-color #0f8a4d
-      color #052e1a
+      background: bg(palette.green)
+      border-color: ln(palette.green)
       .checkboxIcons
         transform translateY(-1.25em)
         transform translateY(-1.25em)
@@ -432,9 +430,9 @@ input[type=text], input[type=search], input[type=number]
   border-radius 0.4em
   border-style solid
   border-width 2px
-  border-color #8a0f38
-  background #e6195d
-  color #fad1df
+  border-color: ln(palette.red)
+  background: bg(palette.red)
+  color white
   // box-shadow 0 0.2em 0.3em rgba(0,0,0,0.15)
   transition-property border, color, background-color, box-shadow
   transition-duration 0.15s
@@ -450,10 +448,11 @@ input[type=text], input[type=search], input[type=number]
 
 .checkboxIcons
   position absolute
-  top -.15em
-  left 0
+  top -.10em
+  left .05em
   transition transform 0.3s
   .mdi
+    font-size 14px
     display block
     height 20px
 
@@ -465,8 +464,8 @@ input[type=submit]
   color #fff
   border-width 2px
   border-style solid
-  border-color #0a5c33
-  background-color #14b866
+  border-color: ln(palette.green)
+  background-color: bg(palette.green)
   outline none
   transition-property box-shadow, border-color, transform
   transition-duration: 0.5s

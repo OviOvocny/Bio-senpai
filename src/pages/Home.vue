@@ -213,7 +213,7 @@ export default {
 </script>
 
 <style lang="stylus">
-bgcolor = #1e2430
+@import "../stylus/unified-color"
 
 .top-modules
   margin -.5em
@@ -328,20 +328,20 @@ bgcolor = #1e2430
 
 .social-links__native
   color white
-  background-color hsl(150, 80%, 40%)
-  border 2px solid darken(@background-color, 50%)
+  border: 2px solid ln(palette.green)
+  background-color: bg(palette.green)
 .social-links__facebook
   color white
-  background-color #3b5998
-  border 2px solid darken(@background-color, 50%)
+  border 2px solid #4f7cda
+  background-color modest(#4f7cda)
 .social-links__twitter
   color white
-  background-color #1da1f2
-  border 2px solid darken(@background-color, 50%)
+  border 2px solid #1da1f2
+  background-color modest(#1da1f2)
 .social-links__discord
   color white
-  background-color #7289da
-  border 2px solid darken(@background-color, 50%)
+  border 2px solid #7289da
+  background-color modest(#7289da)
 
 
 .top-news__grid

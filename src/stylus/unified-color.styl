@@ -1,0 +1,16 @@
+palette = {
+  blue: 220,
+  green: 150,
+  red: 340,
+  yellow: 60
+}
+
+bgcolor = #1e2430
+
+bg(hue)
+  blue(hsl(hue, 40%, 25%), 30%)
+ln(hue)
+  hsl(hue, 80%, 50%)
+
+modest(color)
+  lightness(saturation(color, 40%), 25%)
