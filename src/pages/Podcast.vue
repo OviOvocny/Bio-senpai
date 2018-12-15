@@ -56,11 +56,10 @@
         <img :src="icon(ep.file)" :alt="'Obal ' + ep.epName" @click="playEpisode(ep)">
         <div>
           <h3 class="ep-title">{{ep.epName}}</h3>
-          <p v-html="ep.epDesc">
-            <div v-if="ep.chapters">
-              <icon symbol="format-list-checks"></icon> Můžete přeskakovat na kapitoly
-            </div>
-          </p>
+          <p v-html="ep.epDesc"></p>
+          <div v-if="ep.chapters">
+            <icon symbol="format-list-checks"></icon> Můžete přeskakovat na kapitoly
+          </div>
           <btn variant="red" icon="play" @click="playEpisode(ep)">Přehrát</btn>
           Vydáno <b>{{date(ep.id)}}</b>
         </div>
@@ -69,7 +68,7 @@
 
     <div style="text-align:center">
       <div style="color:white">Jste na konci. Nebo spíš na začátku.</div>
-      <btn icon="arrow-up-bold" @click="elevator">Zpátky nahoru</btn>
+      <btn variant="red" icon="arrow-up-bold" @click="elevator">Zpátky nahoru</btn>
     </div>
   </section>
 </template>
@@ -226,8 +225,8 @@ ease-out-expo = cubic-bezier(0.19, 1, 0.22, 1)
   padding 1em
   margin 1.5em 0
   border-radius 10px
-  background-color #fff
-  color #1e2430
+  background-color lighten(#1e2430, 15%)
+  color white
   img
     margin-right 1em
     width 100%

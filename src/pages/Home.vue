@@ -225,16 +225,14 @@ bgcolor = #1e2430
   .top-modules--area
     flex 1 2 auto
   .top-modules__guide
-    flex-basis 300px
+    flex-basis 35%
 
 .top-modules--area
-  background-color #efefef
-  color bgcolor
+  background-color lighten(bgcolor, 15%)
   padding 1em
   border-radius 15px
   margin .5em
   h2
-    color lighten(bgcolor, 10%)
     margin-top .25em
 
 .yoimiru__logo
@@ -275,7 +273,6 @@ bgcolor = #1e2430
   position relative
   width 100%
   h3
-    color lighten(bgcolor, 10%)
     max-width 10em
     font-size 1.6em
     margin 0

@@ -259,7 +259,7 @@ export default {
     margin-right .3em
 
 input:not(:valid)
-    border-color hsl(350, 80%, 50%)
+    border-color hsl(340, 70%, 40%)
 
 #formular
     height calc(100vh - 90px)

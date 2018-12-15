@@ -3,7 +3,7 @@
     <div :class="['msg-infobar', {team}]">
       <div class="msg-info">
         <span class="msg-sender">{{sender}}</span>
-        {{humanTime}}
+        <span class="msg-time">{{humanTime}}</span>
       </div>
     </div>
     <div class="msg-contents" v-html="sanitizedText">
@@ -40,8 +40,11 @@ export default {
 </script>
 
 <style lang="stylus">
+bgcolor = #1e2430
+fgcolor = lighten(bgcolor, 15%)
+
 .message
-  background #eee
+  background fgcolor
   border-radius 15px 15px 10px 10px
   text-align left
   position relative
@@ -62,7 +65,7 @@ export default {
   margin .5em 0
 
 .msg-infobar
-  background hsl(220, 23%, 35%)
+  background hsl(220, 30%, 50%)
   border-radius 10px 10px 0 0
   padding 0 1em
   padding-left 2em
@@ -75,16 +78,19 @@ export default {
     background hsl(220, 70%, 50%)
 
 .msg-sender
-  background #eee
-  padding .1em .5em
+  font-weight bold
   margin 0 .3em
-  border-radius 1em
-  color hsl(220, 23%, 25%)
+  padding-right .6em
+  border-right 2px solid alpha(white, 30%)
+
+.msg-time
+  font-size .9em
 
 .msg-contents
   position relative
   padding .5em 1em
-  color #111
+  & img
+    border-radius 5px
   &::before
     content: "";
     position: absolute;
@@ -92,5 +98,5 @@ export default {
     left: 1em;
     border-style: solid;
     border-width: 0 0 .7em .7em;
-    border-color: transparent transparent #eee transparent;
+    border-color: transparent transparent fgcolor transparent;
 </style>

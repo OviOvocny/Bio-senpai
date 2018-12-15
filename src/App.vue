@@ -253,7 +253,7 @@ wstr = 1.1
 .fade-enter
   opacity 0
   transform translateX(.5em)
-  
+
 .quick-enter-active
   transition .2s cubic-bezier(0.190, 1.000, 0.220, 1.000)
 .quick-leave-active
@@ -289,7 +289,7 @@ wstr = 1.1
 @keyframes pop
   0%
     // transform scale(1.05)
-    box-shadow 0 0 0 white // hsl(150,80%,50%)
+    box-shadow 0 0 0 hsl(150,80%,50%)
   100%
     box-shadow 0 0 0 .7em transparent
 
@@ -362,14 +362,19 @@ main
   padding-left 2.5em
 
 input[type=text], input[type=search], input[type=number]
-  border-radius 1em
-  padding .3em .7em
-  border 2px solid lighten(#1e2430, 30%)
+  border-radius 2em
+  padding .3em .9em
+  background-color lighten(bgcolor, 15%)
+  color white
+  font-family Noto Sans
+  border 2px solid lighten(#1e2430, 50%)
   transition border-color .2s
   outline 0
   &:hover, &:focus
     animation pop .5s
     border-color hsl(150,80%,50%)
+  &::placeholder
+    color alpha(white, 90%)
 
 .radio-group
   border 0

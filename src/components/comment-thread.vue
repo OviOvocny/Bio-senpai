@@ -1,18 +1,18 @@
 <template>
   <div class="msg-container" :id="id">
     <comment :sender="sender" :time="time" :team="team" :text="msg"></comment>
-    <transition-group-spring back from="top" 
-      :distance="2" 
+    <transition-group-spring back from="top"
+      :distance="2"
       :stiffness="0"
       :friction="170"
       :duration="250"
       :stagger="60">
-      <comment reply v-for="(reply, index) in shownReplies" 
+      <comment reply v-for="(reply, index) in shownReplies"
         :key="reply.msg"
         :data-idx="index % 10 - maxCompactReplies"
-        :sender="reply.sender" 
-        :time="reply.time" 
-        :team="reply.team" 
+        :sender="reply.sender"
+        :time="reply.time"
+        :team="reply.team"
         :text="reply.msg"></comment>
     </transition-group-spring>
     <div class="hidden-hint"
@@ -22,8 +22,8 @@
       Kliknutím zobrazíte zbytek odpovědí (celkem {{remainingReplies}})
     </div>
 
-    <transition-spring back from="top" 
-      :distance="4" 
+    <transition-spring back from="top"
+      :distance="4"
       :stiffness="0"
       :friction="170"
       :duration="250"
@@ -109,7 +109,7 @@ export default {
   transform translateY(-2em)
 
 .msg-container
-  background linear-gradient(to bottom, transparent 3%, hsl(220, 23%, 25%) 3%, transparent)
+  background linear-gradient(to bottom, transparent 3%, hsla(220, 30%, 50%, 15%) 3%, transparent)
 
 .reply-btn-outer
   text-align right

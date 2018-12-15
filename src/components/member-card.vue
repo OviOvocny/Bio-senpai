@@ -65,9 +65,8 @@ export default {
 .member
   width 450px
   margin-bottom 30px
-  background #eee
-  color #111
-  // box-shadow 0 3px 20px rgba(0,0,0,0.533)
+  background lighten(#1e2430, 15%)
+  color white
   border-radius 15px 15px 10px 10px
   text-align center
   will-change transform
@@ -82,6 +81,7 @@ export default {
 
 .member-head
   border-radius 10px 10px 0 0
+  border-bottom 2px solid alpha(white, 50%)
   background-color #2a3345
   background-size cover
   background-position center
@@ -101,6 +101,7 @@ export default {
 
 .member-desc
   padding 1em
+  text-align justify
 
   a
     color hsl(150, 80%, 35%)

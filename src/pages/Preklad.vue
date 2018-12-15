@@ -6,7 +6,10 @@
 
     <h1 :class="{'hero-title': true, 'long': isLong}">{{project.title}}</h1>
     <div class="project-data-wrap" v-if="ok">
-      <span :class="{'project-data': true, 'episodes': true, 'complete': eps.done === eps.total}">
+      <span
+        :class="{'project-data': true, 'episodes': true, 'complete': eps.done === eps.total}"
+        :style="{'--percentage': `${(eps.done / eps.total) * 100}%`}"
+      >
         {{epsVerbose}}
         <span v-if="eps.done < eps.total"> z {{eps.total}}</span>
       </span>
@@ -315,7 +318,7 @@ bgcolor = #1e2430
 .release-info
   //font-size .9em
   display flex
-  color #4e5460
+  color alpha(white, 70%)
   margin-top 1em
   i
     margin-right .5em
@@ -355,8 +358,8 @@ bgcolor = #1e2430
   margin-left 1em
 
 .project-card
-  background white
-  color bgcolor
+  background lighten(bgcolor, 15%)
+  color white
   border-radius 15px
   margin-top 1.5em
   margin-top calc(1em + 1vw)
@@ -405,19 +408,22 @@ bgcolor = #1e2430
 
 .project-data
   display inline-block
-  background white
-  color bgcolor
+  background lighten(bgcolor, 15%)
+  color white
   border-radius 1em
   padding .3em 1em
   margin 0 .5em 1em .5em
   text-decoration none
   &.episodes
-    background transparent
+    --percentage 0%
+    background lighten(bgcolor, 15%)
+    background linear-gradient(to right, lighten(bgcolor, 40%) var(--percentage), lighten(bgcolor, 15%) var(--percentage))
     color white
     padding .2em .9em
-    border .1em solid white
+    border .1em solid lighten(bgcolor, 40%)
     &.complete
       border-color hsl(150, 80%, 50%)
+      background lighten(bgcolor, 15%)
 
 .hero-wrap
   position absolute

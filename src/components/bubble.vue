@@ -25,6 +25,8 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+fgcolor = lighten(#1e2430, 15%)
+
 .bubble
   display flex
   position relative
@@ -47,8 +49,7 @@ export default {
     animation scaleUp .5s cubic-bezier(.25,1.59,.45,.97) forwards
 
 .speech
-  background #eee
-  color #111
+  background fgcolor
   height auto
   margin 0 1em
   border-radius .5em .5em .5em 0
@@ -60,9 +61,9 @@ export default {
   justify-content center
   animation slideInLeft .3s forwards
   a
-    color hsl(150, 80%, 35%)
+    color hsl(150, 80%, 55%)
   a:visited
-    color hsl(150, 80%, 25%)
+    color hsl(150, 80%, 40%)
 
 .right .speech
   text-align right
@@ -77,20 +78,21 @@ export default {
   left: -.5em;
   border-style: solid;
   border-width: 0 0 .5em .5em;
-  border-color: transparent transparent #eee transparent;
+  border-color: transparent transparent fgcolor transparent;
 
 .right .speech::before
   border-width .5em 0 0 .5em
-  border-color transparent transparent transparent #eee
+  border-color transparent transparent transparent fgcolor
   right -.5em
   left initial
 
 .speaker
   font-size .7em
   a
-    color hsl(150, 80%, 25%)
+    color hsl(150, 80%, 55%)
+    text-decoration none
   a:visited
-    color hsl(150, 80%, 15%)
+    color hsl(150, 80%, 40%)
 
 @keyframes slideInLeft
   from

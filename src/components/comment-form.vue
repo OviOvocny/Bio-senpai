@@ -66,8 +66,10 @@ export default {
 </script>
 
 <style lang="stylus">
+bgcolor = #1e2430
+
 .tr-msg
-  background #fff
+  background-color lighten(bgcolor, 15%)
   padding .7em
   padding-bottom 0
   border-radius 10px
@@ -87,22 +89,21 @@ export default {
 .text
   width 100%
   background none
+  background-color lighten(bgcolor, 15%)
+  color white
+  font-family Noto Sans
   border 0
   outline 0
   padding .3em
   transition border-color .2s
 
-input.text
-  max-width 250px
-  border-bottom 2px solid hsl(220, 23%, 35%)
-  color hsl(150, 80%, 50%)
-  margin-bottom .5em
-  &:hover, &:focus
-    border-bottom-color hsl(150, 80%, 50%)
 
 textarea.text
   resize none
-
-::-webkit-input-placeholder
-  opacity .8
+  border-bottom 2px solid lighten(bgcolor, 50%)
+  font-family Noto Sans
+  &::placeholder
+    color alpha(white, 90%)
+  &:hover, &:focus
+    border-bottom-color hsl(150, 80%, 50%)
 </style>
