@@ -21,8 +21,8 @@
         <label for="category-preklad">Překládání</label>
         <input type="radio" v-model="category" value="korekce" id="category-korekce">
         <label for="category-korekce">Korekce</label>
-        <input type="radio" v-model="category" value="encoding" id="category-encoding">
-        <label for="category-encoding">Enkódování</label>
+<!--        <input type="radio" v-model="category" value="encoding" id="category-encoding">
+        <label for="category-encoding">Enkódování</label>-->
       </fieldset>
     </div>
 
@@ -52,7 +52,7 @@
       </ul>
     </div>
 
-    <div v-if="category === 'encoding'">
+<!--    <div v-if="category === 'encoding'">
         <p>Jako enkodér budete bit po bitu ze zdrojového videa tvořit video pro vydání a video pro online stream. Ne, to je lež, udělá to za Vás počítač. Jde jen o to mu to přikázat. Pokud jste to nikdy nedělali, ale myslíte, že na to máte hardware, nelekněte se těch technoblábolů dole, všechno Vás naučíme.</p>
         <bubble speaker="Cerx">Jak vypaluješ assy?</bubble>
         <bubble right speaker="Ovi">
@@ -65,7 +65,7 @@
             <li>Vytvořit mkv ke stažení s vloženými titulky (softsub)</li>
             <li>Vytvořit mp4 pro stream (h.264) s vypálenými titulky (vyžaduje buď silnější grafickou jednotku nebo silnější vůli to přečkat)</li>
         </ul>
-    </div>
+    </div>-->
     <p>Možná jste si na stránce týmu všimli i jiných rolí, než jsou tyto tři. Samozřejmě můžete být kýmkoliv (kromě Batmana), ale na tom se domluvíme až pak. Stejně jako na všem ostatním. Hle, nejjednodušší přihláška široko daleko:</p>
 
     <div ref="formular" id="formular">
