@@ -94,6 +94,7 @@
                 </label>
                 <label for="role:korekce" class="checkboxLabel"><i class="mdi mdi-auto-fix"></i> Korekce</label>
             </div>
+            <!--
             <div class="checkboxContainer">
                 <input type="checkbox" name="role:encoding" id="role:encoding" class="checkbox-hidden"/>
                 <label for="role:encoding" class="checkbox">
@@ -101,6 +102,7 @@
                 </label>
                 <label for="role:encoding" class="checkboxLabel"><i class="mdi mdi-cube"></i> Encoding</label>
             </div>
+            -->
             <br>
             <label for="contact"><span class="num">3</span> Kontakt na Vás</label>
             <input required type="text" class="textInput" name="contact" id="contact" placeholder="Skype nebo e-mail">
@@ -126,7 +128,7 @@
             <icon symbol="alert"></icon>
             Tyto přihlášky se zatím nepodařilo poslat
           </p>
-          <div v-for="appl in pending" class="pending-application">
+          <div v-for="appl in pending" :key="appl.data.name" class="pending-application">
             <div><icon symbol="account"></icon> {{appl.data.name}}</div>
             <div><icon symbol="chart-bubble"></icon> {{appl.data.role}}</div>
             <div><icon symbol="email"></icon> {{appl.data.contact}}</div>
