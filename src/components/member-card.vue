@@ -9,7 +9,7 @@
       </div>
       <div class="mh-right">
         <div class="roles">
-          <div class="role-badge" v-for="role in data.role[0]"><icon :symbol="roleIcon(role)"></icon><span>{{role}}</span></div>
+          <div class="role-badge" v-for="role in data.role[0]" :key="role"><icon :symbol="roleIcon(role)"></icon><span>{{role}}</span></div>
         </div>
       </div>
     </div>

@@ -19,9 +19,11 @@
             <btn variant="red" icon="download">Stáhnout video</btn>
           </a>
           -->
+          <!--
           <router-link to="/survival-guide" class="wtf">
             <icon symbol="help-circle"></icon> Kam zmizel stream a softsuby?
           </router-link>
+          -->
           <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${home.anime.url_title}/[Bio-senpai] ${pad(home.anime.eps.done)} - ${home.anime.title}.ass`" download>
             <btn icon="attachment">Titulky k epizodě</btn>
           </a>
@@ -91,7 +93,7 @@
           </router-link>
         </div>
         <div class="yoimiru__episodes">
-          <div class="yoimiru__ep" v-for="ep in home.podcast">
+          <div class="yoimiru__ep" v-for="ep in home.podcast" :key="ep.id">
             <div class="yoimiru__ep-flex">
               <cl-image :src="'podcast/icons/' + ep.file.substr(0, ep.file.length - 4)" width="160"></cl-image>
               <div class="yoimiru__ep-header">
@@ -111,7 +113,7 @@
     <div class="top-news">
       <h2><icon symbol="newspaper"></icon> Co je nového</h2>
       <div class="top-news__grid">
-        <article class="reading-size-adjust" v-for="article in home.news">
+        <article class="reading-size-adjust" v-for="article in home.news" :key="article.id">
           <div class="article__meta">
             <div class="article__author">
               <cl-image :src="'team/' + article.author"></cl-image>

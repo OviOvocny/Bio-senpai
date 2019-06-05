@@ -4,7 +4,7 @@
       <input class="searchfield" type="text" v-model="search" @input="$refs.iso.filter('text')" placeholder="Vyhledat..." >
     </div>
     <isotope ref="iso" :list="anime" :options="isoOptions" :class="{'tiles': true, 'hidden': hidden, 'zooming': zooming}" v-show="anime.length > 0">
-      <router-link class="tl-link" v-for="show in anime" v-if="!show.hidden" :key="show.url_title" :to="'/projekty/' + show.url_title">
+      <router-link class="tl-link" v-for="show in shows" :key="show.url_title" :to="'/projekty/' + show.url_title">
         <anime :data="show"></anime>
       </router-link>
     </isotope>
@@ -45,6 +45,11 @@ export default {
       }
     }
   },
+  computed: {
+    shows () {
+      return this.anime.filter(a => !a.hidden)
+    }
+  },
   created () {
     this.fetchData()
   },
@@ -80,7 +85,7 @@ export default {
       this.zooming = true
     }
     this.hidden = true
-    setTimeout(next, 200)
+    setTimeout(next, 100)
   }
 }
 </script>
@@ -99,12 +104,11 @@ export default {
 
 .hidden
   opacity 0
-  transform translateY(-10%)
-  transition .1s ease-in
+  transition .05s ease-in
 
 .zooming
-  transform-origin bottom
-  transform translateY(-10%) scaleY(1.15)
+  transform-origin center
+  transform scale(0.95)
 
 .tl-link
   text-decoration none

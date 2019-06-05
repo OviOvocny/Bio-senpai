@@ -85,14 +85,14 @@
     </section>
     -->
 
-    <section class="log reading-size-adjust" v-for="log in logs">
+    <section class="log reading-size-adjust" v-for="log in logs" :key="log">
         <h2>Verze {{log.version}} — {{log.hana}}</h2>
         <p>
             {{log.desc}}
         </p>
         <h3>Seznam změn</h3>
         <ul>
-            <li v-for="change in log.changelog">{{change}}</li>
+            <li v-for="change in log.changelog" :key="change">{{change}}</li>
         </ul>
     </section>
 

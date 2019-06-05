@@ -226,22 +226,22 @@ ease-out-expo = cubic-bezier(0.19, 1, 0.22, 1)
   opacity 0
   transform scaleY(.5)
 
-wdist = 5em
-wstr = 1.1
+wdist = 4em
+wstr = 1.05
 .warp-enter-active
   transform-origin top
-  transition transform 350ms, opacity 250ms
+  transition transform 350ms, opacity 150ms
   transition-timing-function ease-out-expo
 .warp-leave-active
   transform-origin top
-  transition transform 70ms, opacity 40ms
+  transition transform 0ms, opacity 50ms
   transition-timing-function ease-in
 .warp-enter
   opacity 0
-  transform scaleY(wstr) translateY(wdist)
+  transform translateY(wdist)
 .warp-leave-to
   opacity 0
-  transform scaleY(wstr) translateY(-(wdist))
+  //transform scaleY(wstr) translateY(-(wdist))
 
 .fade-enter-active
   transition .6s cubic-bezier(0.190, 1.000, 0.220, 1.000)

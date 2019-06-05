@@ -1,6 +1,6 @@
 <template>
   <section>
-    <cl-image src="404nani" alt="NANI" width="500"></cl-image>
+    <cl-image src="mascot-ng/embarrased" alt="NANI" width="300" class="looking"></cl-image>
     <h2>Tady nic není...</h2>
     <h3>{{what}}</h3>
     <div class="suggestions" v-if="suggested.length > 0">
@@ -65,4 +65,12 @@ export default {
     transition background-color .15s
     &:hover
       background-color hsl(150, 80%, 40%)
+
+  .looking
+    animation lookaround 5s infinite 
+  @keyframes lookaround
+    0%, 45%
+      transform none
+    50%, 90%
+      transform scaleX(-1) rotateZ(-3deg)
 </style>

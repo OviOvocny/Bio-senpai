@@ -107,7 +107,7 @@ export default {
   },
   beforeRouteLeave (to, from, next) {
     this.hidden = true
-    setTimeout(next, 200)
+    setTimeout(next, 100)
   },
   components: {
     isotope
@@ -129,11 +129,7 @@ export default {
 
 .hidden
   opacity 0
-  transform translateY(-1em)
-  transition .1s ease-in
-
-.zooming
-  transform scale(1.2)
+  transition .05s ease-in
 
 .tl-link
   text-decoration none
