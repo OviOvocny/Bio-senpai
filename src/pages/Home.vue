@@ -111,7 +111,7 @@
     </div>
 
     <div class="top-news">
-      <h2><icon symbol="newspaper"></icon> Co je nového</h2>
+      <h2><icon symbol="newspaper"></icon> Co je starého</h2>
       <div class="top-news__grid">
         <article class="reading-size-adjust" v-for="article in home.news" :key="article.id">
           <div class="article__meta">
