@@ -18,7 +18,7 @@
     <div class="pod-controls">
       <button title="Zpět o 15s" @click="$refs.audio.currentTime -= 15"><icon symbol="undo"></icon></button>
       <button title="Kapitoly" @click="chapterList = !chapterList" :disabled="!metadata.chapters"><icon symbol="format-list-bulleted"></icon></button>
-      <button title="Zastavit" @click="$emit('close')"><icon symbol="stop"></icon></button>
+      <button title="Zastavit" @click="$parent.$emit('close')"><icon symbol="stop"></icon></button>
       <button title="Napřed o 30s" @click="$refs.audio.currentTime += 30"><icon symbol="redo"></icon></button>
     </div>
     <!-- Floating pane -->
@@ -31,11 +31,12 @@
         <icon symbol="close" @click.native="chapterList = false"></icon>
       </div>
       <ul class="chlist">
-        <li v-for="m in metadata.chapters" :class="{chcurrent: activeChapter === m}" @click="seek(m.time)">
+        <li v-for="(m, index) in metadata.chapters" :key="index" :class="{chcurrent: activeChapter === m}" @click="seek(m.time)">
           <span class="chname">{{m.name}}</span>
           <span class="chtime">
             {{toHuman(m.time)}}
             <span class="chend" v-if="m.duration > 0"> – {{toHuman(m.time + m.duration)}}</span>
+            <icon class="chlink" symbol="link-variant" @click.native="copyChapLink(index)"></icon>
           </span>
         </li>
       </ul>
@@ -89,7 +90,8 @@ export default {
           chapters: undefined
         }
       }
-    }
+    },
+    linkedChapter: Number
   },
   data () {
     return {
@@ -131,7 +133,14 @@ export default {
   methods: {
     start () {
       const startTime = window.localStorage.getItem('podcast:' + this.source)
-      if (startTime) {
+      if (
+        this.linkedChapter &&
+        this.metadata.chapters &&
+        this.linkedChapter < this.metadata.chapters.length &&
+        this.linkedChapter >= 0
+      ) {
+        this.$refs.audio.currentTime = this.metadata.chapters[this.linkedChapter].time
+      } else if (startTime) {
         this.$refs.audio.currentTime = startTime - 5
       }
       this.playing = true
@@ -152,6 +161,15 @@ export default {
     },
     updateMeta (e) {
       this.duration = e.target.duration
+    },
+    copyChapLink (i) {
+      const el = document.createElement('textarea')
+      el.value = window.location.origin + window.location.pathname + `?e=${this.metadata.file.substr(0, this.metadata.file.length - 4)}&c=${i + 1}`
+      document.body.appendChild(el)
+      el.select()
+      document.execCommand('copy')
+      document.body.removeChild(el)
+      this.$parent.$emit('ticker', 'Odkaz na kapitolu zkopírován.')
     },
     handleKeyboard (e) {
       const ch = this.metadata.chapters
@@ -267,6 +285,12 @@ ease-out-expo = cubic-bezier(0.190, 1.000, 0.220, 1.000)
       color #75f0b3
     .chtime
       margin-left 2em
+    .chlink
+      color white
+      margin-left .2em
+      &:hover
+        color inherit
+    
 
 
 .pod-main
@@ -293,7 +317,16 @@ ease-out-expo = cubic-bezier(0.190, 1.000, 0.220, 1.000)
     transform translateX(-10px)
     opacity 0
     animation tsf .7s ease-out-expo forwards
+    div
+      white-space nowrap
+      overflow hidden
+      text-overflow ellipsis
+      width 130px
   .chapter
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
+    width 130px
     margin-top .2em
     font-size .9em
     font-weight bold

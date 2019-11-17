@@ -41,13 +41,14 @@
       </a>
     </div>
 
-
+<!--
     <transition-group-spring
       :stagger="100"
       :stiffness="0"
       :friction="170"
       :duration="250"
       :stretch="1.1">
+
       <div
         :data-idx="index % 10"
         class="podcast-episode"
@@ -64,7 +65,29 @@
           Vydáno <b>{{date(ep.id)}}</b>
         </div>
       </div>
-    </transition-group-spring>
+
+      
+
+    </transition-group-spring> -->
+
+    <article
+      class="podcast-episode"
+      v-for="ep in podcasts"
+      :key="ep.id">
+      <div class="ep-aside">
+        <img :src="icon(ep.file)" :alt="'Obal ' + ep.epName" @click="playEpisode(ep)">
+        <h3 class="ep-title">{{ep.epName}}</h3>
+        <div>{{date(ep.id)}}</div>
+        <div v-if="ep.chapters" class="ep-chap-indicator">
+          <icon symbol="format-list-bulleted"></icon> Obsahuje kapitoly
+        </div>
+      </div>
+      <div class="ep-desc">
+        <p v-html="ep.epDesc"></p>
+        <btn variant="red" icon="play" @click="playEpisode(ep)">Přehrát</btn>
+        <btn variant="red" icon="link-variant" @click="copyLink(ep)">Kopírovat odkaz</btn>
+      </div>
+    </article>
 
     <div style="text-align:center">
       <div style="color:white">Jste na konci. Nebo spíš na začátku.</div>
@@ -82,7 +105,7 @@ function getUrl (src, params) {
   const c = cl.Cloudinary.new({cloud_name: 'bio-senpai'})
   let parameters = {
     fetch_format: 'auto',
-    height: 150,
+    height: 300,
     crop: 'scale',
     ...params
   }
@@ -127,6 +150,20 @@ export default {
         .call()
         .then(res => {
           this.podcasts = res
+          const linked = this.$route.query.e
+          if (linked) {
+            const ep = this.podcasts.find(e => e.file === `${linked}.mp3`)
+            if (!ep) {
+              this.$emit('error', 'Asi jste dostali špatný odkaz na epizodu podcastu.')
+              return
+            }
+            const c = parseInt(this.$route.query.c) - 1
+            if (c) {
+              this.$emit('update:audio-chapter', c)
+            }
+            this.playEpisode(ep)
+            this.$emit('ticker', `Přehrává se epizoda z odkazu: ${ep.epName}${c ? ' – ' + ep.chapters[c].name : ''}`)
+          }
         })
         .catch(err => {
           this.$emit('error', err)
@@ -135,6 +172,15 @@ export default {
     playEpisode (ep) {
       this.$emit('update:audio', `//data.bio-senpai.ovi.moe/yoimiru/${ep.file}`)
       this.$emit('update:audio-meta', ep)
+    },
+    copyLink (ep) {
+      const el = document.createElement('textarea')
+      el.value = window.location.origin + window.location.pathname + `?e=${ep.file.substr(0, ep.file.length - 4)}`
+      document.body.appendChild(el)
+      el.select()
+      document.execCommand('copy')
+      document.body.removeChild(el)
+      this.$emit('ticker', 'Odkaz na epizodu zkopírován.')
     },
     icon (file) {
       return getUrl('podcast/icons/' + file.substr(0, file.length - 4))
@@ -222,21 +268,29 @@ ease-out-expo = cubic-bezier(0.19, 1, 0.22, 1)
 
 .podcast-episode
   display flex
+  flex-wrap wrap
   padding 1em
   margin 1.5em 0
   border-radius 10px
   background-color lighten(#1e2430, 15%)
   color white
+
+.ep-aside
+  margin-right 1em
+  flex 0 1 200px
   img
-    margin-right 1em
     width 100%
-    max-height 150px
-    max-width 150px
     border-radius 5px
     cursor pointer
+  .ep-chap-indicator
+    margin-top .5em
+    font-size .9em
+
+.ep-desc
+  flex 1 1 300px
 
 .ep-title
-  margin-top 0
+  margin .5em 0
 
 .tiles
   padding 1em

@@ -20,8 +20,8 @@
           class="player"
           :source="audioSource"
           :metadata="audioMetadata"
+          :linkedChapter="audioChapter"
           :active="podcast"
-          @close="$emit('close')"
           autosave>
         </audio-player>
       </div>
@@ -93,7 +93,8 @@ export default {
     podcast: Boolean,
     audioSource: String,
     autosave: Boolean,
-    audioMetadata: Object
+    audioMetadata: Object,
+    audioChapter: Number
   },
   computed: {
     navToggle: function () {

@@ -8,8 +8,10 @@
       :hp="highPerf"
       :audioSource="audioSource"
       :audioMetadata="audioMeta"
+      :audioChapter="audioChapter"
       :podcast="audioActive"
       @close="updateAudio"
+      @ticker="updateTicker"
       autosave></bio-nav>
     <backdrop :src="backdropImage" :params="backdropParameters"></backdrop>
     <main>
@@ -20,6 +22,7 @@
           @update:subnav="val => subnav = val"
           @update:audio="updateAudio"
           @update:audio-meta="val => audioMeta = val"
+          @update:audio-chapter="val => audioChapter = val"
           @update:backdrop="updateBackdrop"
           @option:set="setOption"
           @option:unset="unsetOption"
@@ -58,6 +61,7 @@ export default {
       show: undefined,
       audioSource: '',
       audioMeta: {},
+      audioChapter: undefined,
       backdropImage: '',
       backdropParameters: {},
       error: false,
