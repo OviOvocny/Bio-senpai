@@ -99,7 +99,7 @@
               <div class="yoimiru__ep-header">
                 <h3 :class="{'long': isLong(ep.epName)}">{{ep.epName}}</h3>
                 <div v-if="ep.chapters" style="margin-top: .5em; user-select: none">
-                  <icon symbol="format-list-checks"></icon> Obsahuje kapitoly
+                  <icon symbol="format-list-bulleted"></icon> Obsahuje kapitoly
                 </div>
                 <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
               </div>

@@ -122,11 +122,6 @@ export default {
   },
   created () {
     this.fetchData()
-    this.$emit('update:backdrop', 'header/header', {opacity: 15})
-  },
-  beforeRouteLeave (to, from, next) {
-    this.$emit('update:backdrop', '')
-    next()
   },
   methods: {
     /*
