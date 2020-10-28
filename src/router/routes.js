@@ -33,6 +33,16 @@ const routes = [
     }
   },
   {
+    path: '/podcast',
+    name: 'Podcast',
+    component: Podcast,
+    meta: {
+      title: 'Yoimiru | Bio-senpai',
+      icon: 'radio'
+      // navHidden: true
+    }
+  },
+  {
     path: '/projekty',
     name: 'Projekty',
     component: Projekty,
@@ -66,16 +76,6 @@ const routes = [
     meta: {
       title: 'Návrhy | Bio-senpai',
       icon: 'star'
-      // navHidden: true
-    }
-  },
-  {
-    path: '/podcast',
-    name: 'Podcast',
-    component: Podcast,
-    meta: {
-      title: 'Yoimiru | Bio-senpai',
-      icon: 'radio'
       // navHidden: true
     }
   },

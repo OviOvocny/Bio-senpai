@@ -22,7 +22,7 @@
     "dynamics.js": "^1.1.5",
     "fuzzysearch-js": "^0.2.0",
     "localforage": "^1.5.0",
-    "mdi": "^2.1.19",
+    "@mdi/font": "^5.8.55",
     "moment": "^2.18.1",
     "promise-polyfill": "^6.0.2",
     "stickyfill": "^1.1.1",

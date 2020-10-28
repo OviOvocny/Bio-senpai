@@ -19,6 +19,7 @@
       <transition :name="highPerfTransition? 'warp' : 'quick'" mode="out-in" @after-enter="$refs.view.entered = true">
         <router-view
           ref="view"
+          :show="show"
           @update:subnav="val => subnav = val"
           @update:audio="updateAudio"
           @update:audio-meta="val => audioMeta = val"
@@ -300,7 +301,7 @@ wstr = 1.05
 
 @import 'assets/font/noto-sans.css'
 @import 'assets/font/unica-one.css'
-@import '~mdi/css/materialdesignicons.min.css'
+@import '~@mdi/font/css/materialdesignicons.min.css'
 
 green(l)
   hsl(150, 80%, l)

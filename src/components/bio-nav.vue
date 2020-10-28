@@ -37,8 +37,10 @@
           </ul>
           <div class="social">
             <a class="discord" href="//discord.gg/dcJ3E3y"><icon symbol="discord"></icon></a>
-            <a class="twitter" href="//twitter.com/bio_senpai"><icon symbol="twitter"></icon></a>
-            <a class="facebook" href="//facebook.com/bio-senpai"><icon symbol="facebook-box"></icon></a>
+            <a class="apple" href="//itunes.apple.com/cz/podcast/yoimiru-%C4%8Desk%C3%BD-anime-podcast/id995298954?mt=2"><icon symbol="podcast"></icon></a>
+            <a class="spotify" href="//open.spotify.com/show/2Yku32Y6l9wbUBzHl5zpEw?si=KMpl6_KuQuWhPPjpgvw1FQ"><icon symbol="spotify"></icon></a>
+            <!-- <a class="twitter" href="//twitter.com/bio_senpai"><icon symbol="twitter"></icon></a>
+            <a class="facebook" href="//facebook.com/bio-senpai"><icon symbol="facebook-box"></icon></a> -->
           </div>
         </nav>
       </div>

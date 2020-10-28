@@ -66,7 +66,7 @@
         </div>
       </div>
 
-      
+
 
     </transition-group-spring> -->
 
@@ -105,7 +105,7 @@ function getUrl (src, params) {
   const c = cl.Cloudinary.new({cloud_name: 'bio-senpai'})
   let parameters = {
     fetch_format: 'auto',
-    height: 300,
+    height: 600,
     crop: 'scale',
     ...params
   }

@@ -1,34 +1,28 @@
 <template>
   <section class="relative">
     <transition-zoom :distance="0.3" :twist="-20" :enabled="highPerf">
-      <cl-image v-if="entered || !highPerf" class="top-anime__mascot" :src="'mascot-ng/' + randomMascot" width="250"></cl-image>
+      <cl-image v-if="entered || !highPerf" class="top-anime__mascot" :src="'mascot-ng/' + randomMascot" width="350"></cl-image>
     </transition-zoom>
+
     <div class="top-anime">
       <div class="top-anime__cover">
-        <cl-image ref="topImage" v-if="ready" :src="'cover/' + home.anime.url_title"></cl-image>
+        <cl-image ref="topImage" v-if="ready" :src="'cover/' + show.url_title"></cl-image>
       </div>
       <div class="top-anime--info">
         <h2 class="top-anime__title">
-          <router-link :to="'/projekty/' + home.anime.url_title">{{home.anime.title}}</router-link>
+          <router-link :to="'/projekty/' + show.url_title">{{show.title}}</router-link>
         </h2>
-        <span class="top-anime__episodes">Epizoda {{home.anime.eps.done}}</span>
-        <h3>Vyšlo {{releasedTimeAgo}}</h3>
+        <h3>Zprasil {{show.team.tl[0]}} {{releasedTimeAgo}}</h3>
+        <span class="top-anime__episodes">Přeloženo {{show.eps.done}} z {{show.eps.total}}</span>
         <div class="top-anime--buttons">
-          <!-- Hello CETA
-          <a tabindex="-1" :href="home.anime.mega">
-            <btn variant="red" icon="download">Stáhnout video</btn>
+          <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${show.url_title}/ass.zip`" download>
+            <btn icon="attachment">Stáhnout titulky</btn>
           </a>
-          -->
-          <!--
-          <router-link to="/survival-guide" class="wtf">
-            <icon symbol="help-circle"></icon> Kam zmizel stream a softsuby?
+          <router-link :to="'/projekty/' + show.url_title">
+            <btn icon="magnify">Detail</btn>
           </router-link>
-          -->
-          <a tabindex="-1" :href="`//data.bio-senpai.ovi.moe/data/${home.anime.url_title}/[Bio-senpai] ${pad(home.anime.eps.done)} - ${home.anime.title}.ass`" download>
-            <btn icon="attachment">Titulky k epizodě</btn>
-          </a>
           <!-- Hello CETA
-          <router-link :to="'/stream/' + home.anime.url_title + '/' + home.anime.eps.done">
+          <router-link :to="'/stream/' + show.url_title + '/' + show.eps.done">
             <btn icon="play">Přehrát</btn>
           </router-link>
           -->
@@ -37,6 +31,37 @@
     </div>
 
     <div class="top-modules">
+      <div class="top-modules--area top-modules__yoimiru">
+        <div class="yoimiru__flex">
+          <div class="yoimiru__flex">
+            <svg class="yoimiru__logo" viewBox="0 0 284 259" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M161.695 119.311C171.36 102.571 192.766 96.835 209.506 106.5C226.246 116.165 231.982 137.571 222.317 154.311L172.317 240.913C162.652 257.654 141.246 263.389 124.506 253.724C107.766 244.059 102.03 222.654 111.695 205.913L161.695 119.311Z"/>
+              <path d="M113.195 35C113.195 15.67 128.865 0 148.195 0H248.195C267.525 0 283.195 15.67 283.195 35C283.195 54.33 267.525 70 248.195 70H148.195C128.865 70 113.195 54.33 113.195 35Z"/>
+              <path d="M102.506 153.724C85.7656 163.389 64.3599 157.654 54.695 140.913L4.69496 54.3109C-4.97003 37.5706 0.765602 16.165 17.5058 6.49999C34.2461 -3.16499 55.6518 2.57064 65.3167 19.3109L115.317 105.913C124.982 122.654 119.246 144.059 102.506 153.724Z"/>
+            </svg>
+            <h2>Nejnovější epizody podcastu</h2>
+          </div>
+          <router-link to="/podcast">
+            <btn icon="radio">Podcast</btn>
+          </router-link>
+        </div>
+        <div class="yoimiru__episodes">
+          <div class="yoimiru__ep" v-for="ep in home.podcast" :key="ep.id">
+            <div class="yoimiru__ep-flex">
+              <cl-image :src="'podcast/icons/' + ep.file.substr(0, ep.file.length - 4)" width="400"></cl-image>
+              <div class="yoimiru__ep-header">
+                <h3 :class="{'long': isLong(ep.epName)}">{{ep.epName}}</h3>
+                <div v-if="ep.chapters" style="margin-top: .5em; user-select: none">
+                  <icon symbol="format-list-bulleted"></icon> Obsahuje kapitoly
+                </div>
+                <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
+              </div>
+            </div>
+            <p v-html="ep.epDesc"></p>
+          </div>
+        </div>
+      </div>
+
       <div class="top-modules--flex">
         <div class="top-modules--area top-modules__guide">
           <h2>
@@ -44,7 +69,9 @@
             Survival guide
           </h2>
           <p>
-            Zjistěte, co dělat, když celá česká anime komunita zešílí a smaže všechna přeložená videa ze všech koutů internetů.
+            Zjistěte, jak sehnat video k naším titulkům.
+            Protože nemůžeme přímo poskytovat nebo odkazovat na naše zdroje,
+            připravili jsme pro vás stručnou příručku.
           </p>
           <router-link to="/survival-guide">
             <btn icon="hand-pointing-right">Tudy</btn>
@@ -67,44 +94,14 @@
               <icon symbol="discord"></icon>
               <span class="social-links__label">Discord</span>
             </a>
-            <a href="//facebook.com/bio-senpai" class="social-links__facebook">
+            <!-- <a href="//facebook.com/bio-senpai" class="social-links__facebook">
               <icon symbol="facebook"></icon>
               <span class="social-links__label">Facebook</span>
             </a>
             <a href="//twitter.com/bio_senpai" class="social-links__twitter">
               <icon symbol="twitter"></icon>
               <span class="social-links__label">Twitter</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="top-modules--area top-modules__yoimiru">
-        <div class="yoimiru__flex">
-          <div class="yoimiru__flex">
-            <svg class="yoimiru__logo" viewBox="0 0 284 259" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M161.695 119.311C171.36 102.571 192.766 96.835 209.506 106.5C226.246 116.165 231.982 137.571 222.317 154.311L172.317 240.913C162.652 257.654 141.246 263.389 124.506 253.724C107.766 244.059 102.03 222.654 111.695 205.913L161.695 119.311Z"/>
-              <path d="M113.195 35C113.195 15.67 128.865 0 148.195 0H248.195C267.525 0 283.195 15.67 283.195 35C283.195 54.33 267.525 70 248.195 70H148.195C128.865 70 113.195 54.33 113.195 35Z"/>
-              <path d="M102.506 153.724C85.7656 163.389 64.3599 157.654 54.695 140.913L4.69496 54.3109C-4.97003 37.5706 0.765602 16.165 17.5058 6.49999C34.2461 -3.16499 55.6518 2.57064 65.3167 19.3109L115.317 105.913C124.982 122.654 119.246 144.059 102.506 153.724Z"/>
-            </svg>
-            <h2>Nejnovější epizody podcastu</h2>
-          </div>
-          <router-link to="/podcast">
-            <btn icon="radio">Podcast</btn>
-          </router-link>
-        </div>
-        <div class="yoimiru__episodes">
-          <div class="yoimiru__ep" v-for="ep in home.podcast" :key="ep.id">
-            <div class="yoimiru__ep-flex">
-              <cl-image :src="'podcast/icons/' + ep.file.substr(0, ep.file.length - 4)" width="160"></cl-image>
-              <div class="yoimiru__ep-header">
-                <h3 :class="{'long': isLong(ep.epName)}">{{ep.epName}}</h3>
-                <div v-if="ep.chapters" style="margin-top: .5em; user-select: none">
-                  <icon symbol="format-list-bulleted"></icon> Obsahuje kapitoly
-                </div>
-                <btn icon="play" @click="playEpisode(ep)">Přehrát</btn>
-              </div>
-            </div>
-            <p v-html="ep.epDesc"></p>
+            </a> -->
           </div>
         </div>
       </div>
@@ -139,6 +136,9 @@ const randomMascotArray = [
 import API from 'api'
 import moment from 'moment'
 export default {
+  props: {
+    show: Object
+  },
   data () {
     return {
       onlineData: false,
@@ -154,7 +154,7 @@ export default {
   },
   computed: {
     releasedTimeAgo () {
-      return moment.unix(this.home.anime.updated).locale('cs').fromNow()
+      return moment.unix(this.show.updated).locale('cs').fromNow()
     },
     randomMascot () {
       return new Date().getMonth() === 11 ? 'santa' : randomMascotArray[Math.floor(Math.random() * randomMascotArray.length)]
@@ -225,9 +225,7 @@ export default {
   display flex
   flex-wrap wrap
   .top-modules--area
-    flex 1 2 auto
-  .top-modules__guide
-    flex-basis 35%
+    flex 1 2 400px
 
 .top-modules--area
   background-color lighten(bgcolor, 15%)
@@ -381,12 +379,13 @@ export default {
   position absolute
   top -2rem
   left -5%
+  max-width 230px
   transition top .5s, left .5s
 
 @media (max-width: 1400px)
   .top-anime__mascot
-    left -1vw
-    width 17vw
+    left -.5vw
+    width 16vw
     @media (max-width: 600px), (orientation: portrait)
       .top-anime__mascot
         display none
@@ -394,6 +393,7 @@ export default {
 .top-anime__cover
   position absolute
   height 100%
+  width 100%
   max-height max-content
   overflow hidden
   z-index -1
