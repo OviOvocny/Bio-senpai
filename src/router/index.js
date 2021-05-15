@@ -36,8 +36,11 @@ rt.beforeEach((to, from, next) => {
       .toLowerCase()
     )
   }
-  document.title = to.meta.title
   next()
+})
+
+rt.afterEach(to => {
+  document.title = to.meta.title
 })
 
 export default rt
