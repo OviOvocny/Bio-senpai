@@ -1,12 +1,17 @@
 <template>
   <div>
-    <button class="sidebar-toggle" @click="toggleNav"><icon :symbol="navToggle"></icon></button>
+    <button class="sidebar-toggle" @click="toggleNav">
+      <icon :symbol="navToggle"></icon>
+    </button>
     <div :class="['sidebar', {sideHidden}]">
       <div :class="['sidebar-cta', {podcast}]" :style="{backgroundImage}">
         <router-link class="logo" to="/">
-          <svg width="30px" height="35px" viewBox="0 0 1000 1000" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <svg width="30px" height="35px" viewBox="0 0 1000 1000" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
             <g id="logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <path id="BIO" d="M575.687472,867.358418 C746.512864,832.347977 875,681.178878 875,500 C875,292.893219 707.106781,125 500,125 C292.893219,125 125,292.893219 125,500 C125,681.177943 253.485809,832.346416 424.309883,867.357876 L262.367019,586.613277 C234.774069,538.778085 257.180327,500 312.410586,500 L687.587157,500 C742.818406,500 765.219736,538.784912 737.630724,586.613277 L575.687472,867.358418 Z M500,1000 C776.142375,1000 1000,776.142375 1000,500 C1000,223.857625 776.142375,0 500,0 C223.857625,0 0,223.857625 0,500 C0,776.142375 223.857625,1000 500,1000 Z" fill="#fff"></path>
+              <path id="BIO"
+                d="M575.687472,867.358418 C746.512864,832.347977 875,681.178878 875,500 C875,292.893219 707.106781,125 500,125 C292.893219,125 125,292.893219 125,500 C125,681.177943 253.485809,832.346416 424.309883,867.357876 L262.367019,586.613277 C234.774069,538.778085 257.180327,500 312.410586,500 L687.587157,500 C742.818406,500 765.219736,538.784912 737.630724,586.613277 L575.687472,867.358418 Z M500,1000 C776.142375,1000 1000,776.142375 1000,500 C1000,223.857625 776.142375,0 500,0 C223.857625,0 0,223.857625 0,500 C0,776.142375 223.857625,1000 500,1000 Z"
+                fill="#fff"></path>
             </g>
           </svg>
           <span>{{logotype}}</span>
@@ -15,20 +20,14 @@
           <cl-image :src="'charas/' + show.url_title"></cl-image>
           <router-link class="title" :to="'/projekty/' + show.url_title">{{shy(trim(show.title))}}</router-link>
         </div>
-        <audio-player
-          :hp="hp"
-          class="player"
-          :source="audioSource"
-          :metadata="audioMetadata"
-          :linkedChapter="audioChapter"
-          :active="podcast"
-          autosave>
+        <audio-player :hp="hp" class="player" :source="audioSource" :metadata="audioMetadata"
+          :linkedChapter="audioChapter" :active="podcast" autosave>
         </audio-player>
       </div>
       <div :class="['sidebar-main', {'sidebar-blur': hp}]">
         <nav>
           <ul>
-            <li v-for="item in items" :key="item.label" >
+            <li v-for="item in items" :key="item.label">
               <router-link :to="item.to" @click.native="sideHidden = true">
                 <icon :symbol="item.icon"></icon>
                 <span>{{item.label}}</span>
@@ -36,9 +35,20 @@
             </li>
           </ul>
           <div class="social">
-            <a class="discord" href="//discord.gg/dcJ3E3y"><icon symbol="discord"></icon></a>
-            <a class="apple" href="//itunes.apple.com/cz/podcast/yoimiru-%C4%8Desk%C3%BD-anime-podcast/id995298954?mt=2"><icon symbol="podcast"></icon></a>
-            <a class="spotify" href="//open.spotify.com/show/2Yku32Y6l9wbUBzHl5zpEw?si=KMpl6_KuQuWhPPjpgvw1FQ"><icon symbol="spotify"></icon></a>
+            <a class="discord" href="//discord.gg/dcJ3E3y">
+              <icon symbol="discord"></icon>
+            </a>
+            <a class="apple"
+              href="//itunes.apple.com/cz/podcast/yoimiru-%C4%8Desk%C3%BD-anime-podcast/id995298954?mt=2">
+              <icon symbol="podcast"></icon>
+            </a>
+            <a class="spotify" href="//open.spotify.com/show/2Yku32Y6l9wbUBzHl5zpEw?si=KMpl6_KuQuWhPPjpgvw1FQ">
+              <icon symbol="spotify"></icon>
+            </a>
+            <a class="youtube"
+              href="//music.youtube.com/playlist?list=PL4ylEY7ZlllEWCNQs3ZARzDB8LkIEow9r&si=fMe8rokpxWMKhYA1">
+              <icon symbol="youtube"></icon>
+            </a>
             <!-- <a class="twitter" href="//twitter.com/bio_senpai"><icon symbol="twitter"></icon></a>
             <a class="facebook" href="//facebook.com/bio-senpai"><icon symbol="facebook-box"></icon></a> -->
           </div>
