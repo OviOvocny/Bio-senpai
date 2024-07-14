@@ -75,10 +75,15 @@ function getUrl (src, params) {
 }
 
 let wtfs = [
-  'Podcast aneb tři šílenci mluví o anime a všem dalším, co je napadne...',
-  'Podcast aneb tři šílenci se pokouší neumřít smíchy...',
-  'Podcast aneb tři šílenci šíří hodinu svého smíchu internetem...',
-  'Podcast aneb tři šílenci se hádají u mikrofonu o existenci příběhu v ecchi...'
+  'Podcast o anime aneb tři šílenci mluví o všem, co je napadne.',
+  'Podcast o anime aneb tři šílenci se pokouší neumřít smíchy.',
+  'Podcast o anime aneb tři šílenci šíří hodinu svého smíchu internetem.',
+  'Podcast o anime aneb tři šílenci se hádají u mikrofonu o existenci příběhu v ečči.',
+  'Podcast o anime aneb jak vyděsit turisty na rozhledně.',
+  'Podcast o anime aneb pravá definice kulturistiky.',
+  'Podcast o anime aneb Machy hraje intro na kytaru.',
+  'Podcast o anime aneb sezónní postava v situaci.',
+  'Podcast o anime aneb takovej českej šónen.'
 ]
 
 export default {
@@ -90,6 +95,9 @@ export default {
   },
   created () {
     this.fetchData()
+  },
+  mounted () {
+    this.$emit('update:backdrop', 'podcast/banner')
   },
   beforeRouteLeave (to, from, next) {
     this.$emit('update:backdrop', '')
